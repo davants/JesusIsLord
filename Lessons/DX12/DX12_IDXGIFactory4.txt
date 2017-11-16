@@ -1,0 +1,119 @@
+Tasks for this Lesson:
+	Add the IDXGIFactory4 interface.
+	Add the lib "library" to your project.
+	Create the interface using the factory.
+
+
+In this lesson you will create a DirectX factory that is used to give you other DirectX objects. 
+
+
+
+---------------------
+Lessons
+
+Use the directory structure specified in the course.
+This lesson requires that you already have an app running that can be updated by the following steps.
+So you will not create a project, but edit an existing project.
+
+
+Step 1)
+Include the following file to your program using the #include preprocessor directive.
+
+Code:
+	#include <DXGI1_4.h>
+
+Add the following preprocessor directive to load the DirectX lib.
+
+Code:
+	#pragma comment(lib, "dxgi.lib")
+
+
+Step 2)
+Create the following pointer variable in one of your functions. For example you could use main unless you have another function in mind.
+
+Code: 
+	IDXGIFactory4 * vpDxgiFactory;
+
+Notes:
+The IDXGIFactory4 object is an interface used to create other objects. 
+Later in another lesson, we will use this factory to create another object that is an interface to your GPU. "Graphics Processing Unit"
+
+Step 3)
+Call the following function and pass your pointer varible.  
+
+Code:
+	CreateDXGIFactory1( IID_PPV_ARGS(&vpDxgiFactory) );
+
+
+So this program only adds the include file and 2 lines of code.
+This program only creates the factory, it does not use it; that will happen in a later lesson.
+
+Notes:
+The CreateDXGIFactory1 function is a function from the d3d12.h file you included earlier.
+This function actually takes 2 parameters but we are only passing one. 
+The code "IID_PPV_ARGS(..)" is a macro that turns our one parameter into two. We will talk about this macro in a bit.
+
+Here is the signature of the function: CreateDXGIFactory1(REFIID riid,  void **ppFactory)
+The first parameter, named riid, is the COM ID, which is a number.
+This number tells the CreateDXGIFactory1 function which object to create. So this means the CreateDXGIFactory1 function can be used to 
+create many different objects of different data types.
+The second parameter is a pointer to pointer so the function can call "new" and place the address in the variable you passed. Because your 
+variable is a pointer, to have the function set it you must pass its address so that makes the parameter data type a pointer to pointer.
+Notice on the call we get its address: &vpDxgiFactory
+
+So how does the macro turn this code into 2 parameters? Notice the IID_PPV_ARGS(..)
+The IID_PPV_ARGS is a macro which means it is a preprocessor directive.  
+How this works is that the macro IID_PPV_ARGS will add another parameter which is the COM ID assigned to the IDXGIFactory4 object.
+The macro looks up the number based on the data type being passed. The data type being passed is the IDXGIFactory4 object.
+So when the program is compiled, the number (riid) is added so 2 parameters are actually being passed. 
+The first being the number "riid" which is the COM ID, and the other is the IDXGIFactory4 pointer to pointer.
+
+Last note, again the signature of the CreateDXGIFactory1 function is:
+	CreateDXGIFactory1(REFIID riid,  void **ppFactory);	
+CreateDXGIFactory1 function will figure out what object to create by looking up the riid value which is a COM ID.
+It does not know the data type of the object it is creating until it has looked it up. 
+So that is why the second parameter is a void ** instead of IDXGIFactory4 **.  A void pointer can point to anything.
+Since all pointer variables are the same size, the CreateDXGIFactory1 function can update it by dereferencing what you pass.
+So the inside of the CreateDXGIFactory1 function could look something like: 
+
+Do not add this code. It is only here to show you what CreateDXGIFactory1(REFIID riid,  void **ppFactory) is doing.
+
+if( riid == 12 )
+{
+	// Dereference the ppFactory and put an address in it.
+	*ppFactory = new IDXGIFactory4();
+}
+else if( riid = 13)
+{
+	*ppFactory = new SomeOtherObject();
+}
+...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

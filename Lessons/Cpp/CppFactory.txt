@@ -1,0 +1,84 @@
+
+----------------------------------------------------------------------
+Step 1
+
+Tasks for this Step:
+	Create a factory 
+	
+You will learn a little about the following:
+	What is a factory?
+	Pointer to Pointer
+	
+	
+Things you need to know for this lesson.
+	basic level understanding of c++
+	basic level understanding of visual studio 2017
+	Complete Lesson Cpp\CppPointers.txt
+	Complete Lesson Cpp\CppPointerToPointer.txt
+	
+
+Overview:
+A factory is an object or function that creates other objects. 
+Think of a car factory. Better yet, think of the ice cream shop where you give your instructions and the person behind the counter will create what you asked for.
+
+
+
+
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+Projects
+All of these are console applications.
+If you have already done these program, review the instructions below and make sure you understand how to build these.
+	
+
+Create a directory according to the structure specified in the course.
+
+
+
+------------------------------
+CppPFactory_Prog1_CarFactory
+
+Create a car class and add some properties like Make, Color and Year.
+
+Create a struct, not a class, named OrderInstructions that will hold information on what you want the factory to create.
+The same properties to this struct that you have in the car class, but add one more called numberOfCars that is an int.
+
+Create a class called CarsOrder that contains a vector of car objects.
+
+Create a function named CarFactory that takes two parameters. This function will not return anything.
+The first parameter is the OrderInstructions and the second is a pointer to a CarsOrder pointer.
+Have this function allocate the CarsOrder on the heap, setting the passed CarsOrder.
+Next, add all the cars to the CarsOrder vector based on the OrderInstructions.  
+However many are specified in the numberOfCars property of the OrderInstructions, that is how many to add to the vector.
+
+In main, create an OrderInstructions object and set the properties. Set the numberOfCars to 15.
+In main, create a variable of type CarsOrder * named vpCarOrder.
+In main, call the CarFactory function passing the Order instructions and the address of the vpCarOrder.
+In main, output the cars in the CarsOrder.
+In main, delete the vpCarOrder.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

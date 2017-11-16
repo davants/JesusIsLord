@@ -1,0 +1,116 @@
+
+Tasks for this Step:
+	Create a pointer to pointer 
+	
+	
+Things you need to know for this lesson.
+	basic level understanding of c++
+	basic level understanding of visual studio 2017
+	Complete Lesson Cpp\CppPointers.txt
+
+	
+
+
+---------------------------------------------------------
+Video
+Pointer to Pointer: https://youtu.be/ZMDYsr9scGo
+
+
+
+---------------------------------------------------------
+How can we use a double pointer?
+The double pointer pattern is used so that a function can allocate an object for the caller. 
+For example
+	Note the "MyClass" is just some class that you already created.
+
+int someFunc(MyClass** returnObj) 
+{
+	// By dereferencing, I'm getting at the value of pValue in main.
+    *returnObj = new MyClass();
+
+    return 0;
+}
+
+int main()
+{
+	MyClass* pValue;
+	someFunc(&pValue);
+	// pValue now contains the newly allocated MyClass
+}
+
+//A single pointer is insufficient here because parameters are passed by value in C++. So the modification of the single pointer would only be visible from within someFunc. 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Another way to do the same thing is to have a reference to a pointer.
+
+//Note: When using C++ you should consider using a reference in this scenario. 
+int someFunc(MyClass*& retObj) 
+{
+  retObj = new MyClass();
+  return 0;
+}
+
+int main()
+{
+	MyClass* pValue;
+	someFunc(pValue);
+}
+
+//This allows you to pass the argument by reference instead of by value. Hence the results are visible to the caller. 
+
+
+
+------------------------------
+Make sure you understand:
+Why do we have to pass a pointer to a pointer?
+
+Remember, a function's parameters are brand new variables created each time a the function is called.
+Also remember, when you pass a variable to another function, the parameter in the function gets a copy of the value. Again, it is a copy of the value passed.
+
+If you want a function to edit the caller's variable, you have to pass the address of the caller's variable so the value copied in the function's 
+parameter will be the address of the caller's variable. This means the parameter data type will be a pointer to the data type of the caller's variable.
+If the caller's variable is an int, then the paramter will be of type int *.
+If the caller's variable is an int *, then the parameter will be of type int **.
+Now that the function has the address of the caller's variable, the function can dereference it so it are editing the value of the caller's variable.
+
+If you don't pass the caller variable's address, then the function will be editing the parameter's value and not the caller's variable.
+
+So now that we know we need to pass the address of the caller's variable, the parameter must be a pointer to the caller's variable type.
+If the caller's variable type is a pointer to an int then the parameter would be a pointer to an int pointer. (int ** ppI)
+
+
+
+
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+Lessons
+
+All of these are console applications.
+If you have already done these program, review the instructions below and make sure you understand how to build these.
+	
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+
+
+
+
+------------------------------
+CppPointersToPointers_Lesson1
+Create the program from the video.
+
+
+------------------------------
+CppPointersToPointers_Lesson2
+Create a program that has a class named food that has a property of type string who's name is foodType.  
+In main, create a variable of type food pointer named pFoodItem.
+Create a function named allocateFood that has 2 parameters; one parameteer that is type string named foodType and a second parameter of type food ** named ppFoodItem.
+The allocateFood function should create a food object on the heap and set the passed parameter.
+In main, call the allocateFood function, passing a food type and the address of the pFoodItem.
+In main, output to the screen the property foodType of the created food object.
+
+
+

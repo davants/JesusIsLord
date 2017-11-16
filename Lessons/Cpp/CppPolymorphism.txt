@@ -1,0 +1,44 @@
+Tasks for this Step:
+	Inheritance
+	Polymorphism
+
+You should understand Inheritance before starting this lesson.
+
+
+
+Video - https://youtu.be/tGfblV9g5kQ
+
+
+		
+
+----------------------
+Lessons
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+
+
+------------------------------
+CppPolymorphismA
+
+Create the same project at the video, step through each step as he did it so you can see things clearly.
+Next, create one more type of animal and override the eat function as you did for the ant and lion.
+Test this new object like you did for the other animals.
+Next, create a vector of animal pointers.  
+	vector<Animal *> vListOfAnimals;
+Fill this list with many different ants, lions and your new animal.
+Next, loop through the list and call Eat() for each one.  Polymorphism at its best!
+
+
+NOTES:
+A parent class is also called a base class.
+A child class is also called a derived class.
+If a parent/base class has a pure virtual function it means the function does not have a body in the base/parent class.
+If a parent/base class has a pure virtual function you can not create an object from it; however, you can create
+a pointer to it because a pointer is not the object, just a variables that holds addresses.
+If a parent/base class has a pure virtual function then the child/derived class should override the function if you
+plan on creating an object.
+
+Last, you can create a parent class pointer and have it point to child objects because the child inherits from the parent.
+

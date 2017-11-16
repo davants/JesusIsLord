@@ -1,0 +1,52 @@
+
+Tasks for this Step:
+	Create a program that uses a vector.
+	Vectors 
+
+
+Videos
+	intro - https://youtu.be/SGyutdso6_c
+	intro and delete an element - https://youtu.be/vSio4fvNgzg
+
+
+
+Note: This lesson does not cover iterators yet!	
+
+
+
+----------------------
+Lessons
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+
+
+------------------------------
+CppVectorsLesson1VectorOfInts
+
+Write a program that creates a vector of ints and asks the user to add as many ints as the user wants.
+Use the push_back function to add the ints to the vector.
+After the users adds an int, ask if they want to stop adding ints.
+After they are done adding to the vector, print out all the ints in the list.
+
+
+------------------------------
+CppVectorsLesson2DeleteAnElement
+
+Write a program that creates a vector of doubles. 
+Add 10 double values to the vector. 
+Print out the values.
+Erase the 4th values in the list. Note this will be index 3.
+Print out the values.
+Validate the correct double was deleted.
+Clear the vector of all elements.
+Print out the values. 
+Add one double and print the values.
+Validate that only the last one added was printed.
+
+
+
+
+
+

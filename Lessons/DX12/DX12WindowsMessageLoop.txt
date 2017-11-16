@@ -1,0 +1,22 @@
+Tasks for this Step:
+	Add windows loop logic to your DX Program.
+
+This lesson assumes you already have a DX program that creates some DX components and it outputs the adapters to the
+visual studio output window.
+
+It also assumes you have a basic windows message program that you can use as a guide.
+
+
+----------------------
+Lesson
+
+Step 1)
+
+Simply add the message loop code to the DX project. In the next lesson, a base class can be created and so on...
+
+
+
+working here.....Remember, the DX lessons build on each other, the windows and cpp lessons do not!
+				This means we start from a previous DX lesson and add the windows loop to it, not vice versa.
+
+

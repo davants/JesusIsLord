@@ -1,0 +1,48 @@
+Tasks for this Step:
+	Debug and output text to the debug window.
+
+
+----------------------
+Lessons
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+------------------------------
+CppVisualStudioOutputDegugInfo
+
+
+Create console application with a simple "hello world" structure.
+
+Add the windows.h file to the project along with string.
+
+Create a wide char string variable, wstring, and set it to the text you want to output to the debug window.
+Because you are using a wstring, you will have to add an L in front of the text you add.
+Next, call the windows OutputDebugString(..) function with your wstring. 
+	Note: The OutputDebugString function does not take wstring, it takes an array of wide chars; therefore, 
+		pass the OutputDebugString(..) function an array of wide chars by calling the "c_str()" function of the wstring class.
+Next, in visual studio look for the "output" windows at the bottom. You may have to click a tab to show it.
+
+
+Here is the complete code.
+
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+#include <Windows.h>
+
+using namespace std;
+
+int main()
+{
+	cout << "hello world" << endl;
+
+	wstring s = L"Hello Output Window! I'm writing to you.";
+	OutputDebugString( s.c_str() );
+
+    return 0;
+}
+
+
+
+

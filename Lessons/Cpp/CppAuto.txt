@@ -1,0 +1,44 @@
+
+Tasks for this Step:
+	auto key word
+
+Notes:
+	The "auto" keyword makes the compiler fiture out the data type; at compile time.
+	
+Videos
+	https://youtu.be/W5OiUywNZ5U
+		Note: In the video he says that the "auto" type is set at runtime, but it is actually at compile time.
+
+----------------------
+Lessons
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+
+
+------------------------------
+CppAuto
+
+
+Create a vector of strings. Use push back to add some strings.
+Loop through the vector using the iterator, not the random access brackets [i].
+	Output them to the screen.
+	Use a "for loop".
+
+Now convert the iterator to have its datatype set by the "auto" keyword. To do this, initialize the 
+iterator in the "for loop".
+
+Example:
+	From:
+		for(vector<string>::iterator item = vecOfStrings.begin() ; .....)
+	To:
+		for(auto item = vecOfStrings.begin() ; .....)
+
+		// The compiler can figure out the datatype for "item" by looking at your vector list and the return type of the "begin()" function.
+		// This is alot better than having to give the type "vector<string>::iterator".  
+		// If you are looping through a std::map then the type name is even more complex so auto is a life-saver.
+
+
+
+

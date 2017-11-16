@@ -1,0 +1,62 @@
+Tasks for this Step:
+	Create a program that uses a map.
+
+Videos - https://youtu.be/POYRev0zk2k
+	- https://youtu.be/5bLNPFlEfqM
+	
+Overview
+	Map - Also known as associative container list. You associate a key with a value.
+	A map, like a vector, is a list container; however, a map works differently than a vector.
+	
+	Key and value datatypes
+		The key can be any datatype. 
+		The value can be any datatype.
+
+	std:map is a list container like vector, but you can get at an element using a key instead of looping through the list. 
+
+	std:map is a template that takes two data types. 
+		The first is the key and the second is the "value".
+		DO NOT think of the word "value" like you do for a variable's value. When they say "value" they just mean
+			the variable that is "associated" with the key.
+		The "key" is how you get to the "value" variable.
+		The value is really just the object/variable value you are storing at that key.
+
+	Since the key is how you get to the value, it is unique in the map. 
+		Meaning, it is not possible for you to have duplicate keys.
+
+	Notice how you can add an element to the map on the fly. Just give it a new key and assign it a value.	
+
+	Definition Iterator:
+		One definition of an iterator: it is a pointer to the key/value pair.
+	
+	You can use itrators with maps, vectors, linked lists, and other types of list containers.
+
+
+
+----------------------
+Lessons
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+
+
+------------------------------
+CppMappLesson1MapOfPeople
+
+Create a console program.
+Create a person class with some basic properties and functions.
+Create a map where the key is a string and the value is a person.
+The key will be the person's email. You can also have another email as one of the properties in the person class.
+
+Allow a user to add, insert and remove elements from the map. Ask the user for this information.
+	Do not use the iterator as shown in the video for this part.
+	Do not use the "insert" function to add elements to the map.
+
+
+At the end of the program, use the iterator to loop through the map.
+
+
+
+
+

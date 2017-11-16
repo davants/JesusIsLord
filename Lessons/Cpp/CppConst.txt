@@ -1,0 +1,24 @@
+Tasks for this Step:
+	Const
+
+
+Video - https://youtu.be/k55CRqm1gzk
+
+In the video, he did not say what it means for a function to be const. It means that the function is not allowed to change anything.
+In the video, the function only output to the screen so the function did not change variables.
+A good example of a const function would be one that "gets" some value from the object. 
+For example: 
+// We'll say that this function is a member of a Dog class and one of the private members is a string named "mName" that holds the dog's name.
+// This function can be a const because the function does not change the mName variable, it just returns a copy of it.
+	string getName(void) const
+	{
+		return mName;
+	}
+
+-------------------------------
+Lessons
+
+CppConstFunctionParameters
+Write a program that has a function that takes 2 parameters that are pointers to ints. 
+Make one const and the other without the const.
+Try to change both values in the function and see what the compilter does.

@@ -1,0 +1,73 @@
+Tasks for this Step:
+	Create a very simple windows program.
+	WinMain
+	Windows MessageBox
+
+
+
+---------------------
+Lessons
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+
+
+
+------------------------------
+CppLesson1_WinApp
+
+
+Visual Studio 2017
+New project->Win32 Project
+	Name the project YourFirstName + AppABC.  (example: DavantAppABC)  (No Spaces or unusual charactors)
+	Have visual studio create a directory for your solution. (This is a checkbox in the lower right.)
+	Click Ok to go to the next screen.
+	Click Next
+	Select windows application
+	Don't select empty project
+
+Visual Studio will create a simple windows program. Compile and run.
+
+Open the DavantAppABC.cpp file. (file name will be different)
+
+Control A to highlight all text in the file and hit delete.
+
+Add the following code to the file.
+
+Code:
+	#include "stdafx.h"
+
+	int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,	PSTR cmdLine, int showCmd)
+
+	{
+		MessageBox(nullptr, L"Hello World", L"Working!!", MB_OK);
+		return 0;
+	}
+
+
+Here is what the code is doing.
+
+#include "stdafx.h"
+	This include file has basic other includes files in it that support commands that are common.  Like input/output include files.
+	When you use the #include "some filename" code in your program, you are actually adding code that some other programmer wrote. Isn't it nice to share!
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,	PSTR cmdLine, int showCmd)
+
+	The "WinMain function is where the program will start. 
+	The windows operating system will calls the WinMain function when your program is started by the user.
+
+MessageBox(nullptr, L"Hello World", L"Working!!", MB_OK);
+	This will pop up a screen for the user to click ok.
+
+Compile and run the program.
+Debug the app, step through the code.
+
+
+Note that Visual Studio has a solution file that groups all the files needed to build your program.
+It will be called "DavantAppABC.sln".  Use this file to re-open your Visual Studio Solution.
+
+
+
+
+

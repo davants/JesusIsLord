@@ -1,0 +1,84 @@
+Tasks for this Step:
+	Use visual studio to create several files, include files, etc.
+
+
+
+
+Notes to review before watching the video.
+
+#define
+	This preprocessor creates and defines a label. For example:
+		#define MY_STUFF
+	This will define a label named "MY_STUFF". 
+	Why would I create a lable?  I would create a label so I can later check to see if it exists or not. 
+	You can only define a lable's name one time for the entire project.
+
+#ifndef
+	This is preprocessor "if" logic. 
+	This works somewhat like a regular if statement; meaning, if it is true then do something.
+	The code #ifndef means "if not defined" and is looking to see if a label has been defined.  
+	If it is true, it will add the code that follows until it reaches the #endif.
+
+		So the code:
+			#ifndef MY_STUFF
+				
+			#endif
+		is saying "if not defined"; meaning if label MY_STUFF is not defined then
+		add all the code to the compiled application until you reach #endif.
+
+		So the code: 
+			#ifndef MY_STUFF
+			#define MY_STUFF
+	
+			class my_stuff
+			{
+				int heightOfStuff;
+			};
+
+			#endif
+		This will check to see if the MY_STUFF label is defined already, if not it will do the following:
+			It will define MY_STUFF.
+			It will add a class named my_stuff to the final code.
+			
+		If 10 header files all #include the my_stuff.h, this will make sure the my_class does not get added
+		more than once because the next time the compiler opens this file the MY_STUFF label will be defined now. 
+
+#pragma once
+	This does the same thing as the #ifndef ... #endif logic above but with one line of code.
+
+Abstract Class
+	An abstract class is a class that can not be used to create an object.
+	It only exists for other classes to derive from it or you can create a pointer of that datatype; 
+		however, you can't create an object of that datatype.
+	If a class has a pure virtual function it means the function does not have a definition; it only has the declaration.
+	To make a function a pure virtual function set the function declaration equal to zero.
+	If a class has a pure virtual function then that class can't be created and is therefore an "Abstract Class".
+
+	Example:
+		class animal
+		{
+		public:
+			virtual void eatFood(int x) = 0; // pure virtual function
+		};
+	
+	You can create a pointer to an abstract class, but not the object.
+	Example:
+		// This is allowed. It can create it because it is not creating the object, just an address holder.
+		animal * pAnimal;
+		
+		// This is not allowed. It can't create it because the function has no guts!
+		animal barney; // Error, will not compile.
+
+
+	Why would we have an abstract class?  Because we want to derive from it. For example, we could create dog and cat classes that 
+	derive from animal.  If we override the pure virtual functions we inherit from the base class (animal), then we can create dog and cat 
+	objects because they have definitions for the functions.
+
+
+
+Video - https://youtu.be/QG5s42I_75c
+	
+	
+
+
+

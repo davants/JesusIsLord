@@ -1,0 +1,33 @@
+Tasks for this Step:
+	Creating and using a static variables in a class.
+
+
+
+Overview
+A static variable in a class is kind of like a global variable for just that class.
+A static variable in a class only exist 1 time in memory for all the objects created for that class; meaning it is a shared variable.
+Example:
+	Say I have a class named person.
+	Say person has a static variable named OldestPersonsAge.
+	If I create 10 person objects and set OldestPersonsAge to 98, all 10 person objects will have the value of 98 for the OldestPersonsAge variable.
+		This is because all objects share the same memory for the static variables.
+
+This video is a bit confusing at first, but when you see the code at the end it helps; maybe watch it a couple of times and then 
+re-read the "Overview" above.
+Video - https://youtu.be/V-BFlMrBtqQ
+
+
+
+---------------------
+Lessons
+
+Create a console app with a "person" class that has a static int variable named oldestAge.
+Have the class also have an int age variable that is a normal variable (not static).
+Create a "setAge" function for the class that sets the age. 
+	Inside the "setAge" after setting the age class variable also set the oldestAge static variable if the value is higher.
+Create 10 persons and set the ages for all to different values.
+Now output all the persons age and oldestAge.
+
+Notice that the age variables are different per object but the oldest is not because all classes share it.
+
+

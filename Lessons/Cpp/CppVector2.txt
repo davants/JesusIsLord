@@ -1,0 +1,42 @@
+
+Tasks for this Step:
+	Vectors 
+	Iterators
+
+
+Notes:
+	You will hear them say container classes. This is just different types of lists.
+		For example, Map list, vector list, etc...
+	You may also want to watch the CppMap lesson because it also talks about iterators.
+	
+Definition Iterator:
+	One definition of an iterator: it is a pointer to the key/value pair.
+	
+	
+	
+Videos
+	https://youtu.be/JWudH9wlHEs
+	https://youtu.be/2b9Mdh3L5Qs
+		This one does not have talking, just music in the background. I turned off the music because it started to drive me crazy!
+
+
+
+
+----------------------
+Lessons
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+
+
+------------------------------
+CppVectors2Iterators
+
+Create a vector of strings. Use push back to add some strings.
+Loop through the vector using the iterator, not the random access brackets [i].
+	Output them to the screen.
+	Use a "for loop".
+
+
+

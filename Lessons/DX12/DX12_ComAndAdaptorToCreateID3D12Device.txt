@@ -1,0 +1,328 @@
+
+Tasks for this Step:
+	Add the Com pointer template that wraps up the ID3D12Device interface.
+	Use the factory interface function EnumAdapters1(..) to get a IDXGIAdapter1 interface to your video card.
+	Use the Com and the IDXGIAdapter1 interface to create the ID3D12Device.
+
+
+This is a very big lesson; so go slow and ask lots of questions.
+This lesson will use the ComPtr template to hold the pointer to the DirectX interface objects instead of our own pointer.
+This template calls "Release(..)" when the ComPtr is destroyed.
+If we use the ComPtr template, you do not have to call "Release()" on the Com objects because the template does this for us.
+
+The video card on your computer is called a video card adapter; also called the GPU.
+After we have added code to use the ComPtr template, we will use the factory to create the IDXGIAdapter1 interface which is a 
+direct connection to your video adapter card on your computer.
+Using this adaptor interface object, we will create the ID3D12Device interface object which we use to do DirectX programming on 
+the video adapter card.
+We will check all the video adapters on your computer and pick the one with the most video memory.
+
+So the factory gets us the adapter we want and the adapter gets us the directX interface object we want.
+
+
+----------------------
+Lesson
+
+
+
+Step 1)
+We need another file that has the Com template. (wrl.h)
+Also, add the namespace. (Microsoft::WRL)
+Code:
+	#include <wrl.h>
+
+	using namespace Microsoft::WRL;
+
+Step 2) 
+
+Find any DirectX Com interface objects and replace the data type with 
+the "ComPtr< type goes here >" data type.
+
+For example, Change:
+	From:
+		IDXGIFactory4 * vpDxgiFactory;
+	To: 
+		ComPtr<IDXGIFactory4> vpDxgiFactory;
+
+
+Notice we did not pass the type "IDXGIFactory *" to the ComPtr template, just "IDXGIFactory". 
+The ComPtr template takes the type we pass and creates a pointer for us. 
+In fact, you can get to the pointer it created by calling the Get() function of ComPtr template.
+Do not add this code, it is to show you how to get the pointer that ComPtr created.
+	ComPtr<IDXGIFactory4> vComPtr_DxgiFactory; 
+	IDXGIFactory4 * pDxgiFactory = vComPtr_DxgiFactory.Get();
+
+
+
+Step 3) 
+
+Do the same for the ID3D12Device * variable.
+
+We will be replacing the rest of the code in main so you can delete it.
+
+Step 4)
+Remove the previous code that called release. These are not needed because the template has
+code that does this in the destructor of the template code.
+
+
+NOTES:
+Notice the name of the template "ComPtr", meaning Com pointer. It is an object that
+will create a pointer of the data type you passed to the template.
+In the descructor, it will call "Release()". That is why you don't have to.
+
+The only reason we are using this template is that most of the code samples use it so we will
+just follow along.
+
+
+Step 5)
+In previous examples we didn't use the factory.  This time we will. The factory can be used to get at all the video cards on your computer.
+So, we will loop through all the video cards and find one that supports the DirectX features we need.
+If we find more than one that supports DX12, we will choose the one with the most video memory.
+We will create a function that will use the factory to find a good video card with enough features for Dx12.
+Create a function above main called GetHardwareAdapter. Its return type will be HRESULT and it will take 2 parameters.
+
+We will return S_OK if we found one and E_FAIL if we didn't. Both these values are preprocessor typedefs of integer values. We don't really
+care what their actual value is, we will just use the typedef names.
+
+The first parameter will be a pointer to the factory.
+The second parameter will be the adapter pointer we want to set. In main, the adapter is a pointer to IDXGIAdapter1 type. So, if we want this
+new function to set it we have to pass a pointer to the variable in main. This means the parameter will be a pointer to pointer.
+
+Step 5.1)
+The function signature should look something like this.
+Code
+	HRESULT GetHardwareAdapter(IDXGIFactory4* pFactory, IDXGIAdapter1** ppAdapter)
+	{
+
+	}
+
+Step 5.2)
+In GetHardwareAdapter, set the passed adapter pointer to a null pointer (nullptr) just to make sure it is clean. 
+If we can't find a good video card then the adapter pointer back in main will be set to nullptr which is good. 
+Because we are setting the variable that was created back in main, and not this parameter copy, we need to dereference our parameter.
+Code
+	*ppAdapter = nullptr;
+
+Step 5.2.1)
+In GetHardwareAdapter, we also need a number to keep track of the video card with the most memory. We will use SIZE_T which is an int. 
+The DX12 call to get the memory uses SIZE_T so that is why we are using it instead of a regular int.
+Code 
+	SIZE_T vMemory = 0;
+
+Step 5.2.2)
+In GetHardwareAdapter, we need an HRESULT which will be our return value. Set it to "E_FAIL" as its default value. 
+We will change it to S_OK if we find a good card.
+Code
+	HRESULT vResult = E_FAIL;
+
+Step 5.3)
+In GetHardwareAdapter, create a for loop with a true for the condition so that it will never stop. 
+We will break out of the loop if there are no more cards to check.
+Code
+	for (UINT adapterIndex = 0; true ; ++adapterIndex)
+	{
+
+	}
+	
+Step 5.4)
+In GetHardwareAdapter, we will create a temporary pointer to the Adaptor interface pointer which we will use with the factory 
+because we don't want to update the parameter adapter pointer until we are sure it supports DirectX12. 
+Add this inside the "for" loop.
+Code
+	IDXGIAdapter1* pAdapterTEMP = nullptr;
+
+The factory has a function called EnumAdapters1(..). 
+This function takes 2 parameters. 
+The first is the index of the video adapter we want. 
+	So if our computer has 2 video GPU adapter cards then they would be indexes 0 and 1. 
+	We will use the "for loop" index we already created. 
+	If you ask for an index that does not exist then the EnumAdapters1 function will return an HRESULT that 
+	equals DXGI_ERROR_NOT_FOUND. So we will check for this and if so then break out of the "for loop" because 
+	there are no more adapters to check.
+The second parameter is where we pass our pointer variable, which is a pointer to an adapter.
+	Because we are asking the EnumAdapters1 function to update our variable, we will pass its address. 
+	So this means we are passing a pointer to pointer :)
+
+Add this inside the for loop. Using the factory we call the EnumAdapters1 function which will return an HRESULT.
+Code	
+	if (DXGI_ERROR_NOT_FOUND == pFactory->EnumAdapters1(adapterIndex, &pAdapterTEMP ))
+	{
+		// No more adapters to enumerate.
+		break;
+	}
+
+Step 5.5)
+In GetHardwareAdapter, now we have a pointer to a GPU video card adapter interface object.
+We now want to check if the adapter is powerful enough to support DirectX. This is called the feature level.
+Actually, lets just check for a card big enough to handle Direct X 11 features because a video card that is big enough
+to support DirectX 11 features will be powerful enough for us. 
+Just because we are checking using Dx11 feature level does not mean we will program using Dx11 API; we will be using 
+the Dx12 API. 
+
+The code is a bit tricky because we will call the create device Com function "D3D12CreateDevice(..)" we have used before
+but we will ask it not to create the device. We will only be asking the function if it CAN create it if we asked it to. 
+We are basically asking "if we asked, could you create the device?"
+The way to do this is to pass a nullptr where we would normally pass the device pointer variable. 
+If the function sees a nullptr for the last parameter, it will just return an enum value letting us know if 
+it could create the interface or not.
+
+The first parameter to the DX12 function D3D12CreateDevice(..) is the adapter we are asking about. 
+We will use the pAdapterTEMP we created with the factory.
+The second parameter is the feature level/power level we are asking about. We will pass D3D_FEATURE_LEVEL_11_0.
+The third parameter is the datatype we are asking the Com function to create. For use the datatype is ID3D12Device.
+The fourth parameter is the nullptr which tells the function not to actually create the device interface but just return a value 
+	that lets us know if the adapter can support the feature level. 
+We will wrap this function call in a macro called "SUCCEEDED" which returns true or false. It will return true if the 
+D3D12CreateDevice function returned a value saying it can support the feature.
+If the adapter does not have the minimum feature levels, we call "Release()" on it since we can't use it.
+Add this inside the "for" loop.
+Code
+	// Check to see if the adapter supports our features, but don't create the
+	// actual device yet.
+	if( SUCCEEDED( D3D12CreateDevice(pAdapterTEMP, D3D_FEATURE_LEVEL_11_0, _uuidof(ID3D12Device), nullptr)) )
+	{
+	}
+	else
+	{
+		pAdapterTEMP->Release();
+	}
+
+Step 5.5.1)
+In GetHardwareAdapter, inside the "for loop" and "if" statement, we will get the memory of the video card.
+Code
+	DXGI_ADAPTER_DESC1 vDXGI_ADAPTER_DESC1;
+	pAdapterTEMP->GetDesc1(&vDXGI_ADAPTER_DESC1);
+
+Notes:
+The first line create a variable of type DXGI_ADAPTER_DESC1. This is a struct that will hold information on our video card.
+The second line call a function of the adapter named GetDesc1, which will update our variable with info on the card.
+
+Step 5.6)
+At the top of this function, GetHardwareAdapter, we created an int named "vMemory" and defaulted it to zero.
+Add a check so see if this video card holds more memory that a previous loop's adapter. The first time through the "for loop", anything will 
+beat zero. Each iteration of the "for loop" may be a card that has more memory.
+If it has more memory then we want to update our parameter by dereferencing it and giving it the adapter's address.
+If we already set a video card from a previous loop, we should call the Release function for it since we found a better one.
+We also want to update our vMemory variable with the new, highest, value.
+We also want to set our return value to S_OK since we found a valid card.
+
+If the Com function D3D12CreateDevice say the adapter can support the feature level and it has more memory that any previous loop
+then we want to set the adapter paramter ppAdapter.  
+The pAdapterTEMP holds the address of the adapter interface so all we have to do 
+is assign the value. Make sure we derereference the parameter so we update the variable back in main.
+This goes inside the "for" loop and inside the "if" statement ...  "if (SUCCEEDED(D3D12CreateDevice(pAdapterTEMP, ......"
+Code
+	// If here then the card meets the feature levels we need.
+
+	// Create a struct to hold the adapter's information and call GetDesc1(..) to fill it with data.
+	DXGI_ADAPTER_DESC1 vDXGI_ADAPTER_DESC1;
+	pAdapterTEMP->GetDesc1(&vDXGI_ADAPTER_DESC1);
+
+	// Another video card may have passed the DX feature requirement, so check if this one has more memory.
+	// If it does have more memory then call Release() on the smaller one we don't want anymore.
+	if (vDXGI_ADAPTER_DESC1.DedicatedVideoMemory > vMemory)
+	{
+		// This "if" checks to see if we already chose an adapter and if so then release it because we have one with more memory.
+		if ((*ppAdapter) != nullptr)
+		{
+			(*ppAdapter)->Release();
+			*ppAdapter = nullptr;
+		}
+
+		// Update the video memory of our local variable vMemory so we can check against other cards.
+		vMemory = vDXGI_ADAPTER_DESC1.DedicatedVideoMemory;
+
+		// Set the adapter parameter, dereference it so we are updating the client's variable.
+		*ppAdapter = pAdapterTEMP;
+		vResult = S_OK;
+	}
+	else
+	{
+		// This card has the needed features, but does not have as much memory as another card we already found
+		// so call Release() because we won't use it.
+		pAdapterTEMP->Release();
+	}
+
+
+Step 5.7)
+Before the very end of the GetHardwareAdapter function, return the result.
+Code
+	return vResult;
+
+
+
+
+
+Step 6)
+Back in main, use the new GetHardwareAdapter(..) to get a good adapter interface object.
+The GetHardwareAdapter(..) function returns an HRESULT which we will check to see if it found a valid adapter.
+
+Code
+	HRESULT vResult;
+	
+	vResult = CreateDXGIFactory1(IID_PPV_ARGS(&vpDxgiFactory));
+
+	ComPtr<IDXGIAdapter1> hardwareAdapter;
+
+	vResult = GetHardwareAdapter(vpDxgiFactory.Get(), &hardwareAdapter);
+
+Step 7)
+In main, we will check so see if the call to create the adapter was successful and if so creat the device interface.
+Next, we will use the Com function D3D12CreateDevice(..) again, but this time actually create the interface object.
+We will check to see if the device was created as well using the HRESULT. If anything fails we will output an
+explination of the issue. 
+Like we did in the GetHardwareAdapter(..) function, we will get data on the video card and output how much video memory we have.
+If you have other if/else logic you will replace it with the below code.
+
+Notice below how we are converting the dedicated video memory, which is a SIZE_T (int), to a string.
+We use message box to show the video memory to the user. The following assumes you are building with 64 bit windows.
+As a result, you will need to use the wstring datatype, not string datatype. 
+The reason is that "wstring" is designed to hold international letters, not just english.
+Don't forget to include the <string> header if you don't already have it defined and specify that your using the std namespace.
+The DXGI_ADAPTER_DESC1 struct has a member variable named DedicatedVideoMemory that is data type SIZE_T; which means it is an int.
+To convert the int to a wstring call the std function "to_wstring(..)" which is part of the string file, passing it the value 
+of the dedicated video memory.
+Note that we call the wstring function "c_str()" function which on our wstring object which returns an array of wchar_t values. This is 
+what the MessageBox wants. 
+FYI, wchar_t are 2 bytes unlike char which is one byte.
+
+
+
+Code
+	if (vResult == S_OK)
+	{
+		vResult = D3D12CreateDevice(
+			hardwareAdapter.Get(),
+			D3D_FEATURE_LEVEL_11_0,
+			IID_PPV_ARGS(&vpD3dDevice)
+		);
+
+		if (vResult == S_OK)
+		{
+			// Let's see how much memory this video card GPU has...
+			DXGI_ADAPTER_DESC1 vDXGI_ADAPTER_DESC1;
+			hardwareAdapter.Get()->GetDesc1(&vDXGI_ADAPTER_DESC1);
+
+			wstring vDedicatedVideoMemory = std::to_wstring(vDXGI_ADAPTER_DESC1.DedicatedVideoMemory);
+			wstring vOutputMessage = L"Success - ID3D12Device was created and the video card memory is " + vDedicatedVideoMemory;
+			MessageBox(nullptr, vOutputMessage.c_str(), L"Working!!", MB_OK);
+		}
+		else
+		{
+			MessageBox(nullptr, L"FAIL, adapter was created but ID3D12Device was not!", L"Working, but we have a problem!", MB_OK);
+		}
+	}
+	else
+	{
+		MessageBox(nullptr, L"FAIL to create the adapter.", L"Working, but we have a problem!", MB_OK);
+	}
+
+	return 0;
+
+
+Notes:
+As always, debug your code stepping through each line.
+Debug the code in the GetHardwareAdapter(..) function and hover over the struct that holds the info on the card
+as it goes through the "for loop" so you can see the different adapters on your computer.
+
+

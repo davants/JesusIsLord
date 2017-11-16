@@ -1,0 +1,25 @@
+Tasks for this Step:
+	Create the main windows message loop
+
+
+----------------------
+Lessons
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+------------------------------
+CppWindowsLoop
+
+
+Complete the "Win32 Basics" section of the following DirectX 11 online tutorial.
+There are 5 lessons.
+This will take some time but is needed to setup the windows environment.
+
+	http://www.directxtutorial.com/LessonList.aspx?listid=11
+
+	
+
+
+
+

@@ -1,0 +1,48 @@
+Tasks for this Step:
+	Creating and using a template
+
+
+Video - https://youtu.be/9PVRYDrnm9A 
+		Review this video with the teacher.	
+	
+	https://youtu.be/BwOQqqRwgpA
+
+	
+
+Overview
+Templates are a feature of the C++ programming language that allows functions and classes to operate with generic types. This allows a function or class to work on many different data types without being rewritten for each one.
+
+
+---------------------
+Lessons
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+
+-----------------------
+CppTemplateLesson1
+
+Create a console application that has a function template that adds two values.
+Next, call the function with the following types.
+	int
+	float
+	double
+
+
+
+-----------------------
+CppTemplateLesson2
+
+Name some templates that someone else has built and you are using.
+Answer
+	vector< data type >
+	
+You have probably used the vector<..> template to create a list that can grow dynamically as you add items.
+Notice all you have to do is add the type, even if it is your own custom type, and you have a list that is ready to go!
+Create a simple program that uses the vector<..> template.
+
+
+
+
+

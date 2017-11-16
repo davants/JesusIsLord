@@ -1,0 +1,37 @@
+Tasks for this Step:
+	Add the adapters to the Visual Studio Output Window
+
+
+This lesson assumes you have already completed a function that loops through all the adapters on the computer. 
+In one of the previous Dx lessons there was a function named GetHardwareAdapter that did this.
+
+----------------------
+Lesson
+
+
+
+Step 1) If you haven't, review the CppVisualStudioOutputDebugInfo lesson.
+
+Step 2) Update the GetHardwareAdapter function. (you may have named it something else) 
+	Add code to output each adapter to the Visual Studio output window even if it is not the one you are looking for.
+	Output the memory of each adapter and it name.
+	This will allow you to see all the video adapters.
+
+
+
+
+Sample Code - something like the following in the adapter loop.
+	This code assumes you have a valid adapter pointer (IDXGIAdapter1*) named pAdapterTEMP.
+
+
+		// Output info on the video card
+		// Create a struct to hold the adapter's information and call GetDesc1 to fill it with data.
+		DXGI_ADAPTER_DESC1 vDXGI_ADAPTER_DESC1;
+		pAdapterTEMP->GetDesc1(&vDXGI_ADAPTER_DESC1);
+		wstring sStart = L"\n\nVideo Card Info and memory: ";
+		wstring sAdapterDescription = vDXGI_ADAPTER_DESC1.Description;
+		wstring sSpace = L" ";
+		wstring sAdapterMemory = std::to_wstring(vDXGI_ADAPTER_DESC1.DedicatedVideoMemory);
+		wstring sEnd = L"\n";
+		wstring sCombined = sStart + sAdapterDescription + sSpace + sAdapterMemory + sEnd;
+		OutputDebugString(sCombined.c_str());

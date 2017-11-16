@@ -1,0 +1,21 @@
+Tasks for this Step:
+	assert
+
+
+
+Video - https://youtu.be/72dt8Fvr7x8
+	Stop this video at minute 2 unless you just want to finish it. He starts to dig into the assert macro which is not needed.
+
+
+Overview
+An "assert" is a macro that will kill your program if the expression in the assert is false. It will output information if this happens.
+If the expression is true then nothing will happen and the program will continue as normal.
+
+Asserts are used for debugging and stopping your program is something bad is discovered.
+For example, say you are connecting to the GPU graphics card in your code, but for some reason you are not able to.
+At that point you can use the assert to kill the program because there is no reason to continue.
+
+
+
+
+

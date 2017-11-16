@@ -1,0 +1,27 @@
+Tasks for this Step:
+	Creating and using a typedef
+
+
+Video
+	https://youtu.be/AKUd9elQQY0
+
+Overview
+A typedef declaration lets you define your own identifiers that can be used in place of type specifiers such as int, float, and double. A typedef declaration does not reserve storage. The names you define using typedef are not new data types, but synonyms for the data types or combinations of data types they represent.
+
+
+---------------------
+Lessons
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+
+-----------------------
+CppTypeDefLesson1
+
+Creat a project that asks a user for an int and responds with that number plus 15.
+Run and test the application.
+
+Now create a typedef for int, choose your own name, and then update the program to use the typedef.
+Run and test the application.
+Validate that it runs the same as before.

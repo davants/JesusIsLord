@@ -1,0 +1,23 @@
+This is just a list for searching purposes.  The file name is not enough to find the correct content so use this to find needed lessons.
+
+This should be filled with tags values that can be searched.
+
+DX12_IDXGIFactory4
+	IDXGIFactory4
+
+
+DX12_ID3D12Device
+	ID3D12Device
+
+DX12_COM
+	COM 
+	HRESULT
+	
+DX12_ComAndAdaptorToCreateID3D12Device
+	COM
+	ComPtr<..> template
+	IDXGIFactory4::EnumAdapters1
+	IDXGIAdapter1
+	ID3D12Device
+	wstring
+	

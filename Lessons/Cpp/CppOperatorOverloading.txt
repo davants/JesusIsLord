@@ -1,0 +1,94 @@
+Tasks for this Step:
+	Operator Overloading
+
+
+Video - https://youtu.be/PgGhEovFhd0 
+	https://youtu.be/q4vZIF-uMzs
+	
+
+-------------------------------
+Lessons
+
+CppOperatorOverloadingPlus
+	Create program that has a custom data type that overloads the + operator.
+
+
+CppOperatorOverloadingLessThan
+	Create a custom class called "train" that has a property "int numberOfTrainCars". Don't worry about any other member properties for this example.
+	Overload the < (less than sign) so that you can determine which train has less cars.
+	Hint!  The operator< function will return a bool. 
+	If you get stuck, the sample code is at the bottom of this document.
+	In main, you should be able to have the following code.	
+
+		train t1(23);
+		train t2(15);
+
+		if (t1 < t2)
+		{
+			cout << "t1 has less cars than t2" << endl;
+		}
+		else
+		{
+			cout << "t2 has less cars than t1" << endl;
+		}
+
+
+
+
+
+
+
+
+
+
+/////////////////////////
+// Sample Code
+#include "stdafx.h"
+#include <iostream>
+
+using namespace std;
+
+class train
+{
+public:
+	train(int vNumberOfCars)
+	{
+		numberOfCars = vNumberOfCars;
+	}
+
+	bool operator<(const train& other)
+	{
+		if (numberOfCars < other.numberOfCars)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+private:
+	int numberOfCars;
+
+};
+
+
+int main()
+{
+	train t1(23);
+	train t2(15);
+
+	if (t1 < t2)
+	{
+		cout << "t1 has less cars than t2" << endl;
+	}
+	else
+	{
+		cout << "t2 has less cars than t1" << endl;
+	}
+
+	system("PAUSE");
+
+    return 0;
+}

@@ -1,0 +1,52 @@
+Tasks for this Step:
+	Inheritance
+
+
+Video - https://youtu.be/rcER7XtA2ew
+
+
+
+	
+
+Overview
+You can create a class that gets all the functionality of another class by "deriving" from it. 
+For example
+	You can create a "animal" class as a custom data type.
+	Next, you can create a "dog" class that you derive from "animal" and the "dog" will get all the "animal" member variables and functions.
+	In this example, the animal is the parent class (sometime called base class) and the dog is the child class (sometimes called derived class).
+		
+
+----------------------
+Lessons
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+
+
+------------------------------
+CppInheritanceFruit
+
+Create a program where you have 3 classes. One class is a base class and the other 2 classes will derive from the base class.
+
+Base Class
+	"fruit"
+
+Derived Classes
+	"apple"
+	"tomato" - Yes, tomato is a fruit.. look it up!
+
+Add member variables and functions in the base class so that the derived classes will get them for free.
+	fruit
+		string color;
+		int weight;
+
+Add a member function to the derived classes that would not go in the base class.
+	apple
+		void apple::addPeanutbutter(void);
+
+	tomato
+		void tomato::addToPizza(void);
+	
+In main, create and use the classes.
+

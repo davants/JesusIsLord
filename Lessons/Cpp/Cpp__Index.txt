@@ -1,0 +1,95 @@
+This is just a list for searching purposes.  The file name is not enough to find the correct content so use this to find needed lessons.
+
+This should be filled with tags values that can be searched.
+
+CppFactory
+	Factory
+	Pointer to Pointer
+
+CppSimpleWindowsApp
+	Windows Application - no windows loop, just a pop-up box
+
+CppPointers
+	Pointers
+	Dynamic memory
+	Dereference
+	Address of
+
+CppPointerToPointer
+	**
+	Pointer to Pointer
+	Dynamic memory
+	Dereference
+	Address of
+
+CppVector
+	Vector bracket access
+	Vector push_back
+	Vector erase - removes one element anywhere in the list	
+	Vector clear
+	Note - this does not yet cover iterators
+
+CppPreprocessor.txt
+	Preprocessor
+	Macro
+	#include
+	#define	
+	#pragma comment
+
+CppTypeDef.txt
+	typedef
+
+CppTemplates.txt
+	template
+
+CppOperatorOverloading
+	operator overloading
+	operator+
+	operator<
+
+CppConst
+	const
+
+CppAssert
+	Assert
+
+CppInheritance
+	Inheritance
+
+CppPolymorphism
+	Inheritance
+	Polymorphism
+	Pure virtual function
+
+CppMap
+	std::map
+	associative containers
+	iterator
+
+CppVector2
+	vector
+	iterator
+
+CppAuto
+	auto 
+
+CppProjectFilesAndCodeOrganization
+	.h files
+	.cpp files
+	#include 
+	#define
+	#ifndef
+	Abstract Class
+	Pure virtual function
+
+CppVisualStudioOutputDebugInfo
+	debug
+	Output Window
+
+CppWindowsLoop
+	Windows
+	message loop
+
+CppStaticVariableInAClass
+	static
+

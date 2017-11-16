@@ -1,0 +1,74 @@
+
+Tasks for this Step:
+	This is a quick review of COM and its way of doing things.
+
+There are no programs for this lesson, just learn :)
+
+	
+DirectX uses COM in many places to create and manage objects.
+
+COM is a programming model, kind of like a style of programming, used by Microsoft. You call functions to create objects on the heap for you.
+COM will do the job of calling "new" and then will setup the object's properties.
+For example, this is a COM function call to create an object. Note that this code will not run unless you include the needed libraries.
+
+
+	HRESULT vResult;
+
+	ID3D12Device * vpD3dDevice;
+
+	vResult = D3D12CreateDevice(
+		nullptr,             // this parameter is not important for this lesson on COM
+		D3D_FEATURE_LEVEL_11_0, // this parameter is not important for this lesson on COM
+		IID_PPV_ARGS(&vpD3dDevice));
+
+The first 2 arguments, "nullptr" and "D3D_FEATURE_LEVEL_11_0" are not important for this lesson so you can ignore them.
+
+The D3D12CreateDevice function has the job of allocating the ID3D12Device object for you. It works like a factory.
+
+Notice the 3rd argument "IID_PPV_ARGS(&vpD3dDevice)". The "IID_PPV_ARGS" is a macro that actually replaces your code, changing it to 2 arguments. 
+So the D3D12CreateDevice function actually has 4 parameters. The preprocessor changes the code to something like this:
+
+	vResult = D3D12CreateDevice(
+		nullptr,             // nullptr mean to create the default adapter
+		D3D_FEATURE_LEVEL_11_0,
+		50025, // Macro added the object's COM number. I made up the 50025.
+		&vpD3dDevice); // 4th argument is the same, the pointer to pointer
+
+
+This is the COM way of doing things. It takes a number and a pointer to pointer.  It takes the number and looks up the object you want
+and creates it for you. The definition of the D3D12CreateDevice will allocate the object on the heap and set it up.
+It will dereference the pointer to pointer you passed so that your pointer variable will now have the address of the object.
+
+COM also returns HRESULT values which are numbers. You can use this return value to check if COM was successful in creating your object; something 
+like this.  "S_OK" is macro that is simply an int set to zero. So if the function returns a S_OK, 0, then COM was able to create the object
+you asked for.
+
+	if (vResult == S_OK)
+	{
+		// It worked!
+
+	}
+	else
+	{
+		// ERROR, something went wrong!
+	}
+
+
+The last thing about COM that you need to know. 
+
+We have not deleted these pointers; however, we do not clean up these objects
+like we do other objects. Notice that we did not call "new", we called a COM function that allocated 
+the objects for us.  The writers of these objects have a specific way to delete these objects and it is
+to call the "Release()" function. This will do the job of shutting down the objects as needed and deleting then.
+
+So, call delete on both the vpD3dDevice. 
+
+
+	vpD3dDevice->Release();
+
+Now the objects have been deleted. 
+You will NOT call delete yourself.
+
+delete vpD3dDevice; // wrong code for COM
+
+
