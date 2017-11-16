@@ -1,0 +1,18 @@
+
+
+In-Progress
+
+Download the Desktop app.
+
+Create Repository by picking the local directory where you want it to be.
+
+The name you choose will be the folder Github desktop creates.
+
+Add files to the directory using normal windows explorer.
+
+Commit the files.
+
+"Push" the files. This will push them up to the github site so they can be seen by anyone.
+
+
+
