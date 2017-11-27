@@ -1,4 +1,0 @@
-Github Checkout/Pull
-
-If you are on a new computer you may want to pull your source code from your github account.
-

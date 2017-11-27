@@ -9,3 +9,7 @@ Github_UpdateCloudWithChanges.txt
 	Commit
 	Push
 	History
+
+Github_GetARepository.txt	
+	Clone - This is the github name for getting the code from your cloud repository.
+		This is also known as Get or Pull.
