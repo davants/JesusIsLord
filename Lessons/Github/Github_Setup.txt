@@ -1,0 +1,45 @@
+Github is an online, "cloud", location to put your programming work. 
+Many programmers share code and work together on projects using github.
+
+You will create one or more "repositories" which will hold your code and other files.
+For each repository, you will have a local repository, on your computer, and a cooresponding cloud repository.
+Sometimes you will work on your local repository without the cloud and you can save different versions of your code.
+After you are done with your program, you can push it to the cloud.
+You can also push to the cloud as you work as a safety precaution.
+	If your local copy accidentally gets deleted or your computer crashes then you can get your code back.
+You will use the github software to keep your local and cloud in-sync.
+For example:
+	You will specify one of your local directories as a github repository. 
+	A local repository will work all by itself, without the cloud.
+	A local repository will track your changes. 
+	When you have reached a milestone, you can "Commit" your code to the local repository; but it is still only local.
+	Commiting your code locally allows you to track your changes, see what changed since last week 
+		and to undo changes that you decided are no longer needed. This comes in handy if you break your code
+		and want to get back to where you were yesterday or last week!
+	After you have reached a bigger milestone, you can "Push" your code to the cloud.
+	Your code will be usable by other programmers unless you make your code private.
+
+Another example:
+	What if you have lots of repositories in the cloud. Then you get a new computer. 
+	It is now easy to get all your code because all you have to do is load the github software, login and download.
+	Now you are back in business.
+
+
+Step 1) Go to github and create a login.
+
+Step 2) Download the Desktop app.
+
+Step 3) Create Repository using the github software. It will ask you to pick a directory on your computer. 
+	This is where it will create a new directory which will be the local repository. 
+	The repository name you choose will be the folder Github creates on your local computer.
+
+Step 4) Add files to the directory using normal windows explorer, visual studio, etc...
+	You can work in this directory like any other directory, it is just a regular windows directory.
+
+Step 5) Commit the files. This saves a version of your files locally. It does not update the cloud.
+
+Step 6) Update the cloud repository. "Push" the files. This will push them up to the github site so they can be seen by anyone.
+
+
+There are several videos on the github site. As of this writing there is a "features" menu that has some intro videos. 
+

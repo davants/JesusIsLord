@@ -1,0 +1,31 @@
+Github commit and push
+
+After you have created your repository you can make changes and commit them to your local github database.
+Commiting your code is something you will do from time to time as you develop.  This only updates the local github database, not the cloud.
+Why commit?  It is nice to be able to regress a file back to an earier version if you change your mind on some code.
+	You can also compair 2 different commits for the same file and see the difference. This can help you understand why you changed something.
+	
+After you have reached a big milestone, you can update your cloud repository. This is called "Pushing".
+This process will update your files in the cloud to look like they are locally.
+
+Step 1) Make a change to a file that is already in the cloud in one of your repositories.
+
+Step 2) Commit the change using the github application.  You will see a "Commit to master" button and a textbox to add some summary notes and description.
+		You must put a comment for the commit, giving a note to what has changed.
+		Add some summary notes about your change, also update the description if you want, and then click "Commit to master".
+		
+Step 3) Make other changes and commit. Practice changing the files and commiting. 
+		View the history for your commits.
+		Normally you will commit more often than you "Push" to the cloud.
+
+Step 4) Now that you have made several commits and you are happy with the code, it is time to update the cooresponding cloud repository.
+		In the Changes tab in the github app, you will see all files that have changed since your last commit.
+		If you click on one of them, you will see the changes. 
+				The negative sign "-" that is red highlight means is the "before" version of the file.
+				The plus sign "+" in green is new lines or the new data on a line, "after" version.
+				Also notice the numbers on the left that show the line numbers for "before and after".
+				Lines that have not changed do not have a color.
+		Check the ones you want updated on the cloud and click from the menu "Repository" and then "Push".
+		
+		
+		

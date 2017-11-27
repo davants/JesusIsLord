@@ -1,4 +1,11 @@
 
 Github__Setup.txt
+	repository (local and cloud)
 	Commit
 	Push
+	
+
+Github_UpdateCloudWithChanges.txt
+	Commit
+	Push
+	History

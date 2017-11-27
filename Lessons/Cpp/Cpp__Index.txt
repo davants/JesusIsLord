@@ -1,8 +1,8 @@
 This is just a list for searching purposes.  The file name is not enough to find the correct content so use this to find needed lessons.
 
-This should be filled with tags values that can be searched.
+This should be filled with tag values that can be searched.
 
-This is a github commit test.
+
 
 CppFactory
 	Factory
@@ -24,6 +24,8 @@ CppPointerToPointer
 	Dereference
 	Address of
 
+	
+	
 CppVector
 	Vector bracket access
 	Vector push_back

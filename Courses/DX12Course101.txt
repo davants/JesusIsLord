@@ -139,6 +139,22 @@ Proj_CppStaticVariableInAClass
 	Complete lesson CppStaticVariableInAClass.
 
 
+Proj_Github_Setup
+	Complete the Github_Setup lesson.
+
+Proj_Github_UpdateCloudWithChanges
+	Complete the Github_UpdateCloudWithChanges lesson.
+
+Proj_Github_CheckoutRepository
+WORKING HERE.. 
+	Create a lesson on how to checkout/pull a repository to a computer that does not have that one.
+
+
+Don't go any furthor with github. Just need to be able to creae, update/merge code and checkout/pull.
+
+
+
+
 Proj_DX12WindowsMessageLoop	
 	This project will combine the Proj_CppWindowsLoop with the Proj_AddOutputDebugString.
 	This means the program from this lesson will have a windows message loop and the DirectX components from the DX lessons we have so far.
@@ -154,7 +170,7 @@ Proj_DX12WindowsMessageLoop
 
 
 		Complete lesson DX12WindowsMessageLoop.
-WORKING HERE			Working here...  Remember, the DX lessons build on each other, the windows and cpp lessons do not!
+			Working here...  Remember, the DX lessons build on each other, the windows and cpp lessons do not!
 	
 
 		
