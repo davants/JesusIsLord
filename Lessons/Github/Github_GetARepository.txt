@@ -1,4 +1,4 @@
-Github Checkout/Pull
+Github Clone
 
 If you are on a new computer you may want to pull your source code from your github account.
 This assumes that you already have the Github desktop application running on your computer and have sighed into Github into	
@@ -13,4 +13,8 @@ Step 3) Select from your repository list and choose a local path where you want 
 	Click "Clone"
 
 You now have the repository on your computer and can start editing, commiting and pushing the data to github.
+
+
+
+See also the lesson on "Pull" to see the differences between "Clone" and "Pull".
 

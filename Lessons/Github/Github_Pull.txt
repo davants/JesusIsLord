@@ -1,0 +1,24 @@
+Github Pull
+
+This lesson is to inform about what a "Pull" means.
+
+You can use "Pull" to get files from your repository. So what is the difference between "Pull" and "Clone"?
+
+Github is designed to work on projects in teams of programmers, not just by yourself.
+If you are working on some files and make updates, you can update the cloud repository for others to see and get your changes.
+Likewise, someone else may have make some changes and you want to get their updates.
+This is what "Pull" is all about. 
+
+See these notes from stack overflow: https://stackoverflow.com/questions/3620633/what-is-the-difference-between-pull-and-clone-in-git
+
+	git clone is how you get a local copy of an existing repository to work on. It's usually only used once for a given repository, unless you want to have multiple working copies of it around. (Or want to get a clean copy after messing up your local one...)
+
+	git pull (or git fetch + git merge) is how you update that local copy with new commits from the remote repository. If you are collaborating with others, it is a command that you will run frequently.
+
+
+
+------------------------------
+
+In laymen language we can say:
+ • Clone: Get a working copy of the remote repository.
+ • Pull: I am working on this, please get me the new changes that may be updated by others.

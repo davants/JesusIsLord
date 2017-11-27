@@ -4,7 +4,6 @@ Github__Setup.txt
 	Commit
 	Push
 	
-
 Github_UpdateCloudWithChanges.txt
 	Commit
 	Push
@@ -13,3 +12,7 @@ Github_UpdateCloudWithChanges.txt
 Github_GetARepository.txt	
 	Clone - This is the github name for getting the code from your cloud repository.
 		This is also known as Get or Pull.
+
+Github_Pull
+	Pull - This lesson covers the difference between "Clone" and "Pull".
+
