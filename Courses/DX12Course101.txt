@@ -145,13 +145,15 @@ Proj_Github_Setup
 Proj_Github_UpdateCloudWithChanges
 	Complete the Github_UpdateCloudWithChanges lesson.
 
-Proj_Github_CheckoutRepository
-WORKING HERE.. 
-	Create a lesson on how to checkout/pull a repository to a computer that does not have that one.
+Proj_Github_GetARepository
+	Create a lesson on how to get an existing repository on a new computer.
+
+Proj_Github_Pull
+	Complete the Github_Pull lesson. This actually does not have any steps, just covers the difference between "Clone" and "Push".
 
 
-Don't go any furthor with github. Just need to be able to creae, update/merge code and checkout/pull.
 
+working here.... just finished the Github_Pull lesson
 
 
 

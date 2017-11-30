@@ -7,16 +7,138 @@ visual studio output window.
 It also assumes you have a basic windows message program that you can use as a guide.
 
 
+REMEMBER, want to follow the book at some level.
+	We will inform the student that when they read the chapter that our code will not match exactly. 
+	We can bring in Oculus at some point, but we will still use the book as a base framework.
+
+
 ----------------------
 Lesson
 
-Step 1)
+Step 1) We will need to start organizaing our code so that everything is not in one giant file. 
+	We will create a class that will contain most of our DirectX objects needed by our application.
+	Create a class named myDirectX.
+		Help Reminder: Right click on the Visual Studio project in solution explorer and hover over "Add" and then select "Class..".
 
-Simply add the message loop code to the DX project. In the next lesson, a base class can be created and so on...
+Step 2) Add the following objects to your MyDirectX class and make them private.
+	IDXGIFactory4 * mpDxgiFactory = nullptr;
+	ID3D12Device * mpD3dDevice = nullptr;
+	IDXGIAdapter1 * mpHardwareAdapter = nullptr;
+
+	Note: The variable names start with mp to indicate "member pointer"; The variable is a "member" of the myDirectX class.
+		Also note that when a variable is in a class we can call it a property.
+
+	Add the needed header files that are needed for these data types. 
+
+		#include "stdafx.h"
+		#include <DXGI1_4.h>
+		#include <d3d12.h>
+
+
+	Notice that we are not using the ComPtr<..> template. This means we will have to call release and then delete them ourselves.
+	Why are we not using the ComPtr<...> template?  We want to practice using delete.
+
+	Create a "get" function for each of these 3 pointers.
+		Example: IDXGIFactory4 * getDxgiFactory(void);
+
+
+	Compile.
+
+Step 3) Add an "Initialize" function and a "InitializeFactoryDeviceAndHardware" function to the myDirectX class. 
+	These will be public, return HRESULT and take no parameters.
+	Have the Initialize function call the "InitializeFactoryDeviceAndHardware" function and return its value.
+	Why are we adding a function that just calls another function?
+		This will allow us to add other initialize functions later and call them all from one function; later we can 
+		add something else. i.e. "InitializeABC(..)". 
+
+	Example: // Something like this...
+		HRESULT myDirectX::Initialize(void)
+		{
+			HRESULT hr;
+			hr = InitializeFactoryDeviceAndHardware();
+
+			return hr;
+		}
+
+
+Step 4) Click on the Proj_DX12WindowsMessageLoop.cpp file. Move the GetHardwareAdapter function to your new myDirectX class.
+	This means you will have to add the function declaration to the .h file and the definition to the .cpp file of the myDirectX class.
+	Place the declaration in the private secton of your class because no one will call it but itself.
+	You may need to add some other header files to myDirectX like wstring and specify that you are using the namespace std.
+	
+	
+
+Step 5) In WinMain, you have code that creates the 3 DirectX object interfaces IDXGIFactory4, ID3D12Device and IDXGIAdapter1;
+	Move the code that is in the WinMain to your new InitializeFactoryDeviceAndHardware function that creates the 3 objects.
+	You should now be working in the InitializeFactoryDeviceAndHardware function.
+	Delete the code that creates the 3 variables because we want to use the private member variables now.
+		i.e. - delete "ComPtr<IDXGIFactory4> vpDxgiFactory", "ComPtr<ID3D12Device> vpD3dDevice" and "CommPtr<IDXGIAdapter1> hardwareAdapter".
+		
+	You will notice that you have some errors because the variable names of the 3 objects have changed a bit.
+		For example, vpDxgiFactory is now mpDxgiFactory. Since the names now start with "m" instead of "v", you will need to update a few things.
+
+	Also, the variables (properties) in the myDirectX class are not ComPtr templates.
+		 i.e. - In WinMain the factory was "ComPtr<IDXGIFactory4> vpDxgiFactory", but in the class it is "IDXGIFactory4 * mpDxgiFactory".
+		 As a result, you will not have to call "Get()" to get the pointers from the ComPtr template. Go through code and remove the ".Get()" 
+			where needed.
+	
+	Compile.
+
+Step 6) Add a global variable of type myDirectX object above WinMain with the name "gMyDirectX". 
+	Next, in WinMain, call the Initialize() function for gMyDirectX.
+	You will need to add the myDirectX header.
+
+	For example, now that WinMain was cleaned out, it should look somethign like this.
+
+		... headers...
+
+		myDirectX gMyDirectX;
+
+		int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd)
+
+		{
+			HRESULT hr;
+			hr = gMyDirectX.Initialize();
+
+			return 0;
+		}
+		
+	Compile, fix bugs and run. Make sure to step through the code with the debugger.
 
 
 
-working here.....Remember, the DX lessons build on each other, the windows and cpp lessons do not!
+
+working here.....Now add the windows message loop code!!
+
+ build on each other, the windows and cpp lessons do not!
 				This means we start from a previous DX lesson and add the windows loop to it, not vice versa.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
