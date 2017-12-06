@@ -1,0 +1,311 @@
+Tasks for this Step:
+	Add windows loop logic to your DX Program.
+
+	You should have this project using github source controle.
+	
+
+
+----------------------
+Lesson
+
+You should already have this project in github.
+We will need to start organizaing our code so that everything is not in one giant file. 
+We will create a class that will contain some of our DirectX objects needed by our application.
+
+Step 1) Create a class named myDirectX.
+		Help Reminder: Right click on the Visual Studio project in solution explorer and hover over "Add" and then select "Class..".
+
+Step 2) Add the following objects to your MyDirectX class and make them private.
+	IDXGIFactory4 * mpDxgiFactory = nullptr;
+	ID3D12Device * mpD3dDevice = nullptr;
+	IDXGIAdapter1 * mpHardwareAdapter = nullptr;
+
+	Note: The variable names start with mp to indicate "member pointer"; The variable is a "member" of the myDirectX class.
+		Also note that when a variable is in a class we can call it a property.
+
+	Add the needed header files that are needed for these data types. 
+
+		#include "stdafx.h"
+		#include <DXGI1_4.h>
+		#include <d3d12.h>
+
+
+	Notice that we are not using the ComPtr<..> template. This means we will have to call release and then delete them ourselves.
+	Why are we not using the ComPtr<...> template?  We want to practice using delete.
+
+	Create a "get" function for each of these 3 pointers.
+		Example: IDXGIFactory4 * getDxgiFactory(void);
+
+
+	Compile. Commit your code to your local github repository; make the name the project name plus this step. Also, add a description.
+
+
+Step 3) Add an "Initialize" function and a "InitializeFactoryDeviceAndHardware" function to the myDirectX class. 
+	These will be public, return HRESULT and take no parameters.
+	Have the Initialize function call the "InitializeFactoryDeviceAndHardware" function and return its value.
+	Why are we adding a function that just calls another function?
+		This will allow us to add other initialize functions later and call them all from one function; later we can 
+		add something else. i.e. "InitializeABC(..)". 
+
+	Example: // Something like this...
+		HRESULT myDirectX::Initialize(void)
+		{
+			HRESULT hr;
+			hr = InitializeFactoryDeviceAndHardware();
+
+			return hr;
+		}
+
+
+Step 4) Click on the Proj_DX12WindowsMessageLoop.cpp file. Move the GetHardwareAdapter function to your new myDirectX class.
+	This means you will have to add the function declaration to the .h file and the definition to the .cpp file of the myDirectX class.
+	Place the declaration in the private secton of your class because no one will call it but itself.
+	You may need to add some other header files to myDirectX like wstring and specify that you are using the namespace std.
+	
+	
+
+Step 5) In WinMain, you have code that creates the 3 DirectX object interfaces IDXGIFactory4, ID3D12Device and IDXGIAdapter1;
+	Move the code that is in the WinMain to your new InitializeFactoryDeviceAndHardware function that creates the 3 objects.
+	You should now be working in the InitializeFactoryDeviceAndHardware function.
+	Delete the code that creates the 3 variables because we want to use the private member variables now.
+		i.e. - delete "ComPtr<IDXGIFactory4> vpDxgiFactory", "ComPtr<ID3D12Device> vpD3dDevice" and "CommPtr<IDXGIAdapter1> hardwareAdapter".
+		
+	You will notice that you have some errors because the variable names of the 3 objects have changed a bit.
+		For example, vpDxgiFactory is now mpDxgiFactory. Since the names now start with "m" instead of "v", you will need to update a few things.
+
+	Also, the variables (properties) in the myDirectX class are not ComPtr templates.
+		 i.e. - In WinMain the factory was "ComPtr<IDXGIFactory4> vpDxgiFactory", but in the class it is "IDXGIFactory4 * mpDxgiFactory".
+		 As a result, you will not have to call "Get()" to get the pointers from the ComPtr template. Go through code and remove the ".Get()" 
+			where needed.
+	
+	Compile. Commit your code to your local github repository; make the name the project name plus this step. Also, add a description.
+
+Step 6) Add a global variable of type myDirectX object above WinMain with the name "gMyDirectX". 
+	Next, in WinMain, call the Initialize() function for gMyDirectX.
+	You will need to add the myDirectX header.
+
+	For example, now that WinMain was cleaned out, it should look somethign like this.
+
+		... headers...
+
+		myDirectX gMyDirectX;
+
+		int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd)
+
+		{
+			HRESULT hr;
+			hr = gMyDirectX.Initialize();
+
+			return 0;
+		}
+		
+	Compile. 
+	Run your code and make sure to step through the code with the debugger.
+	Commit your code to your local github repository; make the name the project name plus this step. Also, add a description.
+	
+	
+Step 7)	Now we want to add the windows message loop. It might be a good idea to review the windows process of how it handles messages if you don't remember.
+	
+	At a high level this is the process:
+		Windows automatically puts messages related to your "window", you created, in a queue list called the Windows Message Queue.
+		In your while loop - while(true)...
+			You try to get a message from the queue. - if(PeekMessage(...))....
+			If there is a message then
+				You use the function TranslateMessage() to handle certain message formats. Don't worry about this function, just call it.
+				You then call function DispatchMessage() which will send the message to your "Windows Procedure" WindowProc() function you created.
+				In your WindowProc() function you can see what keys the user has hit.
+			Else... "PeekMessage(..)" will return false if there are no messages in the queue list. So, if there is not a message in the queue to 
+				process then you can run your game code.
+				Most of the time the queue is empty so this "else" block of code gets run a lot! This give you plenty of time to run game code.
+			
+	Notice that we only get to run our game code if there are no messages in the windows message queue!
+
+	If you want a complete refresher on windows messages you can go back through the lessons on this site. You don't have to if you don't need to.
+		http://www.directxtutorial.com/Lesson.aspx?lessonid=11-1-3
+		There are a few lessons here. Note that this one starts out with "GetMessage(...)" and not "PeekMessage(...)".
+		Later it switches over to use "PeekMessage(...)".
+
+
+The following steps that add the "Windows Procedure" WindowProc() function and add a window to your app are from the CppWindowsLoop lesson. 
+The following will be copy and paste so if you don't understand what these are for you should review the CppWindowsLoop lesson.
+
+
+Step 7.1)
+
+	Above the WinMain function, add the WindowProc(..) function prototype declaration.
+
+CODE:
+	// the WindowProc function prototype
+	LRESULT CALLBACK WindowProc(HWND hWnd,
+		UINT message,
+		WPARAM wParam,
+		LPARAM lParam);
+END OF CODE
+
+
+Step 7.2)
+	Below the WinMain(..) function, add the WindowProc(..) function definition.
+
+CODE:
+	// this is the main message handler for the program
+	LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+	{
+		// sort through and find what code to run for the message given
+		switch (message)
+		{
+			// this message is read when the window is closed
+		case WM_DESTROY:
+		{
+			// close the application entirely
+			PostQuitMessage(0);
+			return 0;
+		} break;
+		}
+	
+		// Handle any messages the switch statement didn't
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}
+END OF CODE
+
+
+
+	Compile and run.
+	It should pop up the message pop-up about the video card and then exit.
+	It will exist because we have not added the windows loop yet which keeps the application going.
+
+Step 7.3)
+	Add a window to your app.
+
+	Your WinMain(..) should look something like this.
+
+	int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd)
+
+	{
+		HRESULT hr;
+		hr = gMyDirectX.Initialize();
+
+		return 0;
+	}
+
+	After the "hr = gMyDirectX.Initialize();" line of code, delete the "return 0;" and add the following code. 
+
+CODE:	
+	// the handle for the window, filled by a function
+	HWND hWnd;
+	// this struct holds information for the window class
+	WNDCLASSEX wc;
+
+	// clear out the window class for use
+	ZeroMemory(&wc, sizeof(WNDCLASSEX));
+
+	// fill in the struct with the needed information
+	wc.cbSize = sizeof(WNDCLASSEX);
+	wc.style = CS_HREDRAW | CS_VREDRAW;
+	wc.lpfnWndProc = WindowProc;
+	wc.hInstance = hInstance;
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
+	wc.lpszClassName = L"WindowClass1";
+
+	// register the window class
+	RegisterClassEx(&wc);
+
+	// calculate the size of the client area
+	RECT wr = { 0, 0, 500, 400 };    // set the size, but not the position
+	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);    // adjust the size
+
+														  // create the window and use the result as the handle
+	hWnd = CreateWindowEx(NULL,
+		L"WindowClass1",    // name of the window class
+		L"Our First Windowed Program",    // title of the window
+		WS_OVERLAPPEDWINDOW,    // window style
+		300,    // x-position of the window
+		300,    // y-position of the window
+		wr.right - wr.left,    // width of the window
+		wr.bottom - wr.top,    // height of the window
+		NULL,    // we have no parent window, NULL
+		NULL,    // we aren't using menus, NULL
+		hInstance,    // application handle
+		NULL);    // used with multiple windows, NULL
+
+				  // display the window on the screen
+	ShowWindow(hWnd, nCmdShow);
+
+	// enter the main loop:
+
+	// this struct holds Windows event messages
+	MSG msg = { 0 };
+
+	// Enter the infinite message loop
+	while (TRUE)
+	{
+		// Check to see if any messages are waiting in the queue
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			// translate keystroke messages into the right format
+			TranslateMessage(&msg);
+
+			// send the message to the WindowProc function
+			DispatchMessage(&msg);
+
+			// check to see if it's time to quit
+			if (msg.message == WM_QUIT)
+				break;
+		}
+		else
+		{
+			// Run game code here
+			// ...
+			// ...
+		}
+	}
+
+	// return this part of the WM_QUIT message to Windows
+	return msg.wParam;
+END OF CODE
+
+
+
+Compile and Run.
+You will see the message pop-up about the video card and then a real window. You can minimize it, maximize it and close it.
+
+Now its time to commit your code. Make sure you are in your "Dx12CourseApp" repository.
+Github will show all the files that have changed, but really you only need to commit the .cpp file that 
+has the WinMain function.  Uncheck all the files but the one .cpp file. For me it is the DavantAppABC\Proj_Dx12App.cpp file.
+
+Why not commit the other files?  We don't need to keep every change for some of the file like the "...exe" file. 
+Otherwise we will waste a lot cloud space. The only real important files are the .h and .cpp files.
+With the one file DavantAppABC\Proj_Dx12App.cpp checked, commit the code using the following in the summary textbox.
+	DX12_AddWindowsMessageLoop_Step_7_3
+
+	You can add any description you want.
+
+Now click "Push origin" to copy the file to the cloud github repository.
+
+
+Great! You now have a windows loop and you have the code in your repository in the github cloud.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

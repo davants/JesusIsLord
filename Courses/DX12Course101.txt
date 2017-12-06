@@ -10,6 +10,8 @@ DO NOT PUT ANY ORDER IN THE PROJECT NAMES!
 Projects
 Place all work in the following directory structure: c:/modules/YourName/DX12Course101/ProjectNameHere/...
 
+After several lessons, we will start to use github, an online place to put your code, so the directory will not change after that is started.
+
 
 
 Proj_CppSimpleWindowsApp
@@ -152,33 +154,77 @@ Proj_Github_Pull
 	Complete the Github_Pull lesson. This actually does not have any steps, just covers the difference between "Clone" and "Push".
 
 
-
-working here.... just finished the Github_Pull lesson
-
-
-
-Proj_DX12WindowsMessageLoop	
-	This project will combine the Proj_CppWindowsLoop with the Proj_AddOutputDebugString.
-	This means the program from this lesson will have a windows message loop and the DirectX components from the DX lessons we have so far.
-
-	Complete the following 
-		As always, create a project directory using the directory structure listed at the top of this course.
-		Copy the application you created for the Proj_Proj_AddOutputDebugString project to the new directory for this project.
-			For example, for me I will copy directory DavantAppABC 
-				FROM Folder:  C:\modules\Davant\DX12Course101\Proj_AddOutputDebugString\
-				TO Folder:    C:\modules\Davant\DX12Course101\Proj_DX12WindowsMessageLoop\
-		Rename the cpp file that contains "main" to Proj_DX12WindowsMessageLoop.cpp.
-		Compile and run the application.
-
-
-		Complete lesson DX12WindowsMessageLoop.
-			Working here...  Remember, the DX lessons build on each other, the windows and cpp lessons do not!
 	
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
+Setup Github!!!
+Moving forward, we will use github to store your code so the project name will not match the directory anymore.
+We will use the same directory for the remaining Dx12 lessons.
+
+In the github app, create a new repository named "Dx12CourseApp" in the C:\modules\your name\DX12Course101\
+
+In the previous Dx12 lesson, you have code in the (C:\modules\you name\DX12Course101\Proj_AddOutputDebugString\YournameAppABC\) directory.
+Copy all the files from that directory to the github directory you just created.
+	For example I copied: 
+		Directory DavantAppABC
+		File DavantAppABC.sln
+	If you see the ".vs" directory, you don't have to copy it. It will get generated the next time you compile in Visual Studio.
 		
 
+
+Now go to the github application and you should see all the files.
+Commit to the local repository, give it a summary like "initial load".
+Now publish to the github cloud. 
+
+Open the solution.
+Rename the file that has WinMain from "Proj_AddOutputDebugString.cpp" to "Proj_Dx12App.cpp".
+
+Go back into github and you should see this change.
+Notice it has a negative red [-] next to "Proj_AddOutputDebugString.cpp" because it does not exist anymore.
+Notice is has a plus green [+] next to the file named "Proj_Dx12App.cpp" because it is a new one. Github does not know you changed the
+	name, it only knows that one is gone and another has appreared.
+
+There are several Visual Studio files that keep logs and other data that are not needed in github. They take up a large amound of memory
+	so we want to set github to ignore them.
+In github, look for a file that has an extension of ".ipch". It is usually a long filename. Right click on it and select "Ignore all .ipch files".
+	The file still exists but will not be shown in github.
+	Do the same for extension ".tlog".
+	Do the same for extension ".log".
+
+Commit your code and then publish to the cloud. You can add the summery name "clean up things" if you wish.
+
+You are now ready to move on to the next set of projects.
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+
+
+
+Proj_DX12AddWindowsMessageLoop - NO DIRECTORY	
+	DO NOT create this directory! You will use your new directory that is using github.
+	Open the visual studio solution.  It is located in the directory you just created for the github repository. 
+		For example, for me it is: C:\modules\Davant\DX12Course101\Dx12CourseApp\
+
+	This project will add in the windows loop code we did in project Proj_CppWindowsLoop.  
+
+	This means the program from this lesson will have a windows message loop and the DirectX components from the DX lessons we have so far.
+	This lesson will start to use github to keep your code files.
+
+
+
+
+
 Proj_DX12CommandQueue
+
+WORKING HERE.. just finished the last lesson. This one has not been started.
+
 	ToDo - create lesson
+
+		!!! NOTE - this one will not copy from the previous folder, they will create a new folder and download the reporitory from github!!!
+		This will be the way moving forward.
+
+
 
 Proj_DX12CommandListAndCommandAllocator
 	ToDo - create lesson - this will include the command allocator

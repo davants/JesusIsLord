@@ -6,7 +6,7 @@ You can use "Pull" to get files from your repository. So what is the difference 
 
 Github is designed to work on projects in teams of programmers, not just by yourself.
 If you are working on some files and make updates, you can update the cloud repository for others to see and get your changes.
-Likewise, someone else may have make some changes and you want to get their updates.
+Likewise, someone else may have made some changes and you want to get their updates.
 This is what "Pull" is all about. 
 
 See these notes from stack overflow: https://stackoverflow.com/questions/3620633/what-is-the-difference-between-pull-and-clone-in-git
