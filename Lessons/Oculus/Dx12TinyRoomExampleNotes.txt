@@ -229,7 +229,7 @@ Oculus Tiny Room Sample Notes
 				//				This function passes layer textures to the compositor which handles distortion, timewarp, and GPU synchronization 
 				//				before presenting it to the headset. 
 				// 
-				// Notice we are giving the submit frame function the swap chain for both eyes!!
+				// Notice we are giving the submit frame function the swap chain for both eyes, through the layer object!!
 				// 	This is how it is able to wait corretly!!!
 				result = ovr_SubmitFrame(session, frameIndex, nullptr, &layers, 1);
 				// exit the rendering loop if submit returns an error, will retry on ovrError_DisplayLost
@@ -256,24 +256,24 @@ Oculus Tiny Room Sample Notes
 	} // end of static bool MainLoop(bool retryCreate)
 
 
-	--------------------------------------------------------------------
-	In the main loop, 2 of these objects are created; one for each eye.
-	This object contains the swap chain for one eye. 
+	// --------------------------------------------------------------------
+	// In the main loop, 2 of these objects are created; one for each eye.
+	// This object contains the swap chain for one eye. 
 	struct OculusEyeTexture
 	{
-		// DTS: copy of the session created in the main loop.
+		// Copy of the session created in the main loop.
 		ovrSession               Session;
 
-		// DTS: The variable TextureChain is a pointer to the swap chain.
+		// The variable TextureChain is a pointer to the swap chain.
 		// This is setup in the Init(...) function.
 		ovrTextureSwapChain      TextureChain;
 
 
-		// DTS: These are resized to 3, see Init function notes, and populated with what the swap chain created.
+		// These are resized to 3, see Init function notes, and populated with items the swap chain created.
 		std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> TexRtv;
 		std::vector<ID3D12Resource*> TexResource;
 
-		// DTS: These are resized to 3, see Init function notes, and populated with what the swap chain created.
+		// These are resized to 3, see Init function notes, and populated with items the swap chain created.
 		std::vector<DepthBuffer*>                DepthTex;
 		std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> DepthTexDsv;
 
@@ -283,19 +283,19 @@ Oculus Tiny Room Sample Notes
 			// Setup the TextureChain member which is of data type ovrTextureSwapChain. 
 			// This is the swap chain for this eye. In this Init function a Oculus API function is called to create the swap chain.
 			// The Oculus API chooses the number of textures for the swap chain; we don't decide. 
-			// The next thing the Init function does it ask what number was chosen, which is 3!
-			// The next thing in the Init function is to resize the vectors TexRtv and TexResource to 3.
-			// The next thing in the Init function is to update the TexResource vector with the 3 ID3D12Resource pointers the swap chain created.
-			// The next thing in the Init function is to update the TexRtv vector with 3 spots from the GLOBAL descriptor heap for the render targets. 
+			// The next thing this Init function does is to ask what number was chosen, which is 3!
+			// The next thing this Init function does is to resize the vectors TexRtv and TexResource to 3.
+			// The next thing this Init function does is to update the TexResource vector with the 3 ID3D12Resource pointers the swap chain created.
+			// The next thing this Init function does is to update the TexRtv vector with 3 spots from the GLOBAL descriptor heap for the render targets. 
 				// This is done by calling DIRECTX.RtvHandleProvider.AllocCpuHandle() for each element in the vector.
 			// The next thing in the Init function is to populate/create the 3 spots on the GLOBAL descriptor heap with CPU Descriptor handles for the ID3D12Resource's by
 				// calling DIRECTX.Device->CreateRenderTargetView(TexResource[i], &rtvd, TexRtv[i]);
-			// Note that in the Init function, it calls ovr_CreateTextureSwapChainDX. This function is passed a command queue that must be the samme command queue used
+			// Note that in this Init function, it calls ovr_CreateTextureSwapChainDX. This function is passed a command queue that must be the samme command queue used
 				for the render calls. https://developer3.oculus.com/doc/1.4.0-libovr/_o_v_r___c_a_p_i___d3_d_8h.html#a0e752b4cb9bdef45905c2d2bdbe4604a 
-				This is not a problem because there is only 1 command queue for the application. It is in the global DirectX12 object.
-				Also, remember there are 2 of these objects, one for each eye; that means there are two swap chains, each with 3 render targets.
+				This is not a problem because there is only 1 command queue for the tinyroom application. It is in the global DirectX12 object.
+				Also, remember there are 2 of these OculusEyeTexture objects, one for each eye; that means there are two swap chains, each with 3 render targets.
 
-			// Render target formats and Render target view formats.
+			// Render target formats and Render target view formats
 			// 	In addition to creating the render targets with the swap chain, this Init function also creates the render target views.
 			// 	When the swap chain is created it is set to format type OVR_FORMAT_R8G8B8A8_UNORM_SRGB and the flag to ovrTextureMisc_DX_Typeless.
 			// 	When the render target views are created for the 3 resources created by the swap chain, the format DXGI_FORMAT_R8G8B8A8_UNORM is used.
@@ -305,21 +305,20 @@ Oculus Tiny Room Sample Notes
 			// 		See this forum for understanding about Linear vs sRGB: 
 			//			https://stackoverflow.com/questions/12524623/what-are-the-practical-differences-when-working-with-colors-in-a-linear-vs-a-no
 			//		Here are some parts of the info:
-			//		linear conversion - about the same issue for Vulkin, not DirectX, but the idea is the same. Below, SPIRV means HLSL.
-			//			If your application prefers rendering to a linear format (e.g. OVR_FORMAT_R8G8B8A8_UNORM) while handling the linear-to-gamma conversion via 
+			//		linear conversion - about the same issue for Vulkin, not DirectX, but the idea is the same. Below, SPIRV means/corresponds to HLSL.
+			//			"If your application prefers rendering to a linear format (e.g. OVR_FORMAT_R8G8B8A8_UNORM) while handling the linear-to-gamma conversion via 
 			//			SPIRV code, the application must still request the corresponding sRGB format and also use ovrTextureMisc_DX_Typeless in the Flag field
 			//			ofovrTextureSwapChainDesc. This allows the application to create a RenderTargetView in linear format, while allowing the compositor to 
 			//			treat it as sRGB. Failure to do this will result in unexpected gamma-curve artifacts. The ovrTextureMisc_DX_Typeless flag for depth 
 			//			buffer formats (e.g. OVR_FORMAT_D32_FLOAT) is ignored as they are always converted to be typeless.
 			//			In addition to sRGB, these concepts also apply to the mirror texture creation. For more information, refer to the function 
 			//			documentation provided for ovr_CreateMirrorTextureDX,ovr_CreateMirrorTextureGL, andovr_CreateMirrorTextureWithOptionsVk for 
-			//			D3D, OpenGL, and Vulkan, respectively.
-			//		DTS: I think this means...
+			//			D3D, OpenGL, and Vulkan, respectively."
+			//		I think this means...
 			//			Swap chain must be sRGB so the compositor can do its thing. By specifying typeless and the rtv as 
-			//			non-sRGB; then we are saying we will handle to linear to 
-			//			gamma conversion to make it sRGB ready.
+			//			non-sRGB; then we are saying we will handle the linear to gamma conversion to make it sRGB ready.
 
-			//	The end result is that it might be setup to let the shader to lighting correctly; not sure.
+			//	Looking at the tiny room example, the end result is that it might already be setup to let the shader do the lighting; not sure.
 
 
 		}
@@ -346,7 +345,8 @@ Oculus Tiny Room Sample Notes
 		// The Oculus app only has one Rtv, Dsv and CbvSrv heap that are allocated to a large number 
 		//	and consumed as needed using the DescHandleProvider objects.
 		//	To use an "element/location" in the heap, the client calls the AllocCpuHandle(..) function of 
-		//	the DescHandleProvider class.
+		//	the DescHandleProvider class. Note the "AllocCpuHandle(..)" function does not allocate anything, it
+		//	just gets the next one that has already been created.
     		ID3D12DescriptorHeap*       RtvHeap;
     		ID3D12DescriptorHeap*       DsvHeap;
     		ID3D12DescriptorHeap*       CbvSrvHeap;
@@ -359,14 +359,14 @@ Oculus Tiny Room Sample Notes
     		static const int            SwapChainNumFrames = 4;
     		UINT                        SwapChainFrameIndex;
 
-		// DTS: The reason that there are 2 variables here, ActiveEyeIndex and ActiveContext, is because 
+		// The reason that there are 2 variables here, ActiveEyeIndex and ActiveContext, is because 
 		// 	there are only 2 eyes but 3 draw contexts (left eye, right eye, and mirror).
     		UINT                        ActiveEyeIndex;
     		DrawContext                 ActiveContext;
 
     		// per-swap-chain-frame resources
-		// DTS: 4 SwapChainFrameResources are created 
-		// 	Ignoring the mirror, for each SwapChainFrameResources there are 2 command lists and 2 command allocators.
+		// 4 SwapChainFrameResources are created 
+		// 	There are 3 command lists and 3 command allocators; one for each eye and one for the mirror (PC screen).
 		// 	As of this writing there is only one known command queue.
     		struct SwapChainFrameResources
     		{
@@ -374,12 +374,15 @@ Oculus Tiny Room Sample Notes
         		ID3D12GraphicsCommandList*      CommandLists[DrawContext_Count]; // 3 - 2 eyes and mirror
         		bool                            CommandListSubmitted[DrawContext_Count]; // 3 - 2 eyes and mirror
 
-			// Miror Resources!!!!!! ONLY!!!! 
+			// Miror (screen) Resources!!!!!! ONLY!!!! 
 			// This is very confusing!!!  These resources are not used by Oculus, only the mirror. HOWEVER, the command allocators listed in this
 			// same struct ARE USED!!!  
-			// Need to go through the documentation again and UPDATE as needed.
-        		ID3D12Resource*                 SwapChainBuffer;
-        		CD3DX12_CPU_DESCRIPTOR_HANDLE   SwapChainRtvHandle;
+			// Bad design for learning this stuff. This "SwapChainFrameResources" struct is just the next available 
+			// command list and allocator regardless of the eye swap chain target we are using. 
+			// So adding this mirror target was very confusing. The Oculus targets are in seperate structures, the mirror should be as
+			// well because when you are learning this example you are left thinking they are somehow connected to the HMD.
+        		ID3D12Resource*                 SwapChainBuffer; // Mirror (screen) Rt
+        		CD3DX12_CPU_DESCRIPTOR_HANDLE   SwapChainRtvHandle; // Mirror (screen)
 
         		// Synchronization objects.
         		HANDLE                          PresentFenceEvent;
@@ -387,7 +390,7 @@ Oculus Tiny Room Sample Notes
         		UINT64                          PresentFenceValue;
         		UINT64                          PresentFenceWaitValue;
     		};
-    		SwapChainFrameResources             PerFrameResources[SwapChainNumFrames]; // 4 -  (2 eyes * (front buffer and back buffer)
+    		SwapChainFrameResources             PerFrameResources[SwapChainNumFrames]; 
 
 		static LRESULT CALLBACK WindowProc(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ LPARAM lParam)
 		{
