@@ -237,7 +237,6 @@ Oculus Tiny Room Sample Notes
 					goto Done;
 
 				// Increment the frame index.
-				// Testing github chicken
 				frameIndex++; // See notes above, at its instanciation, about this variable.
 
 			}// end - if (sessionStatus.IsVisible) 
