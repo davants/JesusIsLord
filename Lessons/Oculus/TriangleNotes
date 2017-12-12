@@ -1,0 +1,103 @@
+
+ TriangleSet cube;
+        cube.AddSolidColorBox(0.5f, -0.5f, 0.5f, -0.5f, 0.5f, -0.5f, 0xff404040);
+	
+
+	
+struct TriangleSet
+{
+    int         numVertices, numIndices, maxBuffer;
+    Vertex*     Vertices;
+    short*      Indices;
+
+    TriangleSet(int maxTriangles = 2000) : maxBuffer(3 * maxTriangles)
+    {
+        numVertices = numIndices = 0;
+        Vertices = (Vertex*)_aligned_malloc(maxBuffer * sizeof(Vertex), 16);
+        Indices = (short*)_aligned_malloc(maxBuffer * sizeof(short), 16);
+    }
+
+    ~TriangleSet()
+    {
+        _aligned_free(Vertices);
+        _aligned_free(Indices);
+    }
+
+    void AddQuad(Vertex v0, Vertex v1, Vertex v2, Vertex v3)
+    {
+        AddTriangle(v0, v1, v2);
+        AddTriangle(v3, v2, v1);
+    }
+
+    void AddTriangle(Vertex v0, Vertex v1, Vertex v2)
+    {
+        VALIDATE(numVertices <= (maxBuffer - 3), "Insufficient triangle set");
+        for (int i = 0; i < 3; i++) Indices[numIndices++] = short(numVertices + i);
+        Vertices[numVertices++] = v0;
+        Vertices[numVertices++] = v1;
+        Vertices[numVertices++] = v2;
+    }
+
+    uint32_t ModifyColor(uint32_t c, XMFLOAT3 pos)
+    {
+        #define GetLengthLocal(v)  (sqrt(v.x*v.x + v.y*v.y + v.z*v.z))
+        float dist1 = GetLengthLocal(XMFLOAT3(pos.x - (-2), pos.y - (4), pos.z - (-2)));
+        float dist2 = GetLengthLocal(XMFLOAT3(pos.x - (3),  pos.y - (4), pos.z - (-3)));
+        float dist3 = GetLengthLocal(XMFLOAT3(pos.x - (-4), pos.y - (3), pos.z - (25)));
+        int   bri = rand() % 160;
+        float R = ((c >> 16) & 0xff) * (bri + 192.0f*(0.65f + 8 / dist1 + 1 / dist2 + 4 / dist3)) / 255.0f;
+        float G = ((c >> 8) & 0xff) * (bri + 192.0f*(0.65f + 8 / dist1 + 1 / dist2 + 4 / dist3)) / 255.0f;
+        float B = ((c >> 0) & 0xff) * (bri + 192.0f*(0.65f + 8 / dist1 + 1 / dist2 + 4 / dist3)) / 255.0f;
+        return( (c & 0xff000000) + ((R>255 ? 255 : (uint32_t)R) << 16) + ((G>255 ? 255 : (uint32_t)G) << 8) + (B>255 ? 255 : (uint32_t)B));
+    }
+
+    void AddSolidColorBox(float x1, float y1, float z1, float x2, float y2, float z2, uint32_t c)
+    { //cube.AddSolidColorBox(0.5f, -0.5f, 0.5f, -0.5f, 0.5f, -0.5f, 0xff404040);
+		// also note that - second triangle is (v3, v2, v1) from function AddQuad(Vertex v0, Vertex v1, Vertex v2, Vertex v3)
+	
+        AddQuad( top side
+            Vertex(XMFLOAT3(0.5f, 0.5f, 0.5f), ModifyColor(c, XMFLOAT3(0.5f, 0.5f, 0.5f)), 0.5f, 0.5f),
+            Vertex(XMFLOAT3(-0.5f, 0.5f, 0.5f), ModifyColor(c, XMFLOAT3(-0.5f, 0.5f, 0.5f)), 0.5f, -0.5f),
+            Vertex(XMFLOAT3(0.5f, 0.5f, -0.5f), ModifyColor(c, XMFLOAT3(0.5f, 0.5f, -0.5f)), -0.5f, 0.5f),
+            Vertex(XMFLOAT3(-0.5f, 0.5f, -0.5f), ModifyColor(c, XMFLOAT3(-0.5f, 0.5f, -0.5f)), -0.5f, -0.5f));
+        AddQuad( bottom side
+            Vertex(XMFLOAT3(-0.5f, -0.5f, 0.5f), ModifyColor(c, XMFLOAT3(-0.5f, -0.5f, 0.5f)), 0.5f, -0.5f),
+            Vertex(XMFLOAT3(0.5f, -0.5f, 0.5f), ModifyColor(c, XMFLOAT3(0.5f, -0.5f, 0.5f)), 0.5f, 0.5f),
+            Vertex(XMFLOAT3(-0.5f, -0.5f, -0.5f), ModifyColor(c, XMFLOAT3(-0.5f, -0.5f, -0.5f)), -0.5f, -0.5f),
+            Vertex(XMFLOAT3(0.5f, -0.5f, -0.5f), ModifyColor(c, XMFLOAT3(0.5f, -0.5f, -0.5f)), -0.5f, 0.5f));
+        AddQuad( right side 
+            Vertex(XMFLOAT3(0.5f, -0.5f, -0.5f), ModifyColor(c, XMFLOAT3(0.5f, -0.5f, -0.5f)), -0.5f, -0.5f),
+            Vertex(XMFLOAT3(0.5f, -0.5f, 0.5f), ModifyColor(c, XMFLOAT3(0.5f, -0.5f, 0.5f)), 0.5f, -0.5f),
+            Vertex(XMFLOAT3(0.5f, 0.5f, -0.5f), ModifyColor(c, XMFLOAT3(0.5f, 0.5f, -0.5f)), -0.5f, 0.5f),
+            Vertex(XMFLOAT3(0.5f, 0.5f, 0.5f), ModifyColor(c, XMFLOAT3(0.5f, 0.5f, 0.5f)), 0.5f, 0.5f));
+        AddQuad( left side
+            Vertex(XMFLOAT3(-0.5f, -0.5f, 0.5f), ModifyColor(c, XMFLOAT3(-0.5f, -0.5f, 0.5f)), 0.5f, -0.5f),
+            Vertex(XMFLOAT3(-0.5f, -0.5f, -0.5f), ModifyColor(c, XMFLOAT3(-0.5f, -0.5f, -0.5f)), -0.5f, -0.5f),
+            Vertex(XMFLOAT3(-0.5f, 0.5f, 0.5f), ModifyColor(c, XMFLOAT3(-0.5f, 0.5f, 0.5f)), 0.5f, 0.5f),
+            Vertex(XMFLOAT3(-0.5f, 0.5f, -0.5f), ModifyColor(c, XMFLOAT3(-0.5f, 0.5f, -0.5f)), -0.5f, 0.5f));
+        AddQuad( front side
+				right, bottom, front
+            Vertex(XMFLOAT3(0.5f, -0.5f, 0.5f), ModifyColor(c, XMFLOAT3(0.5f, -0.5f, 0.5f)), 0.5f, -0.5f),
+				left, bottom, front
+            Vertex(XMFLOAT3(-0.5f, -0.5f, 0.5f), ModifyColor(c, XMFLOAT3(-0.5f, -0.5f, 0.5f)), -0.5f, -0.5f),
+				right, top, front
+			Vertex(XMFLOAT3(0.5f, 0.5f, 0.5f), ModifyColor(c, XMFLOAT3(0.5f, 0.5f, 0.5f)), 0.5f, 0.5f),
+				left, top, front
+            Vertex(XMFLOAT3(-0.5f, 0.5f, 0.5f), ModifyColor(c, XMFLOAT3(-0.5f, 0.5f, 0.5f)), -0.5f, 0.5f));
+        AddQuad( back side 
+				left,bottom,Back
+            Vertex(XMFLOAT3(-0.5f, -0.5f, -0.5f), ModifyColor(c, XMFLOAT3(-0.5f, -0.5f, -0.5f)), -0.5f, -0.5f),
+				right,bottom,Back
+            Vertex(XMFLOAT3(0.5f, -0.5f, -0.5f), ModifyColor(c, XMFLOAT3(0.5f, -0.5f, -0.5f)), 0.5f, -0.5f),
+				left,top,Back
+			Vertex(XMFLOAT3(-0.5f, 0.5f, -0.5f), ModifyColor(c, XMFLOAT3(-0.5f, 0.5f, -0.5f)), -0.5f, 0.5f),
+				right,top,Back
+			Vertex(XMFLOAT3(0.5f, 0.5f, -0.5f), ModifyColor(c, XMFLOAT3(0.5f, 0.5f, -0.5f)), 0.5f, 0.5f));
+			
+			
+    }
+};
+		
+		
+		
+		
