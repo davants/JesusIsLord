@@ -1,0 +1,46 @@
+Github_Tag
+
+After you have pushed your code into the cloud you can "Pull" the code to another computer.
+If you make an update to your code and then commit and then push again, the new code will be in the cloud repository.
+
+Let's say you pushed 3 weeks ago because you were at a good stopping point and everything was working.
+Then 2 weeks ago, you added a new feature and again commited and pushed.
+Then last week you made another change and again commited and pushed.
+
+A friend wants to get your code, but you know he should get the one from 2 week ago because the lastest one is not tested yet.
+
+How do you do this?
+
+Release or Tag
+
+You can mark a point in time for your code in the cloud. You can "Tag" it with a name and if someone pulls using that name then
+they will get the code exactly what it looked like when it was given that Tag.  
+Most of the time you will use a version number like "v1.43". 
+
+Now you can tell your friend to pull the code using that Tag and he will get the one from 2 weeks ago.
+
+Tagging also helps you as you build your projects. You may make a change, removing some code, and then a few weeks later you may want
+to see what it looked like before you updated.
+
+
+Here is a web page on this. https://git-scm.com/book/en/v2/Git-Basics-Tagging
+
+
+Step 1) You cannot Tag in the github GUI application, you must do it from the command line; however, you can get to the 
+	command line from the GUI.
+	Select "Repository" then "Open in Command Prompt".
+	You will see the command prompt application open.
+Step 2) Type "git tag YOUR TAG NAME WITH NO SPACES"
+	For example: git tag v1.001
+
+Step 3) If you want the update the server so it is also has the tag, do the following on the command line.
+	git push origin YOUR TAG NAME WITH NO SPACES
+
+
+Done! 
+
+Step 4) Validate that everything worked using the github web site.
+	Navigate to your repository online. For example: https://github.com/davants/Dx12CourseApp
+	Below the name of the app, you will see 4 links "# commits" "# branch" "# release" "# contributor"
+	Click the "# release" link.  (# should be 1 if this is your first tag)
+	You will see the tag name. Now you or others can get your code at that point in time.

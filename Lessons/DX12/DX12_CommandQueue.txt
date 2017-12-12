@@ -1,0 +1,8 @@
+DX12CommandQueue
+
+This lesson will add a command queue. We will start reading the book to understand some basic GPU programming concepts.
+The application we create will not be exactly like the book. This will help you understand the concepts needed.
+This lesson picks up after completion of the DX12_AddWindowsMessageLoop lesson.  
+This lesson also assumes you are using github to save your code.
+
+Step 1)

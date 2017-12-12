@@ -201,8 +201,8 @@ You are now ready to move on to the next set of projects.
 
 
 
-Proj_DX12AddWindowsMessageLoop - NO DIRECTORY	
-	DO NOT create this directory! You will use your new directory that is using github.
+Proj_DX12AddWindowsMessageLoop - NO NEW DIRECTORY - DO NOT create this directory for this project!	
+	You will use your new directory that is using github.
 	Open the visual studio solution.  It is located in the directory you just created for the github repository. 
 		For example, for me it is: C:\modules\Davant\DX12Course101\Dx12CourseApp\
 
@@ -211,18 +211,35 @@ Proj_DX12AddWindowsMessageLoop - NO DIRECTORY
 	This means the program from this lesson will have a windows message loop and the DirectX components from the DX lessons we have so far.
 	This lesson will start to use github to keep your code files.
 
+	Git Tag lesson
+		Now that you have updated github, it is time to "TAG" your code. Tagging your code creates a "Point in Time" copy
+		of your code. 
+		Review the github lesson "Github_Tag", and use the tag "v1.001_DX12_AddWindowsMessageLoop" to tag your project.
+	
 
 
+Proj_DX12CommandQueue 
+	Open the visual studio solution.  It is located in the directory you just created for the github repository. 
+		For example, for me it is: C:\modules\Davant\DX12Course101\Dx12CourseApp\
 
 
-Proj_DX12CommandQueue
 
 WORKING HERE.. just finished the last lesson. This one has not been started.
 
+
+
 	ToDo - create lesson
 
-		!!! NOTE - this one will not copy from the previous folder, they will create a new folder and download the reporitory from github!!!
-		This will be the way moving forward.
+		!!! NOTE - this one will NOT copy from the previous folder, they will create a new folder and download the reporitory from github!!!
+		
+
+
+
+
+
+
+
+
 
 
 
