@@ -1,0 +1,473 @@
+This document provides some extra notes to myself, along with Oculus notes, on the Dx12 TinyRoom example from the Oculus SDK site.
+
+	Online API Doc: https://developer3.oculus.com/doc/1.4.0-libovr/index.html
+
+
+High Level items that were confusing:
+	There is only one command queue for the entire application. This fulfils the requirement that the command queue that creates the swap chain
+	must be the same one that is used for rendering, or as a join. 
+		see https://developer3.oculus.com/doc/1.4.0-libovr/_o_v_r___c_a_p_i___d3_d_8h.html#a0e752b4cb9bdef45905c2d2bdbe4604a
+
+	There is a swap chain for each eye and each swap chain has 3 render targets. Why? Just because, this is how they implemented it.
+		A swap chain comes with certain functionality. Looping through its own targets it one of them. 
+
+	There are 4 frame resourses, each with 3 command lists and command allocators. However, there is only one command queue.
+		Each frame resource has a command list for each eye and one for the mirror totalling three.
+
+
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+Oculus Tiny Room Sample Notes
+	
+	// DirectX12 is a struct that has one global static instance variable.
+	// global DX12 state
+	static struct DirectX12 DIRECTX;
+	// See notes below for the DirectX12 struct
+
+
+
+	WinMain
+	{
+		// Initializes LibOVR, and the Rift
+		// checks the oculus API library, version, etc. Does not create targets or swap chain or anything like that.
+		ovr_Initialize( given the version of Oculus ); 
+			
+		// Sets the static WindowsProc function. More details below if needed.
+		DIRECTX.InitWindow( pass the window's handle given by the Windows 10 OS ); 
+
+		// This basically calls the "MainLoop" function. The "MainLoop" function contains setup and the real loop.
+		// More details below if needed.
+		DIRECTX.Run(MainLoop);
+	}
+
+
+
+
+	static bool MainLoop(bool retryCreate)
+	{
+		// This function contains the real program loop. This is a static function.
+			// At this point, the Oculus has not really been setup, but Windows has been setup.
+			// This function sets things up and then starts the real app loop, which is a "while loop" in this function.
+			// Taking the headset off does not cause this function to be called again so the real app loop never stops for that use-case.
+
+		// Initialize these to nullptr here to handle device lost failures cleanly
+
+		// The mirror is for the monitor!
+		ovrMirrorTexture            mirrorTexture = nullptr;
+
+		// Only creating 2, one for each eye! However, in a few lines of code, this is created and initialized.
+			// See notes on the OculusEyeTexture later in this document; shows how this object holds 3 render targets and so on for each eye.
+		OculusEyeTexture*           pEyeRenderTexture[2] = { nullptr, nullptr };
+
+		Scene*                      roomScene = nullptr;
+		Camera*                     mainCam = nullptr;
+		ovrMirrorTextureDesc        mirrorDesc = {};
+
+		// This represents one user session and can be thought of as the Rift headset. (HMD - Head Mounted Display)
+			// Notice in a couple of lines session is "Created". 
+			// Next, it is queried, to fill out the ovrHmdDesc struct so we can get information on it like the pixel width and height.
+		ovrSession session;
+
+		/// ovrGraphicsLuid - Identifies a graphics device in a platform-specific way.
+		/// For Windows this is a LUID type.
+		ovrGraphicsLuid luid;
+
+		ovrResult result = ovr_Create(&session, &luid);
+		if (!OVR_SUCCESS(result))
+			return retryCreate;
+
+		ovrHmdDesc hmdDesc = ovr_GetHmdDesc(session);
+
+
+		... create both OculusEyeTexture objects.
+		... create mirror
+		... create scene        
+		... create camera
+		
+		// Setup VR components, filling out description
+		// Rendering information for each eye created given the FOV.
+		ovrEyeRenderDesc eyeRenderDesc[2];
+		eyeRenderDesc[0] = ovr_GetRenderDesc(session, ovrEye_Left, hmdDesc.DefaultEyeFov[0]);
+		eyeRenderDesc[1] = ovr_GetRenderDesc(session, ovrEye_Right, hmdDesc.DefaultEyeFov[1]);
+
+		// This is an important int. The index is used to sync all the various theads so things can stay organized.
+		// 	This is incremented as a last step the the main loop below.
+		// Oculus Notes:		
+		//	The frameIndex argument specifies which application frame we are rendering. 
+		//	Applications that make use of multi-threaded rendering must keep an internal frame index and manually 
+		//	increment it, passing it across threads along with frame data to ensure correct timing and prediction. 
+		//	The same frameIndex that was used to obtain timing for the framevalue must be 
+		//	passed to ovr_WaitToBeginFrame, ovr_BeginFrame, and ovr_EndFrame. 		
+		long long frameIndex = 0;
+
+		// Setting this to false will still draw to the HMD, just not the PC screen.
+		bool drawMirror = true;
+	
+
+		DIRECTX.InitFrame(drawMirror);
+
+
+		// This is the real main loop.
+		//	The handle messages function will process all of the messages in the windows queue before returning true.
+		// 	This is how it is able to update all the user input before a draw is made. 
+		while (DIRECTX.HandleMessages())
+		{
+			// Check the session status, make sure the HMD is ready and so on.
+	
+			if (sessionStatus.IsVisible)
+			{
+				// Get user input and update camera
+
+				// Update c++ databases for models that move
+				...
+				roomScene->Models[0]->Pos = XMFLOAT3(9 * sin(cubeClock), 3, 9 * cos(cubeClock += 0.0015f));
+				...
+
+				
+				// Get both eye poses simultaneously, with IPD offset already included. 
+				ovrPosef    EyeRenderPose[2];
+				ovrVector3f HmdToEyeOffset[2] = { eyeRenderDesc[0].HmdToEyeOffset, eyeRenderDesc[1].HmdToEyeOffset };
+
+				double sensorSampleTime;    // sensorSampleTime is fed into the layer later
+				ovr_GetEyePoses(session, frameIndex, ovrTrue, HmdToEyeOffset, EyeRenderPose, &sensorSampleTime);
+
+				// Render Scene to Eye Buffers
+				for (int eye = 0; eye < 2; ++eye)
+				{
+
+					DIRECTX.SetActiveContext(eye == 0 ? DrawContext_EyeRenderLeft : DrawContext_EyeRenderRight);
+	
+					DIRECTX.SetActiveEye(eye);
+
+					// Create a barrier desciption to transition the current render target.
+					// 	There are 2 OculusEyeTexture objects in the pEyeRenderTexture array. Each has a swap chain.
+					//	It is calling ..->GetD3DResource() of the OculusEyeTexture object asks the swap chain for the current 
+					// 	index which is then used to get the ID3DResource for the cooresponding render target.
+					CD3DX12_RESOURCE_BARRIER resBar = CD3DX12_RESOURCE_BARRIER::Transition(pEyeRenderTexture[eye]->GetD3DResource(),
+						D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+						D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+					// There are 4 frame resource. Get the current one.
+					//	Each frame resource has a command list and allocator for each eye; get it.
+					//	For that command list, call the "ResourceBarrier(..)" function.
+					DIRECTX.CurrentFrameResources().CommandLists[DIRECTX.ActiveContext]->ResourceBarrier(1, &resBar);
+	
+					DIRECTX.SetAndClearRenderTarget(pEyeRenderTexture[eye]->GetRtv(), pEyeRenderTexture[eye]->GetDsv());
+					DIRECTX.SetViewport((float)eyeRenderViewport[eye].Pos.x, (float)eyeRenderViewport[eye].Pos.y,
+						(float)eyeRenderViewport[eye].Size.w, (float)eyeRenderViewport[eye].Size.h);
+	
+					// The next few lines are about getting the HMD position, getting the user input, etc and setting
+					//	the view projection matrix.
+					// Get the pose information in XM format
+					XMVECTOR eyeQuat = XMVectorSet(EyeRenderPose[eye].Orientation.x, EyeRenderPose[eye].Orientation.y,
+						EyeRenderPose[eye].Orientation.z, EyeRenderPose[eye].Orientation.w);
+					XMVECTOR eyePos = XMVectorSet(EyeRenderPose[eye].Position.x, EyeRenderPose[eye].Position.y, EyeRenderPose[eye].Position.z, 0);
+	
+					// Get view and projection matrices for the Rift camera
+					Camera finalCam(XMVectorAdd(mainCamPos, XMVector3Rotate(eyePos, mainCamRot)), XMQuaternionMultiply(eyeQuat, mainCamRot));
+					XMMATRIX view = finalCam.GetViewMatrix();
+					ovrMatrix4f p = ovrMatrix4f_Projection(eyeRenderDesc[eye].Fov, 0.2f, 1000.0f, ovrProjection_None);
+					XMMATRIX proj = XMMatrixSet(p.M[0][0], p.M[1][0], p.M[2][0], p.M[3][0],
+						p.M[0][1], p.M[1][1], p.M[2][1], p.M[3][1],
+						p.M[0][2], p.M[1][2], p.M[2][2], p.M[3][2],
+						p.M[0][3], p.M[1][3], p.M[2][3], p.M[3][3]);
+					XMMATRIX prod = XMMatrixMultiply(view, proj);
+	
+					// Pass the view projection matrix to the render function.
+					roomScene->Render(&prod, 1, 1, 1, 1, true);
+	
+					// Now that we are done rendering, tell the GPU to transition the target, call barrier.
+					resBar = CD3DX12_RESOURCE_BARRIER::Transition(pEyeRenderTexture[eye]->GetD3DResource(),
+						D3D12_RESOURCE_STATE_RENDER_TARGET,
+						D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+					DIRECTX.CurrentFrameResources().CommandLists[DIRECTX.ActiveContext]->ResourceBarrier(1, &resBar);
+
+					// Commit rendering to the swap chain
+					// The Commit function will call ovr_CommitTextureSwapChain(Session, TextureChain);
+					//	This function does the following per the .h documentation: 
+					//		/// Commits any pending changes to an ovrTextureSwapChain, and advances its current index.
+					//	Note, the index mentioned here is not the same as the frameIndex that is handled by the app. It is the
+					// 		internal swap chain which there are 3 targets for each eye.
+					pEyeRenderTexture[eye]->Commit();
+
+					// kick off eye render command lists before ovr_SubmitFrame()
+					DIRECTX.SubmitCommandList(DIRECTX.ActiveContext);
+		
+				}
+
+
+				// Initialize our single full screen Fov layer.
+				// Notice this, one screen for both eyes! The 2 individual Render target textures are combined into one image
+				//	 which is sent to the HMD.
+				ovrLayerEyeFov ld = {};
+				ld.Header.Type = ovrLayerType_EyeFov;
+				ld.Header.Flags = 0;
+
+				for (int eye = 0; eye < 2; ++eye)
+				{
+					// The layer needs both eyes. Give it the swap chain for each eye.
+					ld.ColorTexture[eye] = pEyeRenderTexture[eye]->TextureChain;
+
+					// Give the layer the view port and FOV for each eye. FOVs are different because of the nose :)
+					ld.Viewport[eye] = eyeRenderViewport[eye];
+					ld.Fov[eye] = hmdDesc.DefaultEyeFov[eye];
+					ld.RenderPose[eye] = EyeRenderPose[eye];
+					ld.SensorSampleTime = sensorSampleTime;
+				}
+
+				// This sample only has one layer, but more could be added like the control pannel or head-up display.
+				ovrLayerHeader* layers = &ld.Header;
+	
+				// As per the documentation - https://developer.oculus.com/documentation/pcsdk/latest/concepts/dg-render/#dg_render
+				//		ovr_SubmitFrame(...) has been deprecated in favor of 3 functions that allow more granular 
+				//		control to support better thread management. For now, leave the old method in place because it is easier.
+				//		FYI, the new 3 API function are not difficult. There is a wait, begin and end.
+				//			This is good to know because it tells us what the old ovr_SubmitFrame is doing.
+				//			1 - ovr_WaitToBeginFrame - Wait for last render target to be available to use.
+				//			2 - ovr_BeginFrame - Call this when your application is ready to begin rendering the frame.
+				//			3 - ovr_EndFrame - Call this When your application is ready to submit the frame.
+				//				This function passes layer textures to the compositor which handles distortion, timewarp, and GPU synchronization 
+				//				before presenting it to the headset. 
+				// 
+				// Notice we are giving the submit frame function the swap chain for both eyes, through the layer object!!
+				// 	This is how it is able to wait corretly!!!
+				result = ovr_SubmitFrame(session, frameIndex, nullptr, &layers, 1);
+				// exit the rendering loop if submit returns an error, will retry on ovrError_DisplayLost
+				if (!OVR_SUCCESS(result))
+					goto Done;
+
+				// Increment the frame index.
+				frameIndex++; // See notes above, at its instanciation, about this variable.
+
+			}// end - if (sessionStatus.IsVisible) 
+
+
+			if (drawMirror)
+			{
+				...
+			}
+			
+			DIRECTX.SubmitCommandListAndPresent(drawMirror);
+
+		} // end of the real main loop
+
+		// release everything and deallocate everything!
+ 
+	} // end of static bool MainLoop(bool retryCreate)
+
+
+	// --------------------------------------------------------------------
+	// In the main loop, 2 of these objects are created; one for each eye.
+	// This object contains the swap chain for one eye. 
+	struct OculusEyeTexture
+	{
+		// Copy of the session created in the main loop.
+		ovrSession               Session;
+
+		// The variable TextureChain is a pointer to the swap chain.
+		// This is setup in the Init(...) function.
+		ovrTextureSwapChain      TextureChain;
+
+
+		// These are resized to 3, see Init function notes, and populated with items the swap chain created.
+		std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> TexRtv;
+		std::vector<ID3D12Resource*> TexResource;
+
+		// These are resized to 3, see Init function notes, and populated with items the swap chain created.
+		std::vector<DepthBuffer*>                DepthTex;
+		std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> DepthTexDsv;
+
+		
+		bool Init(ovrSession session, int sizeW, int sizeH, bool createDepth)
+		{
+			// Setup the TextureChain member which is of data type ovrTextureSwapChain. 
+			// This is the swap chain for this eye. In this Init function a Oculus API function is called to create the swap chain.
+			// The Oculus API chooses the number of textures for the swap chain; we don't decide. 
+			// The next thing this Init function does is to ask what number was chosen, which is 3!
+			// The next thing this Init function does is to resize the vectors TexRtv and TexResource to 3.
+			// The next thing this Init function does is to update the TexResource vector with the 3 ID3D12Resource pointers the swap chain created.
+			// The next thing this Init function does is to update the TexRtv vector with 3 spots from the GLOBAL descriptor heap for the render targets. 
+				// This is done by calling DIRECTX.RtvHandleProvider.AllocCpuHandle() for each element in the vector.
+			// The next thing in the Init function is to populate/create the 3 spots on the GLOBAL descriptor heap with CPU Descriptor handles for the ID3D12Resource's by
+				// calling DIRECTX.Device->CreateRenderTargetView(TexResource[i], &rtvd, TexRtv[i]);
+			// Note that in this Init function, it calls ovr_CreateTextureSwapChainDX. This function is passed a command queue that must be the samme command queue used
+				for the render calls. https://developer3.oculus.com/doc/1.4.0-libovr/_o_v_r___c_a_p_i___d3_d_8h.html#a0e752b4cb9bdef45905c2d2bdbe4604a 
+				This is not a problem because there is only 1 command queue for the tinyroom application. It is in the global DirectX12 object.
+				Also, remember there are 2 of these OculusEyeTexture objects, one for each eye; that means there are two swap chains, each with 3 render targets.
+
+			// Render target formats and Render target view formats
+			// 	In addition to creating the render targets with the swap chain, this Init function also creates the render target views.
+			// 	When the swap chain is created it is set to format type OVR_FORMAT_R8G8B8A8_UNORM_SRGB and the flag to ovrTextureMisc_DX_Typeless.
+			// 	When the render target views are created for the 3 resources created by the swap chain, the format DXGI_FORMAT_R8G8B8A8_UNORM is used.
+			// 	This has to do with linear and sRGB format. Read the following notes from Oculus and this tech forum conversation for why this is done.
+			// 		See the "Note" Section: 
+			//			https://developer3.oculus.com/doc/1.4.0-libovr/_o_v_r___c_a_p_i___d3_d_8h.html#a0e752b4cb9bdef45905c2d2bdbe4604a
+			// 		See this forum for understanding about Linear vs sRGB: 
+			//			https://stackoverflow.com/questions/12524623/what-are-the-practical-differences-when-working-with-colors-in-a-linear-vs-a-no
+			//		Here are some parts of the info:
+			//		linear conversion - about the same issue for Vulkin, not DirectX, but the idea is the same. Below, SPIRV means/corresponds to HLSL.
+			//			"If your application prefers rendering to a linear format (e.g. OVR_FORMAT_R8G8B8A8_UNORM) while handling the linear-to-gamma conversion via 
+			//			SPIRV code, the application must still request the corresponding sRGB format and also use ovrTextureMisc_DX_Typeless in the Flag field
+			//			ofovrTextureSwapChainDesc. This allows the application to create a RenderTargetView in linear format, while allowing the compositor to 
+			//			treat it as sRGB. Failure to do this will result in unexpected gamma-curve artifacts. The ovrTextureMisc_DX_Typeless flag for depth 
+			//			buffer formats (e.g. OVR_FORMAT_D32_FLOAT) is ignored as they are always converted to be typeless.
+			//			In addition to sRGB, these concepts also apply to the mirror texture creation. For more information, refer to the function 
+			//			documentation provided for ovr_CreateMirrorTextureDX,ovr_CreateMirrorTextureGL, andovr_CreateMirrorTextureWithOptionsVk for 
+			//			D3D, OpenGL, and Vulkan, respectively."
+			//		I think this means...
+			//			Swap chain must be sRGB so the compositor can do its thing. By specifying typeless and the rtv as 
+			//			non-sRGB; then we are saying we will handle the linear to gamma conversion to make it sRGB ready.
+
+			//	Looking at the tiny room example, the end result is that it might already be setup to let the shader do the lighting; not sure.
+
+
+		}
+
+	} // end of struct OculusEyeTexture
+
+
+	-----------------------------------------------------------
+	struct DirectX12
+	{
+		HWND                        Window;
+		bool                        Running;
+		bool                        Key[256]; // This holds user input; if the user has got a key down or up. 
+		int                         WinSizeW;
+		int                         WinSizeH;
+		ID3D12Debug*                DebugController;
+		ID3D12Device*               Device;
+   		ID3D12CommandQueue*         CommandQueue;
+    		DepthBuffer               * MainDepthBuffer;
+    		D3D12_RECT                  ScissorRect;
+
+    		HINSTANCE                   hInstance;
+
+		// The Oculus app only has one Rtv, Dsv and CbvSrv heap that are allocated to a large number 
+		//	and consumed as needed using the DescHandleProvider objects.
+		//	To use an "element/location" in the heap, the client calls the AllocCpuHandle(..) function of 
+		//	the DescHandleProvider class. Note the "AllocCpuHandle(..)" function does not allocate anything, it
+		//	just gets the next one that has already been created.
+    		ID3D12DescriptorHeap*       RtvHeap;
+    		ID3D12DescriptorHeap*       DsvHeap;
+    		ID3D12DescriptorHeap*       CbvSrvHeap;
+
+    		DescHandleProvider          RtvHandleProvider;
+    		DescHandleProvider          DsvHandleProvider;
+    		DescHandleProvider          CbvSrvHandleProvider;
+    
+    		IDXGISwapChain3*            SwapChain;
+    		static const int            SwapChainNumFrames = 4;
+    		UINT                        SwapChainFrameIndex;
+
+		// The reason that there are 2 variables here, ActiveEyeIndex and ActiveContext, is because 
+		// 	there are only 2 eyes but 3 draw contexts (left eye, right eye, and mirror).
+    		UINT                        ActiveEyeIndex;
+    		DrawContext                 ActiveContext;
+
+    		// per-swap-chain-frame resources
+		// 4 SwapChainFrameResources are created 
+		// 	There are 3 command lists and 3 command allocators; one for each eye and one for the mirror (PC screen).
+		// 	As of this writing there is only one known command queue.
+    		struct SwapChainFrameResources
+    		{
+        		ID3D12CommandAllocator*         CommandAllocators[DrawContext_Count]; // 3 - 2 eyes and mirror
+        		ID3D12GraphicsCommandList*      CommandLists[DrawContext_Count]; // 3 - 2 eyes and mirror
+        		bool                            CommandListSubmitted[DrawContext_Count]; // 3 - 2 eyes and mirror
+
+			// Miror (screen) Resources!!!!!! ONLY!!!! 
+			// This is very confusing!!!  These resources are not used by Oculus, only the mirror. HOWEVER, the command allocators listed in this
+			// same struct ARE USED!!!  
+			// Bad design for learning this stuff. This "SwapChainFrameResources" struct is just the next available 
+			// command list and allocator regardless of the eye swap chain target we are using. 
+			// So adding this mirror target was very confusing. The Oculus targets are in seperate structures, the mirror should be as
+			// well because when you are learning this example you are left thinking they are somehow connected to the HMD.
+        		ID3D12Resource*                 SwapChainBuffer; // Mirror (screen) Rt
+        		CD3DX12_CPU_DESCRIPTOR_HANDLE   SwapChainRtvHandle; // Mirror (screen)
+
+        		// Synchronization objects.
+        		HANDLE                          PresentFenceEvent;
+        		ID3D12Fence*                    PresentFenceRes;
+        		UINT64                          PresentFenceValue;
+        		UINT64                          PresentFenceWaitValue;
+    		};
+    		SwapChainFrameResources             PerFrameResources[SwapChainNumFrames]; 
+
+		static LRESULT CALLBACK WindowProc(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ LPARAM lParam)
+		{
+        		auto p = reinterpret_cast<DirectX12 *>(GetWindowLongPtr(hWnd, 0));
+       		 	switch (Msg)
+        		{
+        			case WM_KEYDOWN:
+            				p->Key[wParam] = true;
+            				break;
+        			case WM_KEYUP:
+            			p->Key[wParam] = false;
+            			break;
+        			case WM_DESTROY:
+            				p->Running = false;
+            				break;
+        			default:
+            				return DefWindowProcW(hWnd, Msg, wParam, lParam);
+        		}
+
+        		if ((p->Key['Q'] && p->Key[VK_CONTROL]) || p->Key[VK_ESCAPE])
+        		{
+            			p->Running = false;
+        		}
+        		return 0;
+		}
+
+    		DirectX12() :
+	        Window(nullptr),
+        	Running(false),
+	        WinSizeW(0),
+        	WinSizeH(0),
+	        Device(nullptr),
+        	SwapChain(nullptr),
+	        MainDepthBuffer(nullptr),
+        	hInstance(nullptr),
+	        ActiveContext(DrawContext_Count),   // require init by app
+        	ActiveEyeIndex(UINT(-1))            // require init by app
+		{
+			// Clear input
+			for (int i = 0; i < _countof(Key); ++i)
+        		    Key[i] = false;
+		}		
+
+		InitWindow( pass the window's handle given by the Windows 10 OS )
+		{
+			// This will register the window class, setting the static WindowProc method to be used by the window, and creating the window!
+			// Standard windows stuff, not really related to Oculus.
+		}
+
+
+		DIRECTX.Run(MainLoop)
+		{
+			//This calls the "MainLoop" static function that does not returns until the headset is taken off.
+	
+			// This "while ( HendleMessages... )" call is not the main loop. It is here as a wait for a bit to get going; notice the sleep call.
+				// Meaning, there is another "while(HandleMessages..)" in the static MainLoop function.
+	 	       while (HandleMessages())
+        		{
+	        	    // true => we'll attempt to retry for ovrError_DisplayLost
+	        	    if (!MainLoop(true))
+        	        	break;
+	        	    // Sleep a bit before retrying to reduce CPU load while the HMD is disconnected
+	        	    Sleep(10);
+        		}
+
+		}
+		
+	} // end of DirectX struct
+
+
+
+
+
+
+
+
+
+
+
+
