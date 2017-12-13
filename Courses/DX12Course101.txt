@@ -221,7 +221,9 @@ Proj_DX12AddWindowsMessageLoop - NO NEW DIRECTORY - DO NOT create this directory
 Proj_DX12CommandQueue 
 	Open the visual studio solution.  It is located in the directory you just created for the github repository. 
 		For example, for me it is: C:\modules\Davant\DX12Course101\Dx12CourseApp\
-
+	
+	Design...
+		
 
 
 WORKING HERE.. just finished the last lesson. This one has not been started.
