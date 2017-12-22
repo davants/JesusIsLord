@@ -1,0 +1,20 @@
+This doc is not a lesson. It is just a doc to keep notes as I learn about bullet and physics engines.
+
+Term: Collision Groups and Masks
+	https://blender.stackexchange.com/questions/21286/collision-groups-and-mask
+
+Term: Broadphase
+	http://allenchou.net/2013/12/game-physics-broadphase/
+	Allen Chou 
+	A broadphase is the algorithm of choice to efficiently decide whether it is possible for two 
+	colliders to collide, without using the actual collision detection algorithm that is more expensive.
+	Typically, a broadphase keeps track of bounding volumes, usually AABBs, of all colliders. The 
+	broadphase produces a list of collider pairs whose AABBs are colliding. These collider pairs 
+	are then passed on to the collision detection algorithm to decide whether they actually collide.
+	...
+
+
+
+DTS: Objects are filtered down from boardphase to more detailed checks. 
+	At each phase, pairs of objects are created. The next detailed check can remove
+	objects(pairs) from the list.

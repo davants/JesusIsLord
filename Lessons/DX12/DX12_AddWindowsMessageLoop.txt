@@ -264,7 +264,26 @@ CODE:
 	return msg.wParam;
 END OF CODE
 
+Step 7.4) Update the destructor of the myDirectX class. In the destructor function we will call release on the DirectX objects.
+	To keep your code safe, check to see if the pointers are not null before calling release.
+CODE
+	myDirectX::~myDirectX()
+	{
+		if (mpDxgiFactory != nullptr)
+		{
+			mpDxgiFactory->Release();
+		}
 
+		if (mpHardwareAdapter != nullptr)
+		{
+			mpHardwareAdapter->Release();
+		}
+
+		if (mpD3dDevice != nullptr)
+		{
+			mpD3dDevice->Release();
+		}
+	}
 
 Compile and Run.
 You will see the message pop-up about the video card and then a real window. You can minimize it, maximize it and close it.

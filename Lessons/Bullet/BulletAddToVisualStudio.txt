@@ -1,0 +1,25 @@
+
+In Windows Explorer, copy the bullet "src" directory to the same location as your "main" file.
+This does not add the files to visual studio, just gets them in a good location on disk.
+
+Update the project properties to include the "src" directory as part of the include.
+	Project Properties -> VC++ Directories -- Include Directories .. set to  
+		set to $(ProjectDir)src
+
+Turn off pre-compiled headers
+	Project Properties -> C++ -> Precompiled Headers
+
+
+
+Add the following directories to Visual Studio project by dragging from Windows Explorer to the Visual Studio project.
+	BulletCollision
+	Bullet3Collision
+	BulletDynamics
+	LinearMath
+	BulletCommon
+	Bullet3Geometry
+	Dynamics
+	
+
+
+

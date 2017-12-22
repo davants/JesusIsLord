@@ -98,10 +98,21 @@ the objects for us.  The writers of these objects have a specific way to delete 
 to call the "Release()" function. This will do the job of disconnecting from the GPU and deleting resources.
 
 So, call delete on both the factory and the device. Add this code after you are done with the objects.
+Check to see if they are not null before calling their functions.
 
 Code:
-	vpD3dDevice->Release();
-	vpDxgiFactory->Release();
+	
+	
+	if (vpDxgiFactory != nullptr)
+	{
+		vpDxgiFactory->Release();
+	}
+
+
+	if (vpD3dDevice != nullptr)
+	{
+		vpD3dDevice->Release();
+	}
 
 
 

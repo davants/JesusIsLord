@@ -5,4 +5,126 @@ The application we create will not be exactly like the book. This will help you 
 This lesson picks up after completion of the DX12_AddWindowsMessageLoop lesson.  
 This lesson also assumes you are using github to save your code.
 
-Step 1)
+Previous Lessons
+	In previous lessons we have added and setup the following DirectX components:
+		IDXGIFactory4
+		ID3D12Device
+		IDXGIAdapter1
+	Other progress has been made by creating a class to contain these components.
+	We have also added the windows loop.
+	We are not building our code in github.
+
+
+Watch this video on queues - https://youtu.be/XuCbpw6Bj1U
+
+Notes:
+The printer example in the video is a good analogy for us. In our case, the printer is the GPU video card.
+We will add/insert commands to the GPU queue. The GPU will get the commands off the queue as fast as it can and run them; if there 
+is nothing in the queue the GPU will wait.
+In C++ we will be "Pushing/Inserting" commands at the tail of the queue, and the GPU will "Pop/Get" the commands at the head.
+
+
+Step 1) Add a command queue interface object to the myDirectX class that we already created. Add the following after 
+	the "mpHardwareAdapter" member property. Notice it is in the private area of the class.
+CODE: 
+	ID3D12CommandQueue * mpID3D12CommandQueue = nullptr;
+
+Step 2) Setup the command queue. Previously we created an initialization function in myDirectX class for the factory, device and 
+	adapter called "InitializeFactoryDeviceAndHardware()".
+	We will now create another initialization function for command objects like the command queue.
+	We could add the new code to the existing "InitializeFactoryDeviceAndHardware" function, but since it is already done and tested it 
+	is better to leave it alone.
+	Add a function declaration for the function named "InitializeCommandObjects" to the myDirectX class.
+	Place it below the "InitializeFactoryDeviceAndHardware" function so that it will be in the private section of the class.
+	It will not take any parameters, but will return an HRESULT.
+CODE:
+	HRESULT myDirectX::InitializeCommandObjects(void);
+	
+	Add an empty definition for the function in the myDirectX.cpp file as well.
+	
+Step 3) Our new function does not have any code yet, but let's go ahead and call the new function.  
+	In the public "Initialize" definition , call the new InitializeCommandObjects function after the
+	call to the InitializeFactoryDeviceAndHardware function.
+	However before calling it, check to see if the "InitializeFactoryDeviceAndHardware" function return with a S_OK HRESULT.
+	Here is what my Initialize functions definition looks like. Notice I reuse the HRESULT variable.
+CODE: Your Initialize function should look something like this.
+
+	HRESULT myDirectX::Initialize(void)
+	{
+		HRESULT hr;
+		// First Initialized the factory, device and adapter.
+		hr = InitializeFactoryDeviceAndHardware();
+
+		if (hr == S_OK)
+		{
+			// Next, Initialize the command objects.
+			hr = InitializeCommandObjects();
+		}
+
+		return hr;
+	}
+	
+	This makes sure the InitializeCommandObjects() function is called only if InitializeFactoryDeviceAndHardware was successful.
+	
+Step 4) Add the code to create the command queue to the InitializeCommandObjects function.
+	To create the command object we call the CreateCommandQueue function of the device objects we previously created.
+	We will give the CreateCommandQueue function our specifications in a struct named D3D12_COMMAND_QUEUE_DESC;
+	Create the struct object.
+	Set its "Type" property to D3D12_COMMAND_LIST_TYPE_DIRECT.
+	Set its "Flags" property to D3D12_COMMAND_QUEUE_FLAG_NONE.
+	The ID3D12Device class has the "CreateCommandQueue" function; we created the ID3D12Device object in a previous lesson.
+	Call the function passing the struct and the address of the command queue pointer variable we created above.
+	The "CreateCommandQueue" function returns the normal HRESULT.
+CODE	
+	HRESULT myDirectX::InitializeCommandObjects(void)
+	{
+		HRESULT vResult = E_FAIL;
+
+		D3D12_COMMAND_QUEUE_DESC queueDesc = {};
+		queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
+		queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
+		vResult = mpD3dDevice->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&mpID3D12CommandQueue));
+	
+		return vResult;
+	}
+
+	Notice the IID_PPV_ARGS(..) macro. We have used this before. It basically looks up the COM id number for 
+	the data-type passed, in our case ID3D12CommandQueue, and adds the extra parameter id number to our call to the "CreateCommandQueue" function.
+	
+	
+
+
+
+Step n) remove the popup that tells us we have an adapter, maybe have it say we have a queue...
+
+Step n) ToDo - add release code... step and notes
+
+	Reminder, since we are not using the COM pointer template, we have to call release ourselves.
+CODE - The destructor should now look like this.
+	
+	myDirectX::~myDirectX()
+	{
+		if (mpDxgiFactory != nullptr)
+		{
+			mpDxgiFactory->Release();
+		}
+
+		if (mpHardwareAdapter != nullptr)
+		{
+			mpHardwareAdapter->Release();
+		}
+	
+		if (mpD3dDevice != nullptr)
+		{
+			mpD3dDevice->Release();
+		}
+	
+		if (mpID3D12CommandQueue != nullptr)
+		{
+			mpID3D12CommandQueue->Release();
+		}
+	}
+
+
+
+

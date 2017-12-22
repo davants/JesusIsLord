@@ -90,7 +90,15 @@ else if( riid = 13)
 ...
 
 
-
+Step 4) The last thing to do is call "Release()" for this factory object. This is how COM deallocates its objects.
+	First check to see that it is not null and then call Release.
+	Place this at the end of the program in main.
+	
+CODE
+	if (mpDxgiFactory != nullptr)
+	{
+		mpDxgiFactory->Release();
+	}
 
 
 

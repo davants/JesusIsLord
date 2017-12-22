@@ -96,4 +96,12 @@ CppWindowsLoop
 
 CppStaticVariableInAClass
 	static
+	
+CppVisualStudioLinkingProjects
+	dll
+	dynamic link library
+	static link library
+	projects
+	
+	
 
