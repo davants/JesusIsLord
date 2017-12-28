@@ -4,15 +4,15 @@ This document provides some extra notes to myself, along with Oculus notes, on t
 
 
 High Level items that were confusing:
-	There is only one command queue for the entire application. This fulfils the requirement that the command queue that creates the swap chain
+	There is only one command queue for the entire application. This fulfills the requirement that the command queue that creates the swap chain
 	must be the same one that is used for rendering, or as a join. 
 		see https://developer3.oculus.com/doc/1.4.0-libovr/_o_v_r___c_a_p_i___d3_d_8h.html#a0e752b4cb9bdef45905c2d2bdbe4604a
 
 	There is a swap chain for each eye and each swap chain has 3 render targets. Why? Just because, this is how they implemented it.
 		A swap chain comes with certain functionality. Looping through its own targets it one of them. 
 
-	There are 4 frame resourses, each with 3 command lists and command allocators. However, there is only one command queue.
-		Each frame resource has a command list for each eye and one for the mirror totalling three.
+	There are 4 frame resources, each with 3 command lists and command allocators. However, there is only one command queue.
+		Each frame resource has a command list for each eye and one for the mirror totaling three.
 
 
 ----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ Oculus Tiny Room Sample Notes
 	WinMain
 	{
 		// Initializes LibOVR, and the Rift
-		// checks the oculus API library, version, etc. Does not create targets or swap chain or anything like that.
+		// checks the Oculus API library, version, etc. Does not create targets or swap chain or anything like that.
 		ovr_Initialize( given the version of Oculus ); 
 			
 		// Sets the static WindowsProc function. More details below if needed.
@@ -90,8 +90,8 @@ Oculus Tiny Room Sample Notes
 		eyeRenderDesc[0] = ovr_GetRenderDesc(session, ovrEye_Left, hmdDesc.DefaultEyeFov[0]);
 		eyeRenderDesc[1] = ovr_GetRenderDesc(session, ovrEye_Right, hmdDesc.DefaultEyeFov[1]);
 
-		// This is an important int. The index is used to sync all the various theads so things can stay organized.
-		// 	This is incremented as a last step the the main loop below.
+		// This is an important int. The index is used to sync all the various threads so things can stay organized.
+		// 	This is incremented as a last step in the main loop below.
 		// Oculus Notes:		
 		//	The frameIndex argument specifies which application frame we are rendering. 
 		//	Applications that make use of multi-threaded rendering must keep an internal frame index and manually 
@@ -139,10 +139,10 @@ Oculus Tiny Room Sample Notes
 	
 					DIRECTX.SetActiveEye(eye);
 
-					// Create a barrier desciption to transition the current render target.
+					// Create a barrier description to transition the current render target.
 					// 	There are 2 OculusEyeTexture objects in the pEyeRenderTexture array. Each has a swap chain.
 					//	It is calling ..->GetD3DResource() of the OculusEyeTexture object asks the swap chain for the current 
-					// 	index which is then used to get the ID3DResource for the cooresponding render target.
+					// 	index which is then used to get the ID3DResource for the corresponding render target.
 					CD3DX12_RESOURCE_BARRIER resBar = CD3DX12_RESOURCE_BARRIER::Transition(pEyeRenderTexture[eye]->GetD3DResource(),
 						D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 						D3D12_RESOURCE_STATE_RENDER_TARGET);
@@ -215,7 +215,7 @@ Oculus Tiny Room Sample Notes
 					ld.SensorSampleTime = sensorSampleTime;
 				}
 
-				// This sample only has one layer, but more could be added like the control pannel or head-up display.
+				// This sample only has one layer, but more could be added like the control panel or heads-up display.
 				ovrLayerHeader* layers = &ld.Header;
 	
 				// As per the documentation - https://developer.oculus.com/documentation/pcsdk/latest/concepts/dg-render/#dg_render
@@ -230,14 +230,14 @@ Oculus Tiny Room Sample Notes
 				//				before presenting it to the headset. 
 				// 
 				// Notice we are giving the submit frame function the swap chain for both eyes, through the layer object!!
-				// 	This is how it is able to wait corretly!!!
+				// 	This is how it is able to wait correctly!!!
 				result = ovr_SubmitFrame(session, frameIndex, nullptr, &layers, 1);
 				// exit the rendering loop if submit returns an error, will retry on ovrError_DisplayLost
 				if (!OVR_SUCCESS(result))
 					goto Done;
 
 				// Increment the frame index.
-				frameIndex++; // See notes above, at its instanciation, about this variable.
+				frameIndex++; // See notes above, at its instantiation, about this variable.
 
 			}// end - if (sessionStatus.IsVisible) 
 
@@ -372,14 +372,14 @@ Oculus Tiny Room Sample Notes
     		{
         		ID3D12CommandAllocator*         CommandAllocators[DrawContext_Count]; // 3 - 2 eyes and mirror
         		ID3D12GraphicsCommandList*      CommandLists[DrawContext_Count]; // 3 - 2 eyes and mirror
-        		bool                            CommandListSubmitted[DrawContext_Count]; // 3 - 2 eyes and mirror
+        		bool                            CommandListSubmitted[DrawContext_Count]; // 3 - 2 eyes and mirror 
 
-			// Miror (screen) Resources!!!!!! ONLY!!!! 
+			// Mirror (screen) Resources!!!!!! ONLY!!!! 
 			// This is very confusing!!!  These resources are not used by Oculus, only the mirror. HOWEVER, the command allocators listed in this
 			// same struct ARE USED!!!  
 			// Bad design for learning this stuff. This "SwapChainFrameResources" struct is just the next available 
 			// command list and allocator regardless of the eye swap chain target we are using. 
-			// So adding this mirror target was very confusing. The Oculus targets are in seperate structures, the mirror should be as
+			// So adding this mirror target was very confusing. The Oculus targets are in separate structures, the mirror should be as
 			// well because when you are learning this example you are left thinking they are somehow connected to the HMD.
         		ID3D12Resource*                 SwapChainBuffer; // Mirror (screen) Rt
         		CD3DX12_CPU_DESCRIPTOR_HANDLE   SwapChainRtvHandle; // Mirror (screen)
