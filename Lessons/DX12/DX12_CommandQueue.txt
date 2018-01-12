@@ -1,6 +1,6 @@
 DX12CommandQueue
 
-This lesson will add a command queue. We will start reading the book to understand some basic GPU programming concepts.
+This lesson will add a command queue. 
 The application we create will not be exactly like the book. This will help you understand the concepts needed.
 This lesson picks up after completion of the DX12_AddWindowsMessageLoop lesson.  
 This lesson also assumes you are using github to save your code.
@@ -92,15 +92,10 @@ CODE
 	the data-type passed, in our case ID3D12CommandQueue, and adds the extra parameter id number to our call to the "CreateCommandQueue" function.
 	
 	
-
-
-
-Step n) remove the popup that tells us we have an adapter, maybe have it say we have a queue...
-
-Step n) ToDo - add release code... step and notes
+Step 5) ToDo - add release code... step and notes
 
 	Reminder, since we are not using the COM pointer template, we have to call release ourselves.
-CODE - The destructor should now look like this.
+CODE - The destructor should now look something like this.
 	
 	myDirectX::~myDirectX()
 	{
@@ -124,6 +119,49 @@ CODE - The destructor should now look like this.
 			mpID3D12CommandQueue->Release();
 		}
 	}
+
+
+Step 6) So far we have had a window pop-up "MessageBox" letting us know we have an adapter interface setup and its memory. 
+	This is only for testing and is not needed by our program. Remove the pop-up that tells us we have an adapter and 
+	add another message box to show the command queue was created. 
+	inform us we have a command queue.
+	
+CODE - In the function "HRESULT myDirectX::InitializeFactoryDeviceAndHardware(void)", comment out the MessageBox code.
+	//wstring vDedicatedVideoMemory = std::to_wstring(vDXGI_ADAPTER_DESC1.DedicatedVideoMemory);
+	//wstring vOutputMessage = L"Success - ID3D12Device was created and the video card memory is " + vDedicatedVideoMemory;
+	//MessageBox(nullptr, vOutputMessage.c_str(), L"Working!!", MB_OK);
+
+	
+CODE - In the function "HRESULT myDirectX::InitializeCommandObjects(void)", add the following before the statement "return vResult;". 
+
+	if (vResult == S_OK)
+	{
+		wstring vOutputMessage = L"Success - ID3D12CommandQueue was created";
+		MessageBox(nullptr, vOutputMessage.c_str(), L"Working!!", MB_OK);
+	}
+	else
+	{
+		MessageBox(nullptr, L"FAIL, ID3D12CommandQueue was not created!", L"Working, but we have a problem!", MB_OK);
+	}
+
+
+Step 7) Compile and run your code. You should see the message box indicating the command queue was created.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

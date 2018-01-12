@@ -1,13 +1,13 @@
 Github_Tag
 
 After you have pushed your code into the cloud you can "Pull" the code to another computer.
-If you make an update to your code and then commit and then push again, the new code will be in the cloud repository.
+On this other computer, if you make an update to the code and then commit and then push again, the new code will be in the cloud repository.
 
 Let's say you pushed 3 weeks ago because you were at a good stopping point and everything was working.
-Then 2 weeks ago, you added a new feature and again commited and pushed.
-Then last week you made another change and again commited and pushed.
+Then 2 weeks ago, you added a new feature and again committed and pushed.
+Then last week you made another change and again committed and pushed.
 
-A friend wants to get your code, but you know he should get the one from 2 week ago because the lastest one is not tested yet.
+A friend wants to get your code, but you know he should get the one from 2 week ago because the latests one is not tested yet.
 
 How do you do this?
 
@@ -28,13 +28,15 @@ Here is a web page on this. https://git-scm.com/book/en/v2/Git-Basics-Tagging
 
 Step 1) You cannot Tag in the github GUI application, you must do it from the command line; however, you can get to the 
 	command line from the GUI.
-	Select "Repository" then "Open in Command Prompt".
+	Select "Repository" then "Open in Command Prompt". - You may have to load the git command line tool. It will prompt you if
+		you need to load the command line tool. Use the standard settings. After loading, you will have to close the Github 
+		desktop app and re-open it.
 	You will see the command prompt application open.
-Step 2) Type "git tag YOUR TAG NAME WITH NO SPACES"
+Step 2) Type "git tag YOUR_TAG_NAME_WITH_NO_SPACES"
 	For example: git tag v1.001
 
 Step 3) If you want the update the server so it is also has the tag, do the following on the command line.
-	git push origin YOUR TAG NAME WITH NO SPACES
+	git push origin YOUR_TAG_NAME_WITH_NO_SPACES
 
 
 Done! 
@@ -44,3 +46,6 @@ Step 4) Validate that everything worked using the github web site.
 	Below the name of the app, you will see 4 links "# commits" "# branch" "# release" "# contributor"
 	Click the "# release" link.  (# should be 1 if this is your first tag)
 	You will see the tag name. Now you or others can get your code at that point in time.
+
+	
+	

@@ -21,3 +21,19 @@ DX12_ComAndAdaptorToCreateID3D12Device
 	ID3D12Device
 	wstring
 	
+	
+Proj_DX12AddWindowsMessageLoop
+		Windows loop		
+	
+DX12_CommandQueue
+	ID3D12CommandQueue
+	
+DX12CommandListAndCommandAllocator
+	ID3D12CommandAllocator
+	ID3D12GraphicsCommandList
+	ID3D12CommandQueue
+	An explanation of how these 3 work together is given.
+	
+	
+	
+	

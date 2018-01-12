@@ -15,4 +15,10 @@ Github_GetARepository.txt
 
 Github_Pull
 	Pull - This lesson covers the difference between "Clone" and "Pull".
+	
+Github_Tag
+	Tag - Tag your cloud version so save it at one point in time.
+	Release
+	Label
+	
 

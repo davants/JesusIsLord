@@ -211,6 +211,8 @@ Proj_DX12AddWindowsMessageLoop - NO NEW DIRECTORY - DO NOT create this directory
 	This means the program from this lesson will have a windows message loop and the DirectX components from the DX lessons we have so far.
 	This lesson will start to use github to keep your code files.
 
+	Complete lesson DX12_AddWindowsMessageLoop.
+	
 	Git Tag lesson
 		Now that you have updated github, it is time to "TAG" your code. Tagging your code creates a "Point in Time" copy
 		of your code. 
@@ -222,31 +224,23 @@ Proj_DX12CommandQueue
 	Open the visual studio solution.  It is located in the directory you just created for the github repository. 
 		For example, for me it is: C:\modules\Davant\DX12Course101\Dx12CourseApp\
 	
-	in-progress
-		
+	Complete lesson DX12_CommandQueue.
+	
+	Github - "Commit to Master", give it a nice summary name, and then "Push origin" which will push it to the github cloud.
+	
+	Git Tag lesson
+		Now that you have updated github, it is time to "TAG" your code. Tagging your code creates a "Point in Time" copy
+		of your code. 
+		Review the github lesson "Github_Tag", and use the tag "v1.002_Proj_DX12CommandQueue" to tag your project.
+		Using a browser, go to your online github repository and see if you see the new tag under "releases".
+	
 
 
-WORKING HERE.. just finished the last lesson. This one has not been started.
-
-
-
-	ToDo - create lesson
-
-		!!! NOTE - this one will NOT copy from the previous folder, they will create a new folder and download the reporitory from github!!!
-		
-
-
-
-
-
-
-
-
-
-
-
-Proj_DX12CommandListAndCommandAllocator
-	ToDo - create lesson - this will include the command allocator
+	
+Proj_DX12CommandListAndCommandAllocator	
+	WORKING HERE...  
+	
+	
 
 Proj_DX12SwapChain
 	ToDo - create lesson

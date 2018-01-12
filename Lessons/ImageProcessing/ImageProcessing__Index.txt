@@ -1,0 +1,29 @@
+This group of lessons are focused on image processing related to DirectX.
+This is a list for searching purposes.  
+
+Per article https://blogs.msdn.microsoft.com/chuckw/2012/05/04/direct3d-11-textures-and-block-compression/
+DirectXTex is the latest library that will support many image loading bitmaps, resizing and converting them, generating mipmaps, 
+compressing, and then writing them out as .DDS files. 
+
+The D3DX library is retired.
+
+
+
+Done - Read article above.
+Done - Download code from github - https://github.com/Microsoft/DirectXTex to C:\modules\Davant\ImageProcessing
+ToDo - Run...  DirectXTex_Desktop_2017.sln 
+		There is another project called "DirectXTex_Desktop_2017_Win10.sln", it does not have the samples, just the library.
+
+ToDo - Read the "ReadMe.txt" for the source code on github.
+
+		
+Working here... 
+
+
+
+
+
+
+	
+	
+	

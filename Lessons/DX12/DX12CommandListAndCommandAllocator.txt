@@ -1,0 +1,94 @@
+DX12CommandListAndCommandAllocator
+
+This lesson will add two command objects, the command list and the command allocator.
+	ID3D12CommandAllocator
+	ID3D12GraphicsCommandList
+
+
+
+Previous Lessons
+	In previous lessons 
+	ID3D12CommandQueue
+	Other progress has been made by creating a class to contain DirectX components.
+	We have also added the windows loop.
+	We are not building our code in github.
+
+Notes:
+	To program/control the GPU, which means give it work to it, we use the interface objects we have been creating.
+	Sometimes when we call the DirectX API the GPU performs the action immediately and we know the GPU is done when the 
+	DirectX API function returns. These DirectX API functions do not use the command queue, they just perform the 
+	action at that moment.
+	Other times we add commands to a command queue and they are NOT done immediately; the GPU will execute them as soon as it 
+	can, this is the command queue.
+	This lesson is about creating the DirectX API objects needed to add commands to the command queue.
+	We will not add commands yet, just create the DirectX objects and get them ready to accept commands which we will do
+	in a future lesson.
+	
+	Commands are added to the command queue in groups.  Meaning, instead giving the queue one command at a time, we add 10 at a time.
+	The GPU will grab the group of commands and run them. The group of commands are run by the GPU in the order they 
+	were placed in the group.
+	
+	So how do we create a group of commands? We use the command allocator and the command list.
+	
+	The group of commands are kept in the command allocator. This stores the commands.
+	So what is the command list for then?  The command list "records" the commands into the command allocator.
+	
+	Think of the command allocator as a piece of paper where you can write commands.
+	Think of the command list as the pencil that "records" the commands on the piece of paper.
+	
+	After you have "recorded" several commands on the piece of paper you can put the piece of paper in the 
+	command queue for future processing. Once you put the piece of paper in the command queue, 
+	you should leave that piece of paper alone until you are sure the GPU has taken it out of the command queue and 
+	run all the commands on the paper.  The GPU will run the commands on the paper (command allocator) in the 
+	order they were recorded.
+	
+	Again, in this example, the command list is the pencil that writes down the commands on a piece of paper. The process of writing the
+	commands on the paper is called "recording". The piece of paper is the command allocator.  After recording to a piece of paper, 
+	you will put that piece of paper in the command queue so the GPU can get your commands.  The command queue can hold many pieces of
+	paper and will get to yours as soon as it can.
+	An example of the commands we would record on the command allocator would be something like the following.
+		Record the command to clear the screen so we can start fresh.
+		Record the command showing the GPU where the triangles are for the geometry shape we want it to draw.
+		Record the command to "draw" various shapes; which would draw the graphics to the screen.
+	
+	We will not record any command in this lesson, just create the command allocator (paper) and the command list (pencil).
+	
+	
+WORKING HERE...	
+	
+	
+Add 
+	FROM oculus...
+		
+	    ID3D12CommandAllocator*         CommandAllocators[DrawContext_Count];
+        ID3D12GraphicsCommandList*      CommandLists[DrawContext_Count];
+		Device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&frameRes.CommandAllocators[contextIdx]));
+		
+		///
+                hr = Device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, frameRes.CommandAllocators[contextIdx],
+                    nullptr, IID_PPV_ARGS(&frameRes.CommandLists[contextIdx]));
+                VALIDATE((hr == ERROR_SUCCESS), "CreateCommandList failed");
+                frameRes.CommandLists[contextIdx]->Close();
+  
+	
+	basicall the same...
+		
+	book
+	
+		ThrowIfFailed(md3dDevice->CreateCommandAllocator(
+		D3D12_COMMAND_LIST_TYPE_DIRECT,
+		IID_PPV_ARGS(mDirectCmdListAlloc.GetAddressOf())));
+
+	ThrowIfFailed(md3dDevice->CreateCommandList(
+		0,
+		D3D12_COMMAND_LIST_TYPE_DIRECT,
+		mDirectCmdListAlloc.Get(), // Associated command allocator
+		nullptr,                   // Initial PipelineStateObject
+		IID_PPV_ARGS(mCommandList.GetAddressOf())));
+
+		mCommandList->Close();
+	
+	
+	
+	
+	
