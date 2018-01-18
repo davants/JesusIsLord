@@ -53,41 +53,138 @@ Notes:
 	
 	We will not record any command in this lesson, just create the command allocator (paper) and the command list (pencil).
 	
-	
-WORKING HERE...	
-	
-	
-Add 
-	FROM oculus...
+Step 1) Add the command allocator and command list pointers to the myDirectX class as private properties.
+	Add them below the command queue pointer you added in an earlier lesson.
 		
-	    ID3D12CommandAllocator*         CommandAllocators[DrawContext_Count];
-        ID3D12GraphicsCommandList*      CommandLists[DrawContext_Count];
-		Device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&frameRes.CommandAllocators[contextIdx]));
-		
-		///
-                hr = Device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, frameRes.CommandAllocators[contextIdx],
-                    nullptr, IID_PPV_ARGS(&frameRes.CommandLists[contextIdx]));
-                VALIDATE((hr == ERROR_SUCCESS), "CreateCommandList failed");
-                frameRes.CommandLists[contextIdx]->Close();
-  
+CODE
+	ID3D12CommandAllocator * mpID3D12CommandAllocator = nullptr;
+	ID3D12GraphicsCommandList * mpID3D12GraphicsCommandList = nullptr;
 	
-	basicall the same...
-		
-	book
+Notes	
+	We first create the command allocator because to create the command list you must already have the command allocator.
+	Add code to check the HRESULT after all the command objects and do not continue if there is an error.
 	
-		ThrowIfFailed(md3dDevice->CreateCommandAllocator(
-		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		IID_PPV_ARGS(mDirectCmdListAlloc.GetAddressOf())));
+Step 2) Add the initialization code for the command allocator to the existing "InitializeCommandObjects(void)" function.
+	Add this code after the command queue initialization code.
+	Add code to check the HRESULT after all the command objects and do not continue if there is an error.
+	
+CODE
+	// Now the command allocator
+	vResult = mpD3dDevice->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&mpID3D12CommandAllocator));
 
-	ThrowIfFailed(md3dDevice->CreateCommandList(
-		0,
-		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		mDirectCmdListAlloc.Get(), // Associated command allocator
-		nullptr,                   // Initial PipelineStateObject
-		IID_PPV_ARGS(mCommandList.GetAddressOf())));
-
-		mCommandList->Close();
+	if (vResult != S_OK)
+	{
+		MessageBox(nullptr, L"FAIL, Command Allocator was not created!", L"Working, but we have a problem!", MB_OK);
+		return;
+	}
 	
+	
+Step 3) Add the initialization code for the command list to the existing "InitializeCommandObjects(void)" function.
+	Add this code after the command allocator initialization code.
+	Notice the "CreateCommandList" DirectX function also takes in the Command allocator so it can give it to the 
+	command list.
+	Add code to check the HRESULT after all the command objects and do not continue if there is an error.
+	
+CODE
+	// Now the command list
+	vResult = mpD3dDevice->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, mpID3D12CommandAllocator, nullptr, 
+		IID_PPV_ARGS(&mpID3D12GraphicsCommandList));
+		
+	if (vResult != S_OK)
+	{
+		MessageBox(nullptr, L"FAIL, Command List was not created!", L"Working, but we have a problem!", MB_OK);
+		return;
+	}
+	
+Step 4) Close the command list. 
+	When a command list is created it is open. We will close it for now.
+	
+CODE
+	mpID3D12GraphicsCommandList->Close();
+
+Step 5) Add the "Success" pop-up message box at the end of the InitializeCommandObjects function just to test things for now.
+	This can be removed later. If there is already a "success" pop-up earlier in the function you can remove it in favor of this one.
+	
+CODE
+	if (vResult == S_OK)
+	{
+		wstring vOutputMessage = L"Success - Command Objects were created";
+		MessageBox(nullptr, vOutputMessage.c_str(), L"Working!!", MB_OK);
+	}
+	
+Step 6) Deallocate the new objects in the myDirectX destructor. Remember, a destructor function automatically gets called when 
+	the object is deleted. Meaning, when myDirectX gets deleted the destructor function will get called.
+
+CODE	
+	if (mpID3D12CommandAllocator != nullptr)
+	{
+		mpID3D12CommandAllocator->Release();
+	}
+
+	if (mpID3D12GraphicsCommandList != nullptr)
+	{
+		mpID3D12GraphicsCommandList->Release();
+	}
+	
+	
+	
+	
+Done!
+
+Run and test your code.
+
+	
+	
+Here is the complete definition code for the InitializeCommandObjects() function.
+	
+HRESULT myDirectX::InitializeCommandObjects(void)
+{
+	HRESULT vResult = E_FAIL;
+
+	D3D12_COMMAND_QUEUE_DESC queueDesc = {};
+	queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
+	queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
+	vResult = mpD3dDevice->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&mpID3D12CommandQueue));
+	
+	if(vResult != S_OK)
+	{
+		MessageBox(nullptr, L"FAIL, ID3D12CommandQueue was not created!", L"Working, but we have a problem!", MB_OK);
+		return vResult;
+	}
+	
+	// Now the command allocator
+	vResult = mpD3dDevice->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&mpID3D12CommandAllocator));
+
+	if (vResult != S_OK)
+	{
+		MessageBox(nullptr, L"FAIL, Command Allocator was not created!", L"Working, but we have a problem!", MB_OK);
+		return vResult;
+	}
+
+	// Now the command list
+	vResult = mpD3dDevice->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, mpID3D12CommandAllocator, nullptr, 
+		IID_PPV_ARGS(&mpID3D12GraphicsCommandList));
+		
+	if (vResult != S_OK)
+	{
+		MessageBox(nullptr, L"FAIL, Command List was not created!", L"Working, but we have a problem!", MB_OK);
+		return vResult;
+	}
+
+	mpID3D12GraphicsCommandList->Close();	
+
+	if (vResult == S_OK)
+	{
+		wstring vOutputMessage = L"Success - Command Objects were created";
+		MessageBox(nullptr, vOutputMessage.c_str(), L"Working!!", MB_OK);
+	}
+
+	return vResult;
+}
+	
+	
+	
+
 	
 	
 	

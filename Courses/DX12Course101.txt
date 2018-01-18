@@ -217,7 +217,7 @@ Proj_DX12AddWindowsMessageLoop - NO NEW DIRECTORY - DO NOT create this directory
 		Now that you have updated github, it is time to "TAG" your code. Tagging your code creates a "Point in Time" copy
 		of your code. 
 		Review the github lesson "Github_Tag", and use the tag "v1.001_DX12_AddWindowsMessageLoop" to tag your project.
-	
+
 
 
 Proj_DX12CommandQueue 
@@ -233,16 +233,30 @@ Proj_DX12CommandQueue
 		of your code. 
 		Review the github lesson "Github_Tag", and use the tag "v1.002_Proj_DX12CommandQueue" to tag your project.
 		Using a browser, go to your online github repository and see if you see the new tag under "releases".
-	
 
 
-	
 Proj_DX12CommandListAndCommandAllocator	
-	WORKING HERE...  
+	Open the visual studio solution.  It is located in the directory you just created for the github repository. 
+		For example, for me it is: C:\modules\Davant\DX12Course101\Dx12CourseApp\
+
+	Complete lesson DX12CommandListAndCommandAllocator.
 	
+	Github - "Commit to Master", give it a nice summary name, and then "Push origin" which will push it to the github cloud.
+	
+	Git Tag lesson
+		Now that you have updated github, it is time to "TAG" your code. Tagging your code creates a "Point in Time" copy
+		of your code. 
+		Review the github lesson "Github_Tag" if needed, and use the tag "v1.003_Proj_DX12CommandListAndCommandAllocator" 
+		to tag your project.
+		Using a browser, go to your online github repository and see if you see the new tag under "releases".
+		
+		
+Proj_DX12SwapChain
+
+	WORKING HERE...  
+		not started yet...
 	
 
-Proj_DX12SwapChain
 	ToDo - create lesson
 
 Proj_.... What else is needed to paint a blue screen????
