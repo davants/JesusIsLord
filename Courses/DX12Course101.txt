@@ -1,9 +1,9 @@
 This course has a set of projects that will help you program in DirectX.  This is a very long road but rewarding.
 
 Complete each project as listed below. Some projects are lessons.  The lesson may have its own sub-projects. 
-If you have already done one of the projects, just read through it but don't do the work.
+If you have already done one of the projects, just re-read them but you don't have to do the work.
+If you have already done them, but don't remember them; you need to do them again.
 
-DO NOT PUT ANY ORDER IN THE PROJECT NAMES!
 
 
 -----------------------------------------
@@ -11,6 +11,19 @@ Projects
 Place all work in the following directory structure: c:/modules/YourName/DX12Course101/ProjectNameHere/...
 
 After several lessons, we will start to use github, an online place to put your code, so the directory will not change after that is started.
+
+
+
+This course takes you to creating a box on the screen using DirectX.
+This course is a combination of C++ lessons and DirectX lesson.
+
+At the bottom of this document is APPENDIX A. 
+APPENDIX A is a high level list of DirectX objects and API calls that we will be building/working toward.
+After each DirectX lesson, you can see how each lesson's components fix into the larger application.
+
+-------------------------------------------
+
+
 
 
 
@@ -252,66 +265,94 @@ Proj_DX12CommandListAndCommandAllocator
 		
 		
 Proj_DX12SwapChain
+	Open the visual studio solution.  
+		For example, for me it is: C:\modules\Davant\DX12Course101\Dx12CourseApp\
 
-	WORKING HERE...  
-		not started yet...
+	Complete lesson DX12_SwapChain.
+	
+	Github - "Commit to Master", give it a nice summary name, and then "Push origin" which will push it to the github cloud.
+	
+	Git Tag lesson
+		Now that you have updated github, it is time to "TAG" your code. Tagging your code creates a "Point in Time" copy
+		of your code. 
+		Review the github lesson "Github_Tag" if needed, and use the tag "v1.004_Proj_DX12_SwapChain" 
+		to tag your project.
+		Using a browser, go to your online github repository and see if you see the new tag under "releases".
+
+		
 	
 
-	ToDo - create lesson
-
-Proj_.... What else is needed to paint a blue screen????
+	
 
 
 
 
 
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
 
+APPENDIX A - High Level Components and API Calls
 
+DirectX Application
 
+	On Application Startup - create and initialize the following:
+		Window's window and message loop
+		IDXGIFactory4 * mpDxgiFactory;
+		ID3D12Device * mpD3dDevice;
+		IDXGIAdapter1 * mpHardwareAdapter;
+		ID3D12CommandQueue * mpID3D12CommandQueue;
+		ID3D12CommandAllocator * mpID3D12CommandAllocator;
+		ID3D12GraphicsCommandList * mpID3D12GraphicsCommandList;
+		IDXGISwapChain * name TBD;
+		ID3D12Fence * name TBD;
+		D3D12_VIEWPORT mScreenViewport;
+		D3D12_RECT mScissorRect;
+		ID3D12RootSignature  * name TBD;		
+		ID3D12DescriptorHeap mCbvHeap; // Constant Buffer View Descriptor Heap
+		ID3D12Resource mObjectCB; // Constant Buffer for World View Projection matrix
+		ID3D12Resource  * name TBD; // MeshGeometry Vertex Buffer
+		ID3D12Resource  * name TBD; // MeshGeometry Index Buffer		
+		ID3DBlob mvsByteCode; // Vertex Shader Byte code
+		ID3DBlob mpsByteCode; // Pixel Shader Byte Code		
+		D3D12_INPUT_ELEMENT_DESC mInputLayout; 		
+		ID3D12PipelineState mPSO; // Pipeline State objects		
+		XMFLOAT4X4 mWorld; // Holds the World Space transformation.
+		XMFLOAT4X4 mView; // Holds the View/Camera Space transformation.
+		XMFLOAT4X4 mProj; // Holds the Projection transformation.
+		
+		ToDo - There are several other supporting properties that need to be added.
+		
+	On Each Draw Call - 60+ times a seconds do the following:
+		Update()
+			In this example, the box is the only object and it is always at position 0,0,0.
+			Get the camera's position in world space.
+			Calculate the World View Projection matrix for the box. 
+			Update the GPU constant buffer resource that holds the world view projection for the
+			object by using the interface object mObjectCB we created when the game started.
 
-Working .. what is next in the book?
-	Go through chapter 4 and everywhere there is code that is in the ch 4 code sample, create a lesson to add that code.
-	After the entire chapter is accounted for, have the student read chapter 4.
-
-	Outline each section of the book and create content where needed.
-	4.1 - Preliminaries
-	4.1.1 - Direct3D 12 Overview - high level, no code needed
-	4.1.2 - Com - already covered in com lessons
-	4.1.3 - Texture Formats - high level
-	4.1.4 - Swap Chain and Page Flipping
-		Maybe create the swap chain and talk about textures.
-	4.1.5 - Depth Buffering
-		Maybe create this texture and review it.
-	4.1.6 - Resources and Descriptors
-		Maybe create descriptors if they are needed in the ch 4 code?
-	4.1.7 - Multisampling Theory
-		Notice the word "sampling" - later we will create a sampler.
-		Supersampling renders to 4 times the needed resolution.
-		Multisampling looks at the neighboring pixils and takes an average. This is faster.
-	4.1.8 - Multisampling in Direct3D
-		Multi sample section covers querying for support, but we use the next section "feature" levels.
-	4.1.9 - Feature Levels
-		Done - Lesson is done!
-	4.1.10 - DirectX Graphics Infrastructure
-		Done - Lesson is done, but add the Output Debug string
-		Done - Add a lesson that adds the Output Debug string. This should be a c++ lesson and not be part of the Dx lesson. 
-			Done - Create lesson				
-			Done - After done, add the lesson to this course above.  
-		Done - Next, add a 
-			DX lesson that adds this code to the adapter loop.
-	4.1.11 Checking Feature support
-	4.1.12 Residency - The book does not manage residency. By default, adding a resource makes it resident and deleting it makes it evicted.
-
-	4.2.1 The command queue and command list
-		WORKING HERE...
-			Create lesson above as this section is read.  
-				
-	4.2.2 CPU/GPU Synchronization
-		Try not to add this lesson until we have already send a command list to the GPU that paints the screen.
-		To make it work without synchonization, have the c++ code sleep for 10 seconds to make sure the old allocator is empty.
-
+		Draw()
 			
-Remember, try to create lessons for each thing if possible. One that teaches the thing and one that adds it to the DX project.
+			Draw the box by calling the draw indicies function.
+			
+			Wait for the fence to be cleared.
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 
 

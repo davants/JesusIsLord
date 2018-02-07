@@ -37,12 +37,15 @@ Notes:
 	Think of the command list as the pencil that "records" the commands on the piece of paper.
 	
 	After you have "recorded" several commands on the piece of paper you can put the piece of paper in the 
-	command queue for future processing. Once you put the piece of paper in the command queue, 
+	command queue for future processing. In this example, we write many commands on the paper and then give 
+	that paper to the command queue as a group of commands to be run. This is what happens in our code. We don't
+	just record one command on the command allocator and then add it to the queue, we actually record several commands
+	on the paper and then add commands as a group. 	Once you put the piece of paper in the command queue, 
 	you should leave that piece of paper alone until you are sure the GPU has taken it out of the command queue and 
 	run all the commands on the paper.  The GPU will run the commands on the paper (command allocator) in the 
-	order they were recorded.
+	order they were recorded on the paper.
 	
-	Again, in this example, the command list is the pencil that writes down the commands on a piece of paper. The process of writing the
+	Again, in this example, the command list is the pencil that writes down many commands on a piece of paper. The process of writing the
 	commands on the paper is called "recording". The piece of paper is the command allocator.  After recording to a piece of paper, 
 	you will put that piece of paper in the command queue so the GPU can get your commands.  The command queue can hold many pieces of
 	paper and will get to yours as soon as it can.

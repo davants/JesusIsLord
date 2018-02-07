@@ -1,0 +1,332 @@
+DX12SwapChain
+
+This lesson will create the swap chain.
+
+
+Video: https://youtu.be/IMB6410gcW8
+	Notes: We will not build the exact type of swap chain, but this video does cover what the swap chain is for.
+
+Video: MSAA is Multi-Sampled Anti-Aliasing. Simply put, it is a technique used to make images have smoother edges.
+	MSAA is a setting we specify when we create a swap chain. This video covers what it is about at a high level.
+	https://youtu.be/T2UMqmne4RA
+	This link also show a nice graphic giving an idea about sample counts.
+		https://msdn.microsoft.com/en-us/library/windows/desktop/ff476218(v=vs.85).aspx
+
+	
+Notes:
+	The swap chain keeps 2 images, one for what we see on the screen at this moment and one for DirectX to paint to.
+	The images can be any size we want; however, we want ours to match the size of the window we created.
+	The images are stored in data buffers on the GPU.
+	We call the buffer NOT being shown on the screen the back buffer.
+	Rendering is the process of painting our picture.
+	We render to the back buffer and when it is done we flip the two buffers so the screen shows the newly 
+	painted picture.
+	The back buffer we paint to is called the render target. Think of ourselves shooting data, colors, to the back 
+	buffer.
+	
+	
+Step 1) Add the DirectX swap chain interface object.
+	Add a pointer of type IDXGISwapChain to the myDirectX class in the private area below the 
+	other interface pointers. Initialize it to nullptr.
+CODE:
+	IDXGISwapChain * mpIDXGISwapChain = nullptr;
+
+Step 2) Call Release() in the destructor of the myDirect class.
+	Make sure to check if it is not null before calling the function Release().
+CODE:
+	if (mpIDXGISwapChain != nullptr)
+	{
+		mpIDXGISwapChain->Release();
+	}
+
+Step 3) Add the initialize function for the swap chain like we did for the factory and command objects.
+	In the private area of the myDirect class, add the following declaration.
+CODE:
+	HRESULT InitializeSwapChain(void);
+
+Step 4) Add an empty definition for this new method. NOTE: "Method" is the same thing as a 
+	function! Sometimes we like to call functions that are inside of classes "Methods".
+	
+CODE: You can use the Visual Studio "auto add definition" feature or copy this code to your myDirectX.cpp file.
+	HRESULT myDirectX::InitializeSwapChain(void)
+	{
+		return E_NOTIMPL;
+	}
+	
+Step 5) Like other objects we have created, we call a function that takes a struct that "describes" the settings we want.
+	The struct that holds the settings we want is called DXGI_SWAP_CHAIN_DESC.  Note, the "DESC" at the end of the name
+	stands for "Description". If we didn't have a struct, we would have to call a function with a lot of parameters.
+	Add the following to the InitializeSwapChain function.
+CODE: 
+	DXGI_SWAP_CHAIN_DESC sd;
+	
+	
+	
+Step 6.1) We need to do some cleanup before we create the swap chain.  Because the swap chain keeps the render targets that
+	will be presented to our windows, we need to make sure they are the same number of pixels for width and height.
+	The best way to do this is to create two properties in the myDirectX class to hold this information and have both
+	the window and the swap chain use these properties.
+	Add the following two int values to the myDirectX class. When we created the window originally we used 500 width and 400 
+	height; however, we will change this to 800 and 600.
+	These new class properties should go in the private section.
+	
+CODE: in the myDirectX.h file in the private area of the class.
+	int mRenderTargetWidth = 800;
+	int mRenderTargetHeight = 600;
+
+Step 6.2) Next, create "get" functions for these two properties.		
+
+CODE: in the myDirectX.h file in the pubic area of the class.
+
+	int getRenderTargetWidth(void);
+	int getRenderTargetHeight(void);
+
+
+CODE: in the myDirectX.cpp file
+	int myDirectX::getRenderTargetWidth(void)
+	{
+		return mRenderTargetWidth;
+	}
+
+	int myDirectX::getRenderTargetHeight(void)
+	{
+		return mRenderTargetHeight;
+	}	
+	
+Step 7) Update the window height and width in the main function using these new functions in the myDirectX class.
+		Note: By "window" we mean the actual application screen that we asked Microsoft Windows creates for us in the 
+		main function. 
+	Originally we set the windows we created to 500 by 400. Go to the main function and change this to 800 by 600
+	by using the new get functions so the window will now match the swap chain buffers.
+	
+CODE: - UPDATE the old code	
+	RECT wr = { 0, 0, gMyDirectX.getRenderTargetWidth(), gMyDirectX.getRenderTargetHeight() };    // set the size, but not the position
+
+
+	
+	
+Step 8.1) Another piece of data the swap chain will need is the MSAA support.
+	You watched a video about MSAA, go back to the top and watch if you need to review it again. 
+	MSAA is Multi-Sampled Anti-Aliasing. We should be able to use 4 x multi-sampling because 
+	all Direct3D 11 capable devices support 4X MSAA for all render; however, I had some issues
+	with a laptop that does not have a real GPU. Even though the "Check Feature Levels" returned
+	as valid, when I tried to use a sample count of 4 I received an error. So, we will use a sample count of 1 just
+	to be safe.
+	We will still check the quality level.
+	We need to create a property that tracks the our GPU's support for MSAA. Add a variable to the myDirectX
+	class in the private area. 
+CODE: 
+     UINT      m4xMsaaQuality = 0;      
+
+Step 8.2) Now we want to set this variable when we setup the mpD3dDevice member property which we did in previous 
+	lessons. We are putting it here because it is the spot where we just created the ID3DDevice, so it is a good time
+	to get some information on it. We already ask it for its video memory in this same spot.
+	We did this in a function in the myDirectX class named "InitializeFactoryDeviceAndHardware(..)".
+	We will ask it about its quality level right after we ask about its memory.
+	
+CODE: - right after we set the code "mpHardwareAdapter->GetDesc1(&vDXGI_ADAPTER_DESC1);".
+	
+		// Check 4X MSAA quality support for our back buffer format.
+		// All Direct3D 11 capable devices support 4X MSAA for all render 
+		// target formats, so we only need to check quality support.
+
+		D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS msQualityLevels;
+		msQualityLevels.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		msQualityLevels.SampleCount = 1;
+		msQualityLevels.Flags = D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE;
+		msQualityLevels.NumQualityLevels = 0;
+		mpD3dDevice->CheckFeatureSupport(
+			D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS,
+			&msQualityLevels,
+			sizeof(msQualityLevels));
+
+		m4xMsaaQuality = msQualityLevels.NumQualityLevels;
+				
+		// https://msdn.microsoft.com/en-us/library/windows/desktop/bb173072(v=vs.85).aspx
+		// "The valid range is between zero and one less than the level returned by ..."
+		if (m4xMsaaQuality > 0)
+		{
+			m4xMsaaQuality--;
+		}
+	
+
+Step 9) The swap chain is used to send the finished rendered image to the "window". 
+		Note: By "window" we mean the actual application screen that we asked Microsoft Windows creates for 
+		us in the main function. 
+	This "window" is where we want out images to display. So, one last thing we have to have when we 
+	create the swap chain is the "window" handle.
+	We will add a "window" handle to the myDirectX class and also set it when we call the Initialize() function.
+	This means we will need to add a parameter to the Initialize function that is the "window" handle.
+	We will also need to move the call to the Initialize function until after we have created it in main.
+	
+	Step 9.1) In the main function, move the call to myDirectX Initialize function to after the "ShowWindow(hWnd, showCmd);"
+	line of code. Pass the handle to the "window". Note this will give an error until we are done changing the Initialize 
+	function.
+	Change 
+		From	
+			hr = gMyDirectX.Initialize();
+		To	
+			hr = gMyDirectX.Initialize(hWnd);
+
+CODE:
+	hr = gMyDirectX.Initialize(hWnd);
+
+	
+	Step 9.2) Add a member variable, property, to the myDirectX class.
+CODE:
+	HWND      mhMainWnd = nullptr; // handle to the application's "window"
+	
+	Step 9.3) Update the signature of the Initialize function to take one parameter of type HWND and have it
+		set the new property.
+		
+		Change 
+			From 	
+				HRESULT Initialize()
+			To
+				HRESULT Initialize(HWND vhMainWnd)
+
+CODE: in myDirectX.h file 
+	HRESULT Initialize(HWND vhMainWnd);
+
+CODE: in myDirectX.cpp file 
+	HRESULT myDirectX::Initialize(HWND vhMainWnd)
+	{
+		mhMainWnd = vhMainWnd;
+		
+		... previous code stays as is...
+
+		
+		
+	
+Step 10) We now have what we need to fill out the struct "DXGI_SWAP_CHAIN_DESC" which we will use to tell our GPU
+	what kind of swap chain we want.
+	Now we need to fill out the DXGI_SWAP_CHAIN_DESC object we named "sd" in an earlier step.
+	The DXGI_SWAP_CHAIN_DESC contains another struct property inside called "BufferDesc".
+		"BufferDesc" is where we set things like the image size and color type.
+	We will set what the buffer is used for, meaning "As a render target".
+	We will set the main "window" we want to draw to.
+	We will set how may swap chain buffers we want; 2 in our case so we can have a front buffer and back buffer.
+	There are some other things to set, the comments below will give insight as to what they are for.
+	In the InitializeSwapChain(...) function below the "DXGI_SWAP_CHAIN_DESC sd;".
+CODE: 	
+
+	// Render target width and height. The is the size of our screen which should match the window we created.
+	// We will set them our new member variables. The window also uses these same values so both will
+	// be the same.
+	sd.BufferDesc.Width = mRenderTargetWidth;
+	sd.BufferDesc.Height = mRenderTargetHeight;
+
+	// This is the refresh rate of the images we want on the screen. 	
+	sd.BufferDesc.RefreshRate.Numerator = 60;
+	sd.BufferDesc.RefreshRate.Denominator = 1;
+
+	// The swap chain will create the buffers and we need to specify what type of image format we want.
+	// We will use standard Red, Green, Blue, Alpha. (Alpha can be used for transparency).
+	// Notice the "R8", "G8", "B8". This means each pixel will hold an 8 bits (one byte) for each color plus alpha.
+	// This means that each pixel will be 4 bytes or 32 bits.
+	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+
+	// The next 2 we will not cover, but they need to be set.
+	sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+	sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+
+	// Sampling is covered later. Basically, it says to look at other pixels around each pixel and do a blend 
+	// to make things smoother.
+	// As I wrote above, you should be able to use 4 here, but we are using 1 just to make sure things run.
+	sd.SampleDesc.Count = 1;
+	sd.SampleDesc.Quality = m4xMsaaQuality; // This was already reduced by one.
+
+	// What are these buffers used for?  Render targets.
+	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+
+	// We want 2 buffers; front and back.
+	sd.BufferCount = 2;
+
+	// Set the Window's window to draw to.
+	sd.OutputWindow = mhMainWnd;
+
+	// Not full screen.
+	sd.Windowed = true;
+
+	// After we have used a buffer, throw away the data.
+	sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+
+	// Misc setting.
+	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+
+	HRESULT hr;
+
+	// Now create the swap chain using the struct we just filled out.
+	hr = mpDxgiFactory->CreateSwapChain(
+		mpID3D12CommandQueue,
+		&sd,
+		&mpIDXGISwapChain);
+
+	if (hr != S_OK)
+	{
+		throw(new exception("error creating swap chain"));
+	}
+
+	return hr;
+	
+	
+Step 11) - Add a pop-up window to show the swap chain was created.
+	Like we have done in the past, we will add a pop-up window to indicate the swap chain was created!
+	Step 11.1) First we will remove the pop-up in the myDirectX::InitializeCommandObjects(void) method/function. You can
+		find it toward the bottom. You can just comment it out.
+CODE: Comment Out Existing Code
+	//if (vResult == S_OK)
+	//{
+	//	wstring vOutputMessage = L"Success - Command Objects were created";
+	//	MessageBox(nullptr, vOutputMessage.c_str(), L"Working!!", MB_OK);
+	//}
+
+	Step 11.2) Second, add a pop-up window indicating the swap chain was created. This will go in the 
+		myDirectX::InitializeSwapChain(void) method right before the "return hr;" line of code.
+CODE:	
+
+	if (hr == S_OK)
+	{
+		wstring vOutputMessage = L"Success - The Swap Chain was Created!";
+		MessageBox(nullptr, vOutputMessage.c_str(), L"Working!!", MB_OK);
+	}	
+
+Step 12) - Call your new myDirectX::InitializeSwapChain() method from the myDirectX::Initialize(..) method.
+	In the Initialize(..) method, call your new method after the "if block" code that calls InitializeCommandObjects().
+CODE:
+	if (hr == S_OK)
+	{
+		hr = InitializeSwapChain();
+	}
+
+	The Initialize(..) method should now look something like this.
+	
+CODE EXAMPLE:
+	HRESULT myDirectX::Initialize(HWND vhMainWnd)
+	{
+		mhMainWnd = vhMainWnd;
+
+		HRESULT hr;
+		hr = InitializeFactoryDeviceAndHardware();
+
+		if (hr == S_OK)
+		{
+			hr = InitializeCommandObjects();
+		}
+
+		if (hr == S_OK)
+		{
+			hr = InitializeSwapChain();
+		}
+
+		return hr;
+	}	
+	
+	
+Step 12) - Run and test your code!
+
+
+	
+	
+	
+	

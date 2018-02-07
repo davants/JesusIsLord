@@ -1,0 +1,52 @@
+To understand the Oculus notes, you have to understand gama correction and linear workflow.
+
+Watch and study the folloiwng 2 videos:
+	Linear - what is it.  It is the absence of gama correction.
+		So the next question is.. what is gama correction.
+		
+	Excellent Video on Gama Correction - https://vimeo.com/8119194
+		0 to 256 - 8 bit (0 is black and 256 is white)
+		OR - you can do a range from 0 to 1.0, so halfway is 0.5 (or 128)
+		The spread is EVEN from black to white. Meaning 0.5, or 128, is a perfect gray (half).
+		If you lower the gama, say to 0.25, things get darker. Meaning, dark has a high percentage.		
+		This is used to get rid of the "too much shiny" problem.
+		The far white, 256, stays the same; however, the mid-tones have more darkness.
+		
+		Why do we need this? The monitors do a gama "correction" of their own, making things darker.
+		So, sRGB is a 2.2 gama correction to fix this back to 1.0. If you wanted to UN-DO a sRGB gama correction then 1/2.2 = 0.455
+		
+		When we take a picture, it is most often sRGB "Gama Corrected", meaning made brighter. Now 0.5 is no longer the middle. ;)
+				
+		A linear has a gama or 1.0; meaning, no "correction".
+	
+		Here is another video that covers gama and linear workflow. The first 6 minutes is all that is needed, it covers linear workflow.
+			https://vimeo.com/49932725
+	
+
+How does the format settings effect input and output to shaders?
+	https://msdn.microsoft.com/en-us/library/windows/desktop/hh972627(v=vs.85).aspx
+	
+	
+	KEY Takeaways - Main Points
+		Setting a render target view to _SRGB will convert your pixel shader output from Linear to SRGB.
+		Setting a shader resource view to _sRGB will convert the incoming texture color from SRGB to Linear.
+	
+	
+Now that you understand a bit about linear workflow and gama, the following Oculus notes will make more sense. 
+
+
+Oculus Documentation: https://developer.oculus.com/documentation/pcsdk/latest/concepts/dg-render/
+
+	DTS:
+		On this web page, the standard example for DX12 has the swap chain created as _SRGB.
+		On this web page, the standard example for DX12 has the View, Render target view, as no _SRGB.
+		
+	
+Confusion.. This article says that for Dx 12 the swap chain should not be set to sRGB, but only the
+	render target view. 
+	
+	https://blogs.msdn.microsoft.com/chuckw/2016/08/16/anatomy-of-direct3d-12-create-device/	
+	
+	
+	
+	
