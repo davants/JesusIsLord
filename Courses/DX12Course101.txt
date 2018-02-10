@@ -282,7 +282,9 @@ Proj_DX12SwapChain
 		
 	
 
-	
+Just finished swap chain and created tag on github.
+
+Plan next lesson...
 
 
 
