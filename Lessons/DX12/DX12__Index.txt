@@ -34,6 +34,11 @@ DX12CommandListAndCommandAllocator
 	ID3D12CommandQueue
 	An explanation of how these 3 work together is given.
 	
+DX12_SwapChain	
 	
-	
-	
+DX12_DXGI_SAMPLE_DESC	
+
+DX12_AddWindowsMessageLoop
+
+DX12_AddOutputDebugString
+

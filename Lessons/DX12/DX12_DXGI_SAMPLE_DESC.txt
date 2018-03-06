@@ -1,0 +1,41 @@
+DXGI_SAMPLE_DESC
+
+Notes from the book on 4.1.8 - Filling out the DXGI_SAMPLE_DESC struct (Section name in the book is multisampling)
+	We must fill out the DXGI_SAMPLE_DESC struct. We need this for both the swap chain and depth buffer.
+	Also along those lines, the back buffer and depth buffer must have the same multisampling count.
+	
+	DXGI_SAMPLE_DESC struct has 2 properties.
+		UINT Count; 
+		UINT Quality;
+	"Count" is the number of samples to take per pixel.
+	"Quality" is "Quality Level"; however, what this means changes across hardware. 
+		It depends on the texture format AND the number of samples to take per pixel!
+	
+	How do we fill this out? How do we get the values needed for this structure?
+	For a given format, you can query for the count and quality level.
+	We use the device interface function "CheckFeatureSupport" method/function.
+		Input is format, sample count and a flag about the multisampling we are checking for suppport.
+		Output from the call is the quality level.
+		
+		The value you get back can be used when creating the DXGI_SAMPLE_DESC.
+		The DX12_DXGI_SAMPLE_DESC.Quality property can be set from 0 to the value
+		returned by the "CheckFeatureSupport" (minus 1). Meaning you get to decide
+		what you want to use.
+
+
+We will not change the code we already have in place, but we do want to look at it.
+
+Review the class method "void myDirectX::InitializeFactoryDeviceAndHardware(void)".
+
+Notice we set the sample count to 1 for the query to mpD3dDevice->CheckFeatureSupport(..).
+
+Feel free to try different values to see what is supported; however, you do not have to do this
+if you don't want to. 
+
+Now look in the "HRESULT myDirectX::InitializeSwapChain(void)" class method.
+Notice the DXGI_SWAP_CHAIN_DESC struct we fill out has a DXGI_SAMPLE_DESC member named "SampleDesc".
+We set the count and Quality of that member.  
+
+In my code I set the count to 1; however, if you have reasonably new GPU you can set this to a higher value
+like 4.
+

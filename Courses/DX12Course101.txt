@@ -1,5 +1,11 @@
 This course has a set of projects that will help you program in DirectX.  This is a very long road but rewarding.
 
+This course uses the book "3D Game Programming with DirectX12"; however, the book is not used until the end
+because this assumes there are many areas of c++, and overall programming, that the student is not 
+familiar with and needs help. By the end of this course, many c++ concepts will be reviewed and then
+the book is used from that point on. The program built in this course is not exactly like the book sample
+on purpose. This is to force the student to understand and not copy/paste their way through the course.
+
 Complete each project as listed below. Some projects are lessons.  The lesson may have its own sub-projects. 
 If you have already done one of the projects, just re-read them but you don't have to do the work.
 If you have already done them, but don't remember them; you need to do them again.
@@ -23,6 +29,12 @@ After each DirectX lesson, you can see how each lesson's components fix into the
 
 -------------------------------------------
 
+
+
+Book - At some point in the course you will start reading the book "3D Game Programming with DirectX 12".
+	It might be a good idea to read chapter 4 and then start these lessons; however, if you are not
+	skilled in c++ you may need to wait and go though the lessons first. This is because these
+	lessons go beyond the book and contain c++ lessons along the way.
 
 
 
@@ -279,15 +291,53 @@ Proj_DX12SwapChain
 		to tag your project.
 		Using a browser, go to your online github repository and see if you see the new tag under "releases".
 
+	
+		
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+		
+BOOK - Time to Read!
+	OK, we have waited long enough and it's time to read the book!  
+	The first few chapters, 1-3, cover math and geometry so I will not focus on those at this point.
+	Read chapter 4 of the book "3D Game Programming with DirectX 12".
+		
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 		
 	
+Proj_DX12_DXGI_SAMPLE_DESC	
+	This lesson does not have any code changes unless you want to try different multisample count options.
+	It is here to review section 4.1.8 in the book.
 
-Just finished swap chain and created tag on github.
+	
+	
+Proj_Chapter4
+	Open the visual studio solution.  
+		For example, for me it is: C:\modules\Davant\DX12Course101\Dx12CourseApp\
 
-Plan next lesson...
+	From here on out, you will be using the book.  Use the book to finish the initialization of DirectX.
+	There are a few things still to do. Like the other objects that are setup, create functions for each
+	of the following components and member variables in your myDirectX class.
+	The following components still need to be added and initialized.
+	
+		Add "Render Target View Descriptor" and "Depth Stencil View Descriptor" Heaps
+		Add a Fence.
+	
+	Github - "Commit to Master", give it a nice summary name, and then "Push origin" which will push it to the github cloud.
+	
+	Git Tag lesson
+		Now that you have updated github, it is time to "TAG" your code. Tagging your code creates a "Point in Time" copy
+		of your code. 
+		Review the github lesson "Github_Tag" if needed, and use the tag "v1.005_Proj_Chapter4" 
+		to tag your project.
+		Using a browser, go to your online github repository and see if you see the new tag under "releases".
 
 
 
+Done!  Wow, you did it!
+
+Below is a high level list of the components you worked with in this course.
 
 
 -----------------------------------------------------------------------------------------------------------------------
@@ -298,7 +348,6 @@ APPENDIX A - High Level Components and API Calls
 
 DirectX Application
 
-	On Application Startup - create and initialize the following:
 		Window's window and message loop
 		IDXGIFactory4 * mpDxgiFactory;
 		ID3D12Device * mpD3dDevice;
