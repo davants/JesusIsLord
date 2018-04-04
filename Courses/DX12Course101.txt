@@ -318,11 +318,168 @@ Proj_Chapter4
 
 	From here on out, you will be using the book.  Use the book to finish the initialization of DirectX.
 	There are a few things still to do. Like the other objects that are setup, create functions for each
-	of the following components and member variables in your myDirectX class.
-	The following components still need to be added and initialized.
+	of the following components and member variables in your myDirectX class. 
+	You do not need to re-do components that have already been done.
 	
-		Add "Render Target View Descriptor" and "Depth Stencil View Descriptor" Heaps
-		Add a Fence.
+	The following components still need to be added and initialized.
+	Remember the book uses ComPtr, but you should make your own.
+
+		Done - Add a ID3D12Fence * property and initialize it with a function named	
+			"HRESULT myDirectX::InitializeFence(void)".
+			Take the popup "Success" message from the last placed used and add it to this function.	
+			
+			After your done call this new "InitializeFence" function from the "initialize" function.
+			
+			Remember to call release on this objects in the myDirectX destructor.
+			
+			Understanding fences is covered in Chapter 4 in several sections. Code is covered in 
+			section 4.3.2.
+				
+		Done - Add 3 properties to hold the descriptor sizes. Something like the following. These 
+			should be private and goes in myDirectX.
+				UINT mRtvDescriptorSize = 0;
+				UINT mDsvDescriptorSize = 0;
+				UINT mCbvSrvUavDescriptorSize = 0;
+			Initialized these 3 descriptor size properties by creating a function and call that 
+			function from the "Initialize" function.
+			
+			Take the popup "Success" message from the last placed used and add it to this function.
+			
+			Descriptors are reviewed in Chapter 4.  Code is covered in 
+			section 4.3.2.
+			
+		Done - Add "Render Target View Descriptor" and "Depth Stencil View Descriptor" Heaps.
+			Remember the book uses ComPtr, but you should make your own. 
+			These should be private and goes in myDirectX.
+			
+			ID3D12DescriptorHeap * mpRtvID3D12DescriptorHeap = nullptr;
+			ID3D12DescriptorHeap * mpDsvID3D12DescriptorHeap = nullptr;
+
+			Initialized these 2 descriptor heaps by creating a function named InitializeRtvAndDsvDescriptorHeaps
+			and call that function in your "Initialize" function. 
+			
+			Take the popup "Success" message from the last placed used and add it to this function.
+
+			Remember to call release on this objects in the myDirectX destructor.
+			
+			Descriptors are reviewed in Chapter 4.  Code is covered in 
+			section 4.3.6.
+		
+		Done - Add an int that is used to track the current back buffer. It will change 
+			from 0 to 1 and 1 to 0... back and fourth. The reason is that we have 2
+			render targets in this program. One for the screen the user is seeing and
+			one that we are drawing to; hence the "double buffering" term.
+			The "back buffer" is the one we are drawing to. This variable will keep 
+			track of which of the two render targets is the back buffer at the current
+			moment.
+			This is mentioned in section 4.3.6.  This should be private and goes in myDirectX.
+			
+			int mCurrBackBuffer = 0; // toggles between 0 and 1 in this application.
+		
+		Done - Add a CurrentBackBufferView(..) function like shown in 4.3.6.
+			This function returns a D3D12_CPU_DESCRIPTOR_HANDLE. 
+			The descriptors are on the GPU, kept in descriptor heaps. We need to get at 
+			those descriptors. This is where the handle comes into play.
+				From the book "Our application references descriptors through handles."
+				
+			The book uses a helper class named CD3DX12_CPU_DESCRIPTOR_HANDLE. This class
+			makes is easier to get a descriptor handle from the GPU. This class exists 
+			in a set of libraries provided by Microsoft. The file we need is "d3dx12.h".
+			You can get this file on github at "https://github.com/Microsoft/DirectX-Graphics-Samples".
+			Once you download and unzip this, you can search for the file.  Copy and place the "d3dx12.h" 
+			file and put it in the same directory your other .h and .cpp files.
+			The file is now in the windows directory, but Visual Studio does not know about it.
+			Add the file to the Visual Studio project by right clicking on header folder in Visual Studio,
+			select "add"->"existing item", then select the file.
+			Now it is a part of your Visual Studio project. 
+			
+			Now I know what your thinking, when I add a header file I also have to add the binary library
+			file to my project as well. Well actually, this header has all the code in it so 
+			there is no library file. Every class and function are in-lined; meaning the real code of the
+			declarations, which are the definitions, are in the same header file.
+			
+			Now you can code without any errors:
+				#include "d3dx12.h"
+			
+			Now you can add the code from the book. Here is what my code looks like.
+			
+				D3D12_CPU_DESCRIPTOR_HANDLE myDirectX::CurrentBackBufferView() const
+				{
+					return CD3DX12_CPU_DESCRIPTOR_HANDLE(
+						mpRtvID3D12DescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
+						mCurrBackBuffer,
+						mRtvDescriptorSize);
+				}
+			
+			This code says, hay GPU... here is a descriptor heap, give me a "CPU Handle" to one of the
+			descriptors in the heap!  Notice we also give it the size of each descriptor so the GPU
+			knows how large each element is in the heap.
+			First parameter is the start of the descriptor heap.
+			Second parameter is the element number in the heap we want; either 0 or 1 in our case because
+				we only have 2 elements at the moment (one for front and one for back buffer views)
+			Third is the size of each element in the heap.
+		
+		
+		
+		Done - Add a DepthStencilView function like shown in 4.3.6.
+			This function, like the "CurrentBackBufferView" function, is just a simple "get".
+			Unlike the "CurrentBackBufferView", there is only one element in the heap so there is 
+			no need to determine the "current" back buffer or anything else. We simply return
+			the first element in the heap.
+			
+			Here is what my code looks like.
+				D3D12_CPU_DESCRIPTOR_HANDLE myDirectX::DepthStencilView() const
+				{
+					return mpDsvID3D12DescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+				}
+				
+		Done - Create a ID3D12Resource pointer array to hold the actual back buffers on the GPU.
+			We could just ask the swap chain for this interface pointer when we need it, but it
+			will be easier and convenient to have a local variable.
+			This way we don't have to ask the swap chain for them all the time.
+					
+			Here is what my code looks like. This should be private and goes in myDirectX.
+				ID3D12Resource * mpSwapChainBufferList[2];
+				
+			In the destructor of myDirectX, call release on both of these.
+				for (int i = 0; i < 2; i++)
+				{
+					if (mpSwapChainBufferList[i] != nullptr)
+					{
+						mpSwapChainBufferList[i]->Release();
+					}
+				}
+		
+		Done - Create a ID3D12Resource pointer to hold the depth stencil on the GPU. Only one of 
+			these is needed. This way we don't have to as the swap chain for this all the time.
+				ID3D12Resource * mpDepthStencilBuffer;
+
+			In the destructor of myDirectX, call release on this.
+
+				if (mpDepthStencilBuffer != nullptr)
+				{
+					mpDepthStencilBuffer->Release();
+				}
+						
+
+		ToDo - Now that we have these resources, where do we set them?  
+			Create an "OnResize()" function for the myDirectX class. This function can be called
+			any time the user changes the screen size. It basically will reset the swap chain back
+			buffers. 
+			
+
+		
+		
+		ToDo - Add a function to get the actual current back buffer interface ID3D12Resource*.
+			Name it something like "CurrentBackBuffer()".
+			This will come from the swap chain because when we created the swap chain it automatically
+			created two GPU resources.
+			
+			Here is what my code looks like. Notice it uses the same mCurrBackBuffer member variable
+			we used previously in the "CurrentBackBufferView(..)" function.
+		
+				NOTE!! THIS code is in the myDirectX, just commented out.
+		
 	
 	Github - "Commit to Master", give it a nice summary name, and then "Push origin" which will push it to the github cloud.
 	
