@@ -1,0 +1,132 @@
+Html 
+
+This will not contain many lessons in separate files because all that is needed is links.
+
+Html_CSS3_GettingStartedWithEditor
+	see folder
+	
+Html_CSS3_GettingStartedFirstPage	
+	see folder
+
+Html_CSS3_LineBreak_Paragraphs_Headers
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 3 - line breaks, paragraphs and headers
+	https://www.youtube.com/watch?v=-IOX9KgMK3w&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=3
+
+Html_CSS3_Hyperlink
+	http://www.w3schools.com/tags/tag_a.asp
+	sample hyperlink code: <a href=”section_1/section_1.html” >Section 1</a>
+	
+	
+	
+Html_CSS3_Bold_Italics_Comments	
+	HTML –  You will be using HTML to report what you have learned. Watch the following videos.
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 4 - bold, italics and comments.
+	https://www.youtube.com/watch?v=PfIAw7qC4D0&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=4 
+
+
+Html_CSS3_Begin_Lists
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 5 - lists
+	https://www.youtube.com/watch?v=jFdY0wHSB_w&index=5&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+
+Html_CSS3_and_HyperLink	
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 6 - linking to another page
+	You have already learned how to create a link, but watch the video to reinforce how it works. 
+	https://www.youtube.com/watch?v=jc1ciZtQsjY&index=6&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+
+Html_CSS3_Image	
+	Images - review how to add images
+	http://www.w3schools.com/html/html_images.asp
+
+		
+
+Html_CSS3_AudioTag
+	HTML – Use HTML to document your work. Note that HTML is not like C++. For example, HTML styles use curly braces “{  }” to format styles but they are not functions like in C++.
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 9 - New audio tag
+	https://www.youtube.com/watch?v=_5GzWskBSOg&index=9&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv
+
+Html_CSS3_VideoTag	
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 10 - New video tag
+	https://www.youtube.com/watch?v=aS83ghu7uog&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=10 
+	NEW - W3Schools - HTML YouTube Videos 
+	http://www.w3schools.com/html/html_youtube.asp 
+		
+Html_IntroToCss	
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 11 - Intro to CSS
+	https://www.youtube.com/watch?v=11miJPdgNRg&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=11 
+	
+	
+	
+Html_CSS3_ExternalStyleSheet
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 12 - External style sheet
+	https://www.youtube.com/watch?v=uDyd_3xx0Lk&index=12&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+
+Html_CSS3_FontPropertiesQuentin
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 13 - font properties
+	https://www.youtube.com/watch?v=xx5kljZ2E30&index=13&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+	
+	
+Html_CSS3_comments
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 14 - CSS comments
+	https://www.youtube.com/watch?v=4JE3WNIyyoo&index=14&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+
+Html_CSS3_box_model_padding
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 15 - box model, padding
+	https://www.youtube.com/watch?v=8Jp9PUeePPk&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=15 
+
+Html_CSS3_box_model_border	
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 16 - box model, border 
+	https://www.youtube.com/watch?v=hfiDTY3rz9U&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=16
+	Here are some different kinds of borders. 
+	dotted, dashed, solid, double, groove, ridge, inset, outset
+	
+Html_CSS3_box_model_margin
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 17 - box model, margin 
+	https://www.youtube.com/watch?v=vw75V0ltGhA&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=17 
+
+Html_CSS3_Div_and_Span	
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 18 - div and span.
+	https://www.youtube.com/watch?v=GuUF1ZHEj_o&index=18&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+		
+			
+Html_CSS3_Colors
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 19 - working with colors.
+	https://www.youtube.com/watch?v=6RVuU2hbCsA&index=19&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+
+Html_CSS3_background_Images	
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 20 - background images
+	https://www.youtube.com/watch?v=c7VYKF-pAho&index=20&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv .
+	
+	
+Html_CSS3_Classes
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 21 - Classes
+	https://www.youtube.com/watch?v=TXPpChkDhEU&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=21 
+
+	
+	
+	
+	
+Html_CSS3_IDs	
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 22 - ID's
+	https://www.youtube.com/watch?v=8YBKAsJF9Jg&index=22&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+	
+Html_CSS3_Child_Selectors
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 23 - child selectors
+	https://www.youtube.com/watch?v=cKYDu-JUbs8&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=23 
+
+
+Html_CSS3_Pseudo_Classes	
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 24
+	https://www.youtube.com/watch?v=jFykuYxdPy4&index=24&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv
+
+Html_CSS3_More_Pseudo_Classes
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 25
+	https://www.youtube.com/watch?v=GOhTbAiAXPc&index=25&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv
+
+
+
+
+
+
+
+	
+	
