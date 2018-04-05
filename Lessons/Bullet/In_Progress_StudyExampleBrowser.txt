@@ -1,0 +1,90 @@
+
+ToDo - The mouse does change an object.  How?
+	OpenGLExampleBrowser.cpp file has mouse functions.
+		MyMouseMoveCallback
+		
+		MyMouseButtonCallback - clicks
+
+
+
+CommonExampleInterface abstract base class
+	// CommonExampleInterface contains several pure virtual functions. I guess each example will 
+	// implement these functions. For example, stepSimulation(float deltaTime) and renderScene() are
+	// a few of the pure virtual functions.
+	initPhysics() is a pure virtual function. It is called for each demo every time one is started.
+	
+	
+struct CommonRigidBodyBase : public CommonExampleInterface
+	initPhysics is not implemented.
+	
+struct BasicExample : public CommonRigidBodyBase	
+	initPhysics() is implemented!
+			
+			
+	
+"selectDemo(..)" function is called when changing the demo example. It is passed the index of the 
+	example in the gDefaultExamples static array.
+	From the index it will get a function pointer to the "create" function for the example in question.
+	selectDemo then creates an "OpenGLGuiHelper" object, then a CommonExampleOptions object. The 
+	CommonExampleOptions takes the "OpenGLGuiHelper" as a constructor parameter.
+	The "create" function pointer is called, passing the CommonExampleOptions.
+	Finally, the "initPhysics(..)" function is called.
+	
+	
+gDefaultExamples
+	There is a global static list of ExampleEntry objects.  static ExampleEntry gDefaultExamples[]=....
+	It is initialized with 132 ExampleEntry objects. The third parameter of the ExampleEntry is a 
+	pointer a global create function for that type of object. It is not called at this time, we just
+	have a pointer to the create function.
+	When it is called, each global function will instantiate the object that derives from CommonExampleInterface.
+	For example, the second item in the global list is a BasicExample object.
+	When an example is selected in the example browser, the selectDemo(..) function is called which will
+	call the create function pointer, to create the object.
+	Also note, the "initPhysics(..)" function is also called by the selectDemo(..) function which 
+	adds the objects to the world.
+
+main.cpp
+	
+	main function	
+	
+		ExampleEntriesAll examples; // constructor uses a vector (custom vector that byte aligns automatically)
+			// in this vector will be ExampleEntry objects.
+			// ExampleEntry is a struct that holds int menuLevel, name, description, int options
+			// and a function pointer to CommonExampleInterface::CreateFunc.
+			
+		examples.initExampleEntries();
+			Clear out the ExampleEntry vector list.
+			Loop through the gAdditionalRegisteredExamples list and add them to the ExampleEntry vector list.
+				It is empty so nothing is added.
+			Loop through the gDefaultExamples and add all these to the ExampleEntry vector list. Total is 132.
+				
+		
+		Loop: The exampleBrowser->update(..) is called in a ongoing loop.
+			This calls sCurrentDemo->stepSimulation(deltatime);
+
+				This eventually calls body->getMotionState()->setWorldTransform(interpolatedTransform);
+	
+			Next, the sCurrentDemo->renderScene() is called.
+				This calls CommonRigidBase::renderScene().
+					calls m_guiHelper->syncPhysicsToGraphics(m_dynamicsWorld);
+						This calls others and gets a pointer to b3PublicGraphicsInstance.
+						The position and orientation is updated.
+					and
+					calls m_guiHelper->render(m_dynamicsWorld);
+						calls m_data->m_glApp->m_renderer->renderScene();
+							calls 	renderSceneInternal(B3_CREATE_SHADOWMAP_RENDERMODE);
+									and
+									renderSceneInternal(B3_USE_SHADOWMAP_RENDERMODE);
+			
+			So, conclusion is that a list of motion state objects is created then a loop will 
+				update the graphical versions. This is different that the other example where
+				an interface function is called.
+
+	
+	
+	
+	
+	
+	
+	
+	
