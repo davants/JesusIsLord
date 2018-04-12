@@ -460,13 +460,110 @@ Proj_Chapter4
 				{
 					mpDepthStencilBuffer->Release();
 				}
+				
+				
+				
+		ToDo - Create a function that will make sure there are no more commands on the GPU command queue.
+			We will call this function "FlushCommandQueue()".
+
+			Done - Create the function declaration and empty definition in the myDirectX class.
+				void FlushCommandQueue();
+			
+			To do this operation, we will use the "Fence" we initialized earlier.
+			In the book, section 4.2.2, fences and why we need them are covered. Review this section again.
+			
+			A fence needs an int that you increment.  We will use a large integer number, UINT64, so we won't 
+			run out	of numbers.  How it works is as follows.
+				- Increment the integer
+				- Add a fence command to the command queue, giving it your newly incremented integer value.
+					The function on the command queue that does this is named "Signal", because we are 
+					asking it to signal us when it reaches our fence.
+					Note: 	Like all things added to the command queue, it will be put at the end of the list of 
+							commands. So, if we get the signal then we know it has completed all the other
+							commands in the command queue because it has reached out fence integer value.
+				- Check the fence number on the GPU and if it is less than our new fence number then we will
+					just wait for a signal. 
+							
+			Done - We will need this large int property. Create the int variable as a property of the myDirectX class.
+				UINT64 mCurrentFence = 0;
+
+			Done - In the FlushCommandQueue function that you just created, the first thing we want to do is 
+				increment the fence integer so we know for sure it is larger than any previous fence value.
+				
+				void myDirectX::FlushCommandQueue()
+				{
+					mCurrentFence++;
+				
+				}
+				
+				
+			Done - Next, add the fence code. Here is my complete FlushCommandQueue function. 
+				Read the comments very carefully.
+			
+				void myDirectX::FlushCommandQueue()
+				{
+					// Advance the fence number
+					mCurrentFence++;
+
+					// Give the fence, with the new number, to the command queue.
+					mpID3D12CommandQueue->Signal(mpID3D12Fence, mCurrentFence);
+
+					// We just added a command to the command queue.
+					// When the GPU runs this command, it will update the mpID3D12Fence with the new number.
+
+					// Check the number in the fence, maybe it already set it!  Probably not, but we will check.
+					if (mpID3D12Fence->GetCompletedValue() < mCurrentFence)
+					{
+						// The signal command has not been run yet... so wait for the signal.
+
+						HANDLE eventHandle = CreateEventEx(nullptr, false, false, EVENT_ALL_ACCESS);
+
+						// Fire event when GPU hits current fence.  
+						HRESULT hr = mpID3D12Fence->SetEventOnCompletion(mCurrentFence, eventHandle);
+
+						// Wait until the GPU hits current fence event is fired.
+						WaitForSingleObject(eventHandle, INFINITE);
+						CloseHandle(eventHandle);
+
+					}
+
+				}
+				
+				
+			
+			
+			
+			what else need to be covered here.... ???? 
+WORKING HERE...
+				
 						
 
 		ToDo - Now that we have these resources, where do we set them?  
 			Create an "OnResize()" function for the myDirectX class. This function can be called
 			any time the user changes the screen size. It basically will reset the swap chain back
-			buffers. 
+			buffers because if the screen size changes then the back buffer sizes need to change.
 			
+			Done - Create the function declaration and empty definition in the myDirectX class.
+				void OnResize();
+			
+			Done - In the definition of the OnResize() function, check if the device, swap chain and
+				allocator pointers are null. These should not be null so if they are, then return 
+				without doing anything. This is making our code safer.
+				
+				void myDirectX::OnResize()
+				{
+					if (mpD3dDevice == nullptr)
+					{
+						return;
+					}
+					if (mpIDXGISwapChain == nullptr)
+					{
+						return;
+					}
+					if (mpID3D12CommandAllocator == nullptr)
+					{
+						return;
+					}
 
 		
 		

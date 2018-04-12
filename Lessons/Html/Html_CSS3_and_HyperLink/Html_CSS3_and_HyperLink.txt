@@ -1,0 +1,5 @@
+
+Html_CSS3_and_HyperLink	
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 6 - linking to another page
+	You have already learned how to create a link, but watch the video to reinforce how it works. 
+	https://www.youtube.com/watch?v=jc1ciZtQsjY&index=6&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 

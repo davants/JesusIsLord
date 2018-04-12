@@ -1,0 +1,79 @@
+References
+
+This lesson assumes you know what a function is and how to create and use one.
+This lesson assumes you know what a pointer is and how to use a pointer.
+
+A reference is similar to a pointer; so, it is best to understand pointers and
+	then learn references.
+
+For this lesson you should understand pointers. First, let's do a quick review of pointers.
+	A pointer is a variable that holds the address to a place in memory.
+		So, a pointer holds the memory address of another variable.
+
+	How do you get to the variable if you have a pointer?  You "dereference" it.
+
+	Example: Quick sample code reminder on pointers and dereferencing.
+	
+		// create an int variable
+		int i = 10; // The value of i is 10
+		
+		// create an int pointer variable
+		int * pI; // The value of pI is blah ... nothing but random 1's and 0's
+		
+		// get the address of i and assign it to pI.  "Address of" operator is &
+		pI = &i;  
+		
+		// Now the value of pI is the address of i.
+		
+		// How do we get to the "i" variable using the pointer "pI"?  We Dereference It!
+		
+		// update i using the pointer pI - dereference it with the asterisk *
+		// Dereference means "go to this address so I can work with the variable/memory at that address"
+		*pI = 20;  
+		
+		// Now i has the value of 20.
+		// The value of pI did not change; it is still the address of i.
+		
+		// Make sure you understand everything above before continuing on.
+
+	
+So what is a reference?
+
+A reference does the same thing as a pointer; however, it will automatically dereference for you!
+
+Again... read this... 
+	"A reference is an automatic dereferencing pointer!"
+	
+	
+So, references "point" to another variable just like a pointer.
+Or, you could say they "reference" another variable.
+
+
+Let's do the same code as above with a reference instead of a pointer.
+
+	Example: Quick sample code using references.
+	
+		// create an int variable
+		int i = 10; // The value of i is 10
+		
+		// create a reference variable
+		int & rI = i; 
+		
+		// rI is now a reference to i. 
+		// If you change rI you change the value of i.
+				
+		// We don't have to dereference rI, its automatic!
+		rI = 20;  
+		
+		// Now i has the value of 20.
+				
+		// Make sure you understand everything above before continuing on.
+	
+
+Watch this Video - https://www.youtube.com/watch?v=TgsH02sORZ0
+
+Watch this Video - https://www.youtube.com/watch?v=6U42W0A4ov4
+
+
+
+

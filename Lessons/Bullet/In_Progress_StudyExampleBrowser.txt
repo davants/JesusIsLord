@@ -1,12 +1,104 @@
 
+
+Review this...
+http://www.bulletphysics.org/mediawiki-1.5.8/index.php/Simple_Distance_Joint
+
+
+
+
+
+Note - Pivot Point - https://youtu.be/O8c8yczdGkg
+	A pivot point is the 3d location that an object pivots around. For a box, it would be the center of the box by default.
+	The pivot point can be changed.
+	
+btPoint2PointConstraint	
+	The sample creates a btPoint2PointConstraint between a selected object and a position in 3d space where the mouse cursor is.
+		You can create this by connecting two object or with a vector to a position in 3d space. This "basic" sample uses the 3 float vector.
+		The "basic" sample sets the member property "m_setting" (type btConstraintSetting.
+		http://bulletphysics.org/Bullet/BulletFull/classbtPoint2PointConstraint.html
+
+btConstraintSetting		
+	The class btPoint2PointConstraint has a member named m_setting of type btConstraintSetting.
+		http://bulletphysics.org/Bullet/BulletFull/structbtConstraintSetting.html
+	
+	
+	WORKING HERE...
+		3 Public Attributes
+			btScalar m_tau
+			btScalar m_damping
+			btScalar m_impulseClamp
+
+
+
 ToDo - The mouse does change an object.  How?
 	OpenGLExampleBrowser.cpp file has mouse functions.
 		MyMouseMoveCallback
+			...
+			
+			movePickedBody(rayFrom,rayTo);  
+				
+				How this works is that a new orgit is created and connected to the body.
+			
+				btPoint2PointConstraint* pickCon = static_cast<btPoint2PointConstraint*>(m_pickedConstraint);
+				if (pickCon)
+				{
+					//keep it at the same picking distance
+
+					btVector3 newPivotB;
+
+					btVector3 dir = rayToWorld - rayFromWorld;
+					dir.normalize();
+					dir *= m_oldPickingDist;
+
+					newPivotB = rayFromWorld + dir;
+					pickCon->setPivotB(newPivotB);
+					return true;
+				}
+			
+			
+			
+			
+		Also note that on release the removePickingConstraint() function is called which
+			will set the body back to its previous activation state and delete the 
+			m_pickedConstraint from the dynamics world.
 		
 		MyMouseButtonCallback - clicks
 
+			sCurrentDemo->mouseButtonCallBack(...);
+			
+				pickBody(rayFrom, rayTo);
+			
+					m_pickedBody, a member of CommonRigidBodyBase, is set!
+					
+					// m_savedState, and int, is a member of CommonRigidBodyBase 
+					// Is set to 1 by the next line. This returns m_activationState1 which is
+					// a int. It is not in btRigidBody, but in its base class btCollisionObject.
+					// I think this is "saved" so it can be put back later.
+					m_savedState = m_pickedBody->getActivationState(); // returns m_activationState1 
+					
+					// Now change the state to "DISABLE_DEACTIVATION". From what I understand, objects
+					// can fall asleep which saves processing time. Like when I delete an object and 
+					// things on it don't move. "DISABLE_DEACTIVATION" means it is not allowed to go to 
+					// sleep.
+					m_pickedBody->setActivationState(DISABLE_DEACTIVATION);
+					
+					btVector3 localPivot = body->getCenterOfMassTransform().inverse() * pickPos;
+					btPoint2PointConstraint* p2p = new btPoint2PointConstraint(*body, localPivot);
+					m_dynamicsWorld->addConstraint(p2p, true);
+					m_pickedConstraint = p2p;
+					btScalar mousePickClamping = 30.f;
+					p2p->m_setting.m_impulseClamp = mousePickClamping;
+					//very weak constraint for picking
+					p2p->m_setting.m_tau = 0.001f;
 
+					m_oldPickingPos = rayToWorld;
+					m_hitPos = pickPos;
+					m_oldPickingDist = (pickPos - rayFromWorld).length();
 
+					
+					
+					
+					
 CommonExampleInterface abstract base class
 	// CommonExampleInterface contains several pure virtual functions. I guess each example will 
 	// implement these functions. For example, stepSimulation(float deltaTime) and renderScene() are

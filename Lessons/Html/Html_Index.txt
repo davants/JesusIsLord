@@ -4,45 +4,41 @@ This will not contain many lessons in separate files because all that is needed 
 
 Html_CSS3_GettingStartedWithEditor
 	see folder
+	Notepad++
 	
 Html_CSS3_GettingStartedFirstPage	
 	see folder
+	<body>
 
 Html_CSS3_LineBreak_Paragraphs_Headers
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 3 - line breaks, paragraphs and headers
-	https://www.youtube.com/watch?v=-IOX9KgMK3w&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=3
+	see folder
+	<br/> , <p>, <h1>, <h2>, <h3>, etc...
 
 Html_CSS3_Hyperlink
-	http://www.w3schools.com/tags/tag_a.asp
-	sample hyperlink code: <a href=”section_1/section_1.html” >Section 1</a>
-	
-	
+	see folder
+	<a ...>	link
 	
 Html_CSS3_Bold_Italics_Comments	
-	HTML –  You will be using HTML to report what you have learned. Watch the following videos.
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 4 - bold, italics and comments.
-	https://www.youtube.com/watch?v=PfIAw7qC4D0&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=4 
-
+	see folder
+	bold <strong>, <em> italic , <hr/> horizontal , <!-- comments -->
 
 Html_CSS3_Begin_Lists
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 5 - lists
-	https://www.youtube.com/watch?v=jFdY0wHSB_w&index=5&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+	see folder
+	<ul> unordered List, <li> list item, <ol> ordered list
 
 Html_CSS3_and_HyperLink	
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 6 - linking to another page
-	You have already learned how to create a link, but watch the video to reinforce how it works. 
-	https://www.youtube.com/watch?v=jc1ciZtQsjY&index=6&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+	see folder
+	<a>
 
 Html_CSS3_Image	
-	Images - review how to add images
-	http://www.w3schools.com/html/html_images.asp
-
+	see folder
+	<img >
 		
-
 Html_CSS3_AudioTag
-	HTML – Use HTML to document your work. Note that HTML is not like C++. For example, HTML styles use curly braces “{  }” to format styles but they are not functions like in C++.
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 9 - New audio tag
-	https://www.youtube.com/watch?v=_5GzWskBSOg&index=9&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv
+	see folder
+	<audio>
+	<source>
+	controls
 
 Html_CSS3_VideoTag	
 	Quentin Watt - HTML5 and CSS3 beginners tutorial 10 - New video tag

@@ -1,0 +1,26 @@
+Creating and using C++ functions.
+
+Functions - Video 1 - Programmer’s Institute - Series 7 Functions - (C++ Functions Video 1)
+	https://www.youtube.com/watch?v=CB-RrgQx-KM&index=1&list=PL657E1A971E98E4AC
+
+Functions – Video 2 - Programmer’s Institute - Series 7 Functions (C++ Parameters ) 
+	https://www.youtube.com/watch?v=2Ru8HIhPyns&list=PL657E1A971E98E4AC&index=2
+	
+Functions – Video 3 - Programmer’s Institute - Series 7 Functions (C++ Returns and Types) 
+	https://www.youtube.com/watch?v=0I7b4yNOmG4&list=PL657E1A971E98E4AC&index=3
+
+Functions – Video 4 - Programmer’s Institute - Series 7 Functions (C++ Function calling Functions)
+	https://www.youtube.com/watch?v=aIP2TlyPhVs&list=PL657E1A971E98E4AC&index=4 
+
+Functions – Video 5 - Programmer’s Institute - Series 7 Functions (C++ Predeclarations) 
+	https://www.youtube.com/watch?v=uQZ-Pv-DN6g&list=PL657E1A971E98E4AC&index=5
+	NOTE: This video covers function “pre-declarations”. In the book “pre-declarations” are called “prototypes”.
+
+	
+Note: In the above videos, you are "Passing by Value". This means you are giving the parameters
+		the value of the variable not the actual variable.	
+		
+		"Pass By Value" means we pass a COPY!
+		
+		
+		

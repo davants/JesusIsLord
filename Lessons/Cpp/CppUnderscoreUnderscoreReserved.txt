@@ -1,0 +1,25 @@
+The names starting with underscore are reserved in several situation. 
+They are reserved for the compiler implementation.
+
+
+C++ Rules (which did not change in C++11):
+	Reserved in any scope, including for use as implementation macros: 
+		identifiers beginning with an underscore followed immediately by an uppercase letter
+		identifiers containing adjacent underscores (or "double underscore")
+	Reserved in the global namespace: 
+		identifiers beginning with an underscore
+
+Therefore, names like _Use_decl_annotations_, _In_ and  _Out are not allowed. 
+
+Microsoft has SAL (source-code annotation language).  It is used by the compiler for analysis of your code.
+	For example:
+	_In_
+		Annotates input parameters that are scalars, structures, pointers to structures and the like. 
+		Explicitly may be used on simple scalars. 
+		The parameter must be valid in pre-state and will not be modified.
+	_Out_
+		Annotates output parameters that are scalars, structures, pointers to structures and the like. 
+		Do not apply this to an object that cannot return a value—for example, a scalar that's passed by value. 
+		The parameter does not have to be valid in pre-state but must be valid in post-state.
+
+	Search C++ SAL for complete documentation.

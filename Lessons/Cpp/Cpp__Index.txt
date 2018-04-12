@@ -2,7 +2,32 @@ This is just a list for searching purposes.  The file name is not enough to find
 
 This should be filled with tag values that can be searched.
 
-
+CppFunctions
+	Function
+	Parameters
+	Pass by Value
+	pre-declarations
+	prototypes
+	return type 
+	functions calling functions
+	
+CppPointers
+	*
+	Pointers
+	Dynamic memory
+	Dereference
+	Address of
+	
+	
+CppBeginningReferences
+	*
+	&
+	Reference
+	Parameters
+	Pass by Value
+	Pass by Reference
+	Pass by Pointer
+	stack
 
 CppFactory
 	Factory
@@ -11,11 +36,7 @@ CppFactory
 CppSimpleWindowsApp
 	Windows Application - no windows loop, just a pop-up box
 
-CppPointers
-	Pointers
-	Dynamic memory
-	Dereference
-	Address of
+
 
 CppPointerToPointer
 	**
@@ -103,5 +124,9 @@ CppVisualStudioLinkingProjects
 	static link library
 	projects
 	
-	
-
+CppUnderscoreUnderscoreReserved
+	Reserved identifiers
+	Underscore
+	_Use_decl_annotations_
+	_In_, _Out
+	SAL (source-code annotation language)
