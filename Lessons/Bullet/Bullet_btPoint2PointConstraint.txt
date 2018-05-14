@@ -1,0 +1,80 @@
+
+btPoint2PointConstraint
+
+This defines two bodies that have translation, movement, constraints added to them.
+Here, constraint is a restriction.
+
+This can also define a single body that has a constraint to a 3D position in world space.
+
+It is also thought of as a Joint constraint like a ball socket joint.
+	A "constraint" is what Bullet calls a joint which is exactly what it 
+	sounds like. It's a something that connects bodies together, in certain ways. 
+
+There are 4 parameters for the main constructor.
+	btPoint2PointConstraint(btRigidBody& rbA,btRigidBody& rbB, const btVector3& pivotInA,const btVector3& pivotInB)
+	
+	First 2 are the 2 rigid bodies; we will use rbA and rbB like shown in the above constructor signature.
+	
+	The third and fourth parameters define pivot points for the corresponding bodies.
+
+3rd and 4th parameter notes:
+	3rd is pivot point pivotInA for 1st param rbA. The pivot point is relative to the other body, the rbB.
+	4th is pivot point pivotInB for 2nd param rbB. The pivot point is relative to the other body, the rbA.
+	These pivot points are in local space.
+	
+A pivot point is defined with btVector3 which is 3 floats. (x, y, z)
+	So what is it?  Picture your object with a steel rod coming out of it. The steel rod is part of your
+		object and is solidly in place. The rod starts in the center of your object.
+		
+		How long is the rod and what direction does it point?  This is where the x, y, z come in. They 
+		determine how long and the direction it sticks out based on local space of the object.  
+			Important - The rod is based on the local space of the object.
+	
+		The other end of the rod is connected to some point in world space. When using btPoint2PointConstraint
+		with another object, the rod is connected to the other object's current location. As the other object
+		moves, then so does the rod's connected point.
+		
+		With btPoint2PointConstraint, each object's steel rod is connected to the other's center point. So,
+		they constantly effect each other.
+		
+		Example 1, how do we picture the rod?  Note that in this example does not care about what the 
+			other end of the rod is connected to; just object and its rod which together are one solid 
+			object. Picture a cement block with a steel Rebar sticking out; they are one.
+			
+			Say I have btRigidBody, rbA, with a pivot point btVector3, pivotInA, of (-7, 0, 0).
+			In this case, my rod's length is 7. The rod starts in the center of rbA and sticks out the 
+			left side of rbA because the direction is -7 on the x axis.
+
+
+		Example 2, what about the other end of the rod? If we start with the object and rod created from
+			Example 1, the other end of the rod is loosely connected to a 3d point in space.  The point in 
+			space can be a specified x, y, z or it can be another object's current location.
+			
+			How tightly the rod is connected to the 3d point in space depends on the btPoint2PointConstraint
+			m_setting property.
+			
+
+btPoint2PointConstraint::m_setting which is type data btConstraintSetting.
+
+	btConstraintSetting 3 Public Attributes
+		btScalar m_damping
+			The damping value for the constraint controls how stiff the constraint is.
+			Using the rod example above, the rod is connected to a pivot point. Think of that point and the 
+			rod being connected by a rubber band. How stretchy is the rubber band? Some rubber bands can 
+			stretch very easily, some can not. If you want the rubber band to be stiff then set this value at
+			1.0.  If you want it to be less stiff, set it to 0.05.
+		btScalar m_impulseClamp		
+			The impulse clamp value controls how quickly the dynamic rigid body comes to rest.
+		btScalar m_tau
+			DTS: I think this applies - rotational force, which is called torque and represented by the Greek
+				(tau). So what is torque?  https://www.youtube.com/watch?v=5Zrphnd_0VI
+				I do not know how to use this value. The example leaves it at its default value of 0.3.
+		
+		
+
+Browser Example	
+	http://www.bulletphysics.org/mediawiki-1.5.8/index.php/Simple_Distance_Joint
+
+	
+	
+	

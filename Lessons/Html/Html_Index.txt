@@ -41,38 +41,47 @@ Html_CSS3_AudioTag
 	controls
 
 Html_CSS3_VideoTag	
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 10 - New video tag
-	https://www.youtube.com/watch?v=aS83ghu7uog&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=10 
-	NEW - W3Schools - HTML YouTube Videos 
-	http://www.w3schools.com/html/html_youtube.asp 
+	See folder
+	<video>
+	<source>
+	controls
 		
 Html_IntroToCss	
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 11 - Intro to CSS
-	https://www.youtube.com/watch?v=11miJPdgNRg&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=11 
-	
-	
+	See folder
+	Inline or in-line styling 
+	Internal Style Sheet
+	<style
+	color:blue
+	background-color:yellow
 	
 Html_CSS3_ExternalStyleSheet
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 12 - External style sheet
-	https://www.youtube.com/watch?v=uDyd_3xx0Lk&index=12&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+	See folder
+	<link
+	
 
 Html_CSS3_FontPropertiesQuentin
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 13 - font properties
-	https://www.youtube.com/watch?v=xx5kljZ2E30&index=13&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+	See folder
+	font-family:
+	font-weight:
+	font-style:
+	font-size:
+	font:
+	
 	
 	
 Html_CSS3_comments
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 14 - CSS comments
-	https://www.youtube.com/watch?v=4JE3WNIyyoo&index=14&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv 
+	See folder
+	/*  .... */
 
 Html_CSS3_box_model_padding
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 15 - box model, padding
-	https://www.youtube.com/watch?v=8Jp9PUeePPk&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=15 
+	See folder
+	padding
+
+	
 
 Html_CSS3_box_model_border	
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 16 - box model, border 
-	https://www.youtube.com/watch?v=hfiDTY3rz9U&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=16
-	Here are some different kinds of borders. 
+	See folder
+	border
 	dotted, dashed, solid, double, groove, ridge, inset, outset
 	
 Html_CSS3_box_model_margin

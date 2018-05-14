@@ -1,0 +1,28 @@
+
+
+You will learn a little about the following:
+	References
+
+
+Videos
+	https://youtu.be/IzoFn3dfsPA
+	
+	
+
+
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+Lessons
+All of these are console applications.
+If you have already done these program, review the instructions below and make sure you understand how to build these.
+	
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+
+
+------------------------------
+CppReferenceLesson1
+
+Create a program that passes to a function by reference.  

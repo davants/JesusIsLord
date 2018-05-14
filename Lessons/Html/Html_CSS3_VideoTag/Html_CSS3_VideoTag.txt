@@ -1,0 +1,10 @@
+
+Html_CSS3_VideoTag	
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 10 - New video tag
+	https://www.youtube.com/watch?v=aS83ghu7uog&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=10 
+	NEW - W3Schools - HTML YouTube Videos 
+	http://www.w3schools.com/html/html_youtube.asp 
+
+	
+This video tag worked in Microsoft Edge.
+

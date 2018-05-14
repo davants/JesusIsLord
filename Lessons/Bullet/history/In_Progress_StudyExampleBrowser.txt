@@ -22,7 +22,7 @@ btConstraintSetting
 		http://bulletphysics.org/Bullet/BulletFull/structbtConstraintSetting.html
 	
 	
-	WORKING HERE...
+
 		3 Public Attributes
 			btScalar m_tau
 			btScalar m_damping

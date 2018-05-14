@@ -1,0 +1,9 @@
+
+
+Html_CSS3_box_model_border	
+	Quentin Watt - HTML5 and CSS3 beginners tutorial 16 - box model, border 
+	https://www.youtube.com/watch?v=hfiDTY3rz9U&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=16
+	Here are some different kinds of borders. 
+	dotted, dashed, solid, double, groove, ridge, inset, outset
+	
+	

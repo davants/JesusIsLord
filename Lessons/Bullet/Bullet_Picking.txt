@@ -1,0 +1,207 @@
+Bullet_Picking
+
+
+These lines show how to do a ray test given a source("From") and target("To")
+position in the world. Full code below.
+	btCollisionWorld::ClosestRayResultCallback rayCallback(rayFromWorld, rayToWorld);
+	m_dynamicsWorld->rayTest(rayFromWorld, rayToWorld, rayCallback);
+	if (rayCallback.hasHit()) 
+	{
+		...
+
+This function will take an object out of the simulation step. Full code below.
+	m_pickedBody->setActivationState(DISABLE_DEACTIVATION);
+	
+This function will change the Pivot point of a point 2 point constraint.
+Therefore, if the point has changed then the connected object will follow.
+Full code below.	
+	btPoint2PointConstraint::setPivotB(...)
+
+	
+	
+Browser Example
+	http://www.bulletphysics.org/mediawiki-1.5.8/index.php/Picking
+
+Here is the tutorial in-case the site is not available.	
+
+---------------------------------------------------------------------------------------
+	
+Introduction 
+The ExampleBrowser framework of Bullet provides picking capabilities by default. 
+Therefore, there is no dedicated demo for this tutorial. However, we will detail the 
+picking process that has been implemented in the CommonRigidBodyBase and 
+CommonMultiBodyBase classes. 
+
+Overview 
+The picking process starts when a user clicks on a graphical object in the viewport. 
+We need to first find the rigid body corresponding to the graphical object that the 
+user has clicked on in the viewport. Next, the user drags his mouse and the intersected 
+rigid body is expected to follow along wherever the mouse is dragged. The picking 
+process finishes when the user let goes the mouse button. 
+The picking process is usually accomplished by casting a ray into the simulation world 
+and storing all intersected objects in the ray's path. For casting of ray, we need 
+the ray origin which is the current viewer's position. We need to only worry about the 
+rigid body closest to the viewer. Once we have the intersected rigid body, we then find 
+the intersection point on the rigid body. Lets call this point pointA. We then create a 
+dummy rigid body at the mouse's current location. Lets call the mouse's current location 
+pointB. We then create a point to point constraint between the intersected rigid body and 
+our dummy rigid body created at pointB. The two points pointA and pointB are used to offset 
+the point to point constraint so that the intersected rigid body appears to be anchored at 
+the mouse's current location through a dummy rigid body. Once the mouse button is let go, 
+the point to point constraint is then removed from the simulation world causing the 
+intersected rigid body to move at its current velocity. 
+
+Picking Steps 
+So to summarize, the following steps are required. 
+Get the current camera position 
+Cast a ray into the physics world and picking the rigid body intersected by the ray 
+Create a point to point constraint and handle mouse drag events 
+Remove the point to point constraint when the mouse button is released 
+Get the current camera position to cast ray from 
+To get the camera position, we first get the current camera from the renderer. 
+This is achieved in the CommonRigidBodyBase::mouseButtonCallback function by first 
+getting the renderer. n order to see if the left mouse button is clicked, we need 
+to get the window interface 
+
+virtual bool	mouseButtonCallback(int button, int state, float x, float y)
+{
+   CommonRenderInterface* renderer = m_guiHelper->getRenderInterface();  
+   CommonWindowInterface* window = m_guiHelper->getAppInterface()->m_window;
+
+If the mouse button is clicked (state is 1) and the left mouse button is pressed 
+without Alt or Ctrl keys, we have a picking request. 
+   if (state==1)
+   {
+      if(button==0 && (!window->isModifierKeyPressed(B3G_ALT) && !window->isModifierKeyPressed(B3G_CONTROL) ))
+      {
+
+If so, we take the current camera from the renderer and then get its current 
+position which is used to get the origin for the casting ray. 
+
+         btVector3 camPos;
+         renderer->getActiveCamera()->getCameraPosition(camPos);
+         btVector3 rayFrom = camPos;
+
+Cast a ray into the physics world, picking the rigid body and adding picking constraint 
+Next, using the current mouse position (x,y values in the mouseButtonCallback), 
+we find the ray direction. This is carried out in the getRayTo function. The 
+rayFrom and rayTo variables are passed to the pickBody function. 
+
+         btVector3 rayTo = getRayTo(int(x),int(y));
+         pickBody(rayFrom, rayTo);
+
+Since the definition of the getRayTo function is lengthy, we skip it and refer 
+the readers to the original source file (CommonRigidBodyBase.h). It simply uses 
+the current projection settings to determine the ray direction based on the current 
+viewport aspect ratio. The camera position and current mouse position are used to 
+get the casting ray origin and direction. 
+The pickBody function is defined as follows: 
+
+virtual bool pickBody(const btVector3& rayFromWorld, const btVector3& rayToWorld)
+{
+   if (m_dynamicsWorld==0)
+      return false;
+   
+   btCollisionWorld::ClosestRayResultCallback rayCallback(rayFromWorld, rayToWorld);
+   m_dynamicsWorld->rayTest(rayFromWorld, rayToWorld, rayCallback);
+   if (rayCallback.hasHit()) {
+      btVector3 pickPos = rayCallback.m_hitPointWorld;
+      btRigidBody* body = (btRigidBody*)btRigidBody::upcast(rayCallback.m_collisionObject);
+      if (body) { 
+	 if (!(body->isStaticObject() || body->isKinematicObject())) {
+	    m_pickedBody = body;
+	    m_savedState = m_pickedBody->getActivationState();
+	    m_pickedBody->setActivationState(DISABLE_DEACTIVATION);
+	
+  	    btVector3 localPivot = body->getCenterOfMassTransform().inverse() * pickPos;
+	    btPoint2PointConstraint* p2p = new btPoint2PointConstraint(*body, localPivot);
+	    m_dynamicsWorld->addConstraint(p2p, true);
+	    m_pickedConstraint = p2p;
+	    btScalar mousePickClamping = 30.f;
+	    p2p->m_setting.m_impulseClamp = mousePickClamping;
+	    p2p->m_setting.m_tau = 0.001f;
+	 }
+      }
+      m_oldPickingPos = rayToWorld;
+      m_hitPos = pickPos;
+      m_oldPickingDist = (pickPos - rayFromWorld).length();
+   }
+
+To summarize, the dynamicsWorld::rayTest function provides the list of rigid 
+bodies intersected by the ray. If there is a hit and the intersected rigid body 
+is not static, the rigid body is first deactivated to disable its physics simulation. 
+The hit point is given in the world space. It is converted to the local coordinate 
+of the intersected rigid body. This is done by multiplying the inverse of the 
+intersected rigid body's center of mass with the hit point. Next a point to 
+point constraint is created at the hit point in local space. 
+Handle mouse drag events 
+In the mouseMoveCallback, we first check to see if the user is dragging his mouse. 
+If so, the picked rigid body is moved by calling movePickedBody. 
+
+virtual bool mouseMoveCallback(float x,float y) {
+   CommonRenderInterface* renderer = m_guiHelper->getRenderInterface();
+
+   btVector3 rayTo = getRayTo(int(x), int(y));
+   btVector3 rayFrom; 
+   renderer->getActiveCamera()->getCameraPosition(rayFrom);
+   movePickedBody(rayFrom,rayTo);
+   return false;
+}
+
+The movePickedBody function is defined as follows. 
+
+virtual bool movePickedBody(const btVector3& rayFromWorld, const btVector3& rayToWorld) {
+   if (m_pickedBody  && m_pickedConstraint) {
+      btPoint2PointConstraint* pickCon = static_cast<btPoint2PointConstraint*>(m_pickedConstraint);
+      if (pickCon) {
+         btVector3 newPivotB;
+         btVector3 dir = rayToWorld - rayFromWorld;
+	 dir.normalize();
+	 dir *= m_oldPickingDist;
+         newPivotB = rayFromWorld + dir;
+	 pickCon->setPivotB(newPivotB);
+	 return true;
+      }
+   }
+   return false;
+}
+
+This function first checks to see if there is a picked rigid body. If so, 
+the current mouse direction in which the user is dragging the mouse is 
+determined. The amount of displacement obtained is added to the local pivot 
+point of second rigid body by calling appropriate function on the picking constraint. 
+Remove the point to point constraint when the mouse button is released 
+Finally, in the mouseButtonCallback, the picking constraint is removed by 
+calling removePickingConstraint function when the user release the mouse button. 
+
+   } else {
+      if (button==0) {
+	 removePickingConstraint();
+      }
+   }
+   return false;
+}
+
+The removePickingConstraint function is defined as follows. 
+
+virtual void removePickingConstraint() {
+   if (m_pickedConstraint) {
+      m_pickedBody->forceActivationState(m_savedState);
+      m_pickedBody->activate();
+      m_dynamicsWorld->removeConstraint(m_pickedConstraint);
+      delete m_pickedConstraint;
+      m_pickedConstraint = 0;
+      m_pickedBody = 0;
+   }
+}
+
+This function first restores the activation state of the picked rigid body 
+and then activates it. This ensures that the body starts simulating physically. 
+Then the picking constraint is removed from the dynamics world. Finally, the 
+picking constraint is deleted. 
+Conclusion 
+In this tutorial, the picking process has been elaborated in detail as 
+implemented in the CommonRigidBodyBase and CommonMultiBodyBase class. 
+There can be other ways to implement picking for example by using color 
+coding or depth buffer to identify the graphical objects and then hashing 
+the graphical object's id to determine its rigid body. 
