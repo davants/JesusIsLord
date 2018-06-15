@@ -85,8 +85,9 @@ Html_CSS3_box_model_border
 	dotted, dashed, solid, double, groove, ridge, inset, outset
 	
 Html_CSS3_box_model_margin
-	Quentin Watt - HTML5 and CSS3 beginners tutorial 17 - box model, margin 
-	https://www.youtube.com/watch?v=vw75V0ltGhA&list=PL41lfR-6DnOruqMacTfff1zrEcqtmm7Fv&index=17 
+	See folder
+	box model, margin 
+	
 
 Html_CSS3_Div_and_Span	
 	Quentin Watt - HTML5 and CSS3 beginners tutorial 18 - div and span.
