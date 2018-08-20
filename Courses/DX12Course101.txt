@@ -3,23 +3,33 @@ This course has a set of projects that will help you program in DirectX.  This i
 This course uses materials that are put together my different people from the industry. I would not expect 
 them to be Christian, but probably have some Christian values because our culture was strongly influenced 
 by Christianity. I avoid materials that use bad language or crude commentary.
-I will include verses between lessons so we don't loose sight of what really matters, a 
-relationship with God and remembering that this life is short and eternity is long. Lying, steeling, coveting,
-lusting after someone who is not your spouse (which is adultery in your heart), taking Gods name in vain, 
-hating your brother (which is murder in your heart), worshiping another God; are all wrong (sins). 
-Have you sinned in your life? You have heard of a "debt to society" for crimes; well sins are giant debts. 
-If we are treated justly, morally right or fair, we are condemned. After a lifetime we have a huge dept and 
-no way to pay. If God ignored our wrong-doings, our sins, justice would not be His nature. 
-However, God is not only just but loving and merciful and that is what the cross if all about. 
+I will include verses between lessons so we don't loose sight of what really matters. 
 
-Hebrews 11:6 - and without faith it is impossible to please God, for whoever would draw near to God must 
+Exodus 20:16 - Old Testament
+	You must not lie or deceive one another. 
+	
+Isaiah 53:5 - Old Testament
+	.. he was pierced for our transgressions; he was crushed for our iniquities;
+	upon him was the chastisement that brought us peace, and with his wounds we are healed.
+	
+1 Peter 2:24
+	"He himself bore our sins" in his body on the cross, so that we might die to sins and live 
+	for righteousness; "by his wounds you have been healed." 
+
+Hebrews 11:6 
+	.. and without faith it is impossible to please God, for whoever would draw near to God must 
 	believe that he exists and that he rewards those who seek him.
  
+Acts 18 - 1 through 4
+	Paul....met a certain Jew named Aquila...with his wife Priscilla... and because Paul was a 
+	tentmaker as they were, he stayed and worked with them.
+	Every Sabbath he reasoned in the synagogue, trying to persuade Jews and Greeks.
 
+	
 
-This course uses the book "3D Game Programming with DirectX12"; however, the book is not used until the end
+This course uses the book "3D Game Programming with DirectX12"; however, the book is not used until later
 because this assumes there are many areas of c++, and overall programming, that the student is not 
-familiar with and needs help. By the end of this course, many c++ concepts will be reviewed and then
+familiar with and needs help. Through the course, many c++ concepts will be reviewed and then
 the book is used from that point on. The program built in this course is not exactly like the book sample
 on purpose. This is to force the student to understand and not copy/paste their way through the course.
 
@@ -33,47 +43,57 @@ If you have already done them, but don't remember them; you need to do them agai
 Projects
 Place all work in the following directory structure: c:/modules/YourName/DX12Course101/ProjectNameHere/...
 
-After several lessons, we will start to use github, an online place to put your code, so the directory will not change after that is started.
-
-
-
-This course takes you to creating a box on the screen using DirectX.
-This course is a combination of C++ lessons and DirectX lesson.
-
-At the bottom of this document is APPENDIX A. 
-APPENDIX A is a high level list of DirectX objects and API calls that we will be building/working toward.
-After each DirectX lesson, you can see how each lesson's components fix into the larger application.
+After several lessons, we will start to use github, an online place to put your code, 
+so the directory will not change after that is started.
 
 -------------------------------------------
 
 
 
-Book - At some point in the course you will start reading the book "3D Game Programming with DirectX 12".
-	It might be a good idea to read chapter 4 and then start these lessons; however, if you are not
-	skilled in c++ you may need to wait and go though the lessons first. This is because these
-	lessons go beyond the book and contain c++ lessons along the way.
-
-
-
-
-
-
-Proj_CppSimpleWindowsApp
-	Finish lesson CppSimpleWindowsApp
+Proj_CppSimpleWindowsApp	
+	
+	Task List from the lesson:
+		ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_1
+		ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_2
+		ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_3
+		ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_4
+		ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_5		
+		Done - Verse for the day: Matthew 5:3 - Blessed are the poor in spirit, for theirs is the kingdom of heaven.
 	
 	
-Verse for the day: Matthew 5:3 - Blessed are the poor in spirit, for theirs is the kingdom of heaven.
+Proj_CppPointers 	
 	
-	
-Proj_CppPointers 
-	Finish lesson CppPointers
-
+	Task List from the lesson:
+		ToDo - CppPointersLesson1_pointers
+		ToDo - CppPointersLesson2_pointers
+		ToDo - CppPointersLesson3
+		ToDo - CppPointersLesson4
+		ToDo - CppPointersLesson5
+		ToDo - CppPointersLesson6_pointers
+		ToDo - CppPointersLesson7_pointers
+		ToDo - CppPointersLesson8_notUsingPointers
+		ToDo - CppPointersLesson9_pointers
+		ToDo - CppPointersLesson10_pointers
+		ToDo - CppPointersLesson11_pointers
+		ToDo - CppPointersLesson12_pointers
+		ToDo - CppPointersLesson13
+		ToDo - CppPointersLesson14
+		ToDo - CppPointersLesson15
+		ToDo - CppPointersLesson16	
+		ToDo - Verse for the day: Find a verse for today and email the teacher.		
+		
 Proj_CppPointerToPointer 	
-	Finish lesson CppPointerToPointer
+	Task List from the lesson:
 
+		TEACHER TODO - add todo list here...
+	
+		ToDo - Verse for the day: Find a verse for today and email the teacher.		
+	
 Proj_CppPreprocessor
-	Finish lesson CppPreprocessor
 
+
+		ToDo - Verse for the day: Find a verse for today and email the teacher.		
+	
 Proj_CppVector
 	Finish lesson CppVector
 
@@ -383,7 +403,7 @@ Proj_Chapter4
 			
 			Take the popup "Success" message from the last placed used and add it to this function.
 
-			Remember to call release on this objects in the myDirectX destructor.
+			Remember to call release on these objects in the myDirectX destructor.
 			
 			Descriptors are reviewed in Chapter 4.  Code is covered in 
 			section 4.3.6.

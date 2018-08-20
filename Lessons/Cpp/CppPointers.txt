@@ -28,261 +28,264 @@ Create a directory according to the structure specified in the course.
 Place the lessons below in their own sub-directory naming it the lesson name.
 
 
+Tasks
 
-------------------------------
-CppPointersLesson1_pointers
+	------------------------------
+	ToDo - CppPointersLesson1_pointers
 
-Write a program that allocates an array on the heap, the type should be int.
+		Write a program that allocates an array on the heap, the type should be int.
 
- Call a function to get the size of the array. This means the function will ask the user for the desired size and the function will return the size. So the function will return an int. The function does not allocate the array, only ask the user for the size.
+		 Call a function to get the size of the array. This means the function will ask the user for the 
+		 desired size and the function will return the size. So the function will return an int. 
+		 The function does not allocate the array, only ask the user for the size.
 
 
-------------------------------
-CppPointersLesson2_pointers
+	------------------------------
+	ToDo - CppPointersLesson2_pointers
 
-Write a program that has a function that returns a pointer to an allocated array. The function will have one parameter, an int, that is the size of the array to be created. The function name should be something like "array_maker(..)".
+		Write a program that has a function that returns a pointer to an allocated array. The function will have one parameter, an int, that is the size of the array to be created. The function name should be something like "array_maker(..)".
 
- The rest of the program, that uses this function, can be anything you want. 
+		 The rest of the program, that uses this function, can be anything you want. 
 
 
-Practice debugging - add some break points
+		Practice debugging - add some break points
 
- f5 means run to next break point.
+		 f5 means run to next break point.
 
- f10 means run one line of code then break again.
+		 f10 means run one line of code then break again.
 
- f11 means step into function (this only works if the next line of code is a function call,
+		 f11 means step into function (this only works if the next line of code is a function call,
 
-   otherwise this is the same as f10);
+		   otherwise this is the same as f10);
 
- Hover over variables to see their values
+		 Hover over variables to see their values
 
 
-------------------------------
-CppPointersLesson3
+	------------------------------
+	ToDo - CppPointersLesson3
 
-Write a program that has a function that allocates an array of doubles on the heap. Have the function return the allocated array.
+		Write a program that has a function that allocates an array of doubles on the heap. Have the function return the allocated array.
 
- Write another function that asks the user for the size of the array.
+		 Write another function that asks the user for the size of the array.
 
- Have the user enter doubles into the array and output all the doubles added together.
+		 Have the user enter doubles into the array and output all the doubles added together.
 
- Just output the total value.
+		 Just output the total value.
 
 
-------------------------------
-CppPointersLesson4
+	------------------------------
+	ToDo - CppPointersLesson4
 
-Write a program that creates an int on the heap. Pass this variable to a function that updates the int with the value 55.
+		Write a program that creates an int on the heap. Pass this variable to a function that updates the int with the value 55.
 
- Do no use subscript to update the int.
+		 Do no use subscript to update the int.
 
- Do not return anything from that function.
+		 Do not return anything from that function.
 
- Back in main, output the value to the screen.
+		 Back in main, output the value to the screen.
 
- Remember to call delete at the end of your program to delete the int on the heap.
+		 Remember to call delete at the end of your program to delete the int on the heap.
 
 
 
-------------------------------
-CppPointersLesson5
+	------------------------------
+	ToDo - CppPointersLesson5
 
-Create a function that returns an array of strings. Have the function also fill the array with 10 dinosaur names. In main, output all the strings.
+		Create a function that returns an array of strings. Have the function also fill the array with 10 dinosaur names. In main, output all the strings.
 
 
 
 
-------------------------------
-CppPointersLesson6_pointers
+	------------------------------
+	ToDo - CppPointersLesson6_pointers
 
 
-This program is about practicing using pointers.
+		This program is about practicing using pointers.
 
 
 
-In main, create an int on the heap. This int number will be used to hold the size of an array of strings later in the program.
+		In main, create an int on the heap. This int number will be used to hold the size of an array of strings later in the program.
 
-Pass that int to a function that asks the user for the number of strings they want.  Get the size from the user and then return from that function.
+		Pass that int to a function that asks the user for the number of strings they want.  Get the size from the user and then return from that function.
 
-Now back in main, create an array of strings on the heap using the size the user gave.
+		Now back in main, create an array of strings on the heap using the size the user gave.
 
-Have the user enter all the strings to fill the array.
+		Have the user enter all the strings to fill the array.
 
-Output back to the user all the strings they entered.
+		Output back to the user all the strings they entered.
 
 
 
 
 
-Study this….
+		Study this….
 
-Remember, all variables can hold a value.  The value of a pointer variable is an address of some place in memeory.
+		Remember, all variables can hold a value.  The value of a pointer variable is an address of some place in memeory.
 
-“A variable that holds computer memory addresses is called a pointer variable or just pointer.”
+		“A variable that holds computer memory addresses is called a pointer variable or just pointer.”
 
-You can ask the computer for some memory on the heap by using the word “new”. (“new” will return the address the computer wants you to use.)
+		You can ask the computer for some memory on the heap by using the word “new”. (“new” will return the address the computer wants you to use.)
 
 
 
-On the heap, you can also place many values, like strings, ints, doubles, etc..  
+		On the heap, you can also place many values, like strings, ints, doubles, etc..  
 
-To get at the value on the heap that a pointer “points” to, you must dereference the pointer variable.
+		To get at the value on the heap that a pointer “points” to, you must dereference the pointer variable.
 
-Dereferencing a pointer variable tells the computer to “take me to the address”.
+		Dereferencing a pointer variable tells the computer to “take me to the address”.
 
-To dereference a pointer place an “*” in front of the pointer variable name.
+		To dereference a pointer place an “*” in front of the pointer variable name.
 
 
 
 
-------------------------------
-CppPointersLesson7_pointers
+	------------------------------
+	ToDo - CppPointersLesson7_pointers
 
-Create a program that creates an int named “i8” in main on the stack.
+		Create a program that creates an int named “i8” in main on the stack.
 
-Set its value to 210.
+		Set its value to 210.
 
-Create a function that updates the i8, adding 15 to it.  Pass i8 to the function by passing its address.  This function should update the i8 back in main.
+		Create a function that updates the i8, adding 15 to it.  Pass i8 to the function by passing its address.  This function should update the i8 back in main.
 
-Output the value i8 in main before and after the calling of the function to show that its value did change.
+		Output the value i8 in main before and after the calling of the function to show that its value did change.
 
-Study:
+		Study:
 
-Remember, to get the address of a variable use the “&” operator. “&” means “address of” in c++.
+		Remember, to get the address of a variable use the “&” operator. “&” means “address of” in c++.
 
 
 
 
 
-------------------------------
-CppPointersLesson8_notUsingPointers
+	------------------------------
+	ToDo - CppPointersLesson8_notUsingPointers
 
-Create a program that creates an int named “i8” in main on the stack.
+		Create a program that creates an int named “i8” in main on the stack.
 
-Set its value to 210.
+		Set its value to 210.
 
-Create a function that takes one parameter, an int, and updates the parameter by adding 15 to it.  Pass the value of i8 to the function, not its address.  This function will not update the i8 back in main.
+		Create a function that takes one parameter, an int, and updates the parameter by adding 15 to it.  Pass the value of i8 to the function, not its address.  This function will not update the i8 back in main.
 
-In the function, output the parameter’s new value to the screen.
+		In the function, output the parameter’s new value to the screen.
 
-Output the value i8 in main before and after the calling of the function to show that its value did not change.
+		Output the value i8 in main before and after the calling of the function to show that its value did not change.
 
 
 
-------------------------------
-CppPointersLesson9_pointers
+	------------------------------
+	ToDo - CppPointersLesson9_pointers
 
-Create an array of strings in main on the stack; set the length to 5.
+		Create an array of strings in main on the stack; set the length to 5.
 
-Pass the array to a function that will prompt the user to add the 5 strings.
+		Pass the array to a function that will prompt the user to add the 5 strings.
 
-Back in main, clear the screen and output all the strings the user added.
+		Back in main, clear the screen and output all the strings the user added.
 
-Study:
+		Study:
 
-Remember, when you create an array on the stack you have to know how long it will be at compile time.
+		Remember, when you create an array on the stack you have to know how long it will be at compile time.
 
-Remember, an array on the stack can be passed to a function as a pointer. You do not have to dereference the array when calling the function because an array is already like a pointer.
+		Remember, an array on the stack can be passed to a function as a pointer. You do not have to dereference the array when calling the function because an array is already like a pointer.
 
 
 
-------------------------------
-CppPointersLesson10_pointers
+	------------------------------
+	ToDo - CppPointersLesson10_pointers
 
-Done - 95 - Write a program that contains 10 questions and 10 answers. The answer to the question must be a one word answer to you can check it.
+		Done - 95 - Write a program that contains 10 questions and 10 answers. The answer to the question must be a one word answer to you can check it.
 
-For example: what is the color of the sky?  blue
+		For example: what is the color of the sky?  blue
 
-Tell the user to type in lower case.
+		Tell the user to type in lower case.
 
-Create a function that allocates the array of questions on the heap, fills the array with questions, and returns the array to main.
+		Create a function that allocates the array of questions on the heap, fills the array with questions, and returns the array to main.
 
-Create a function that allocates the answer array on the heap, fills the array with corresponding answers, and returns the array to main.
+		Create a function that allocates the answer array on the heap, fills the array with corresponding answers, and returns the array to main.
 
-Create another function that takes 2 arrays as parameters, the questions and answers, and give the user the test. This function must return an int which
+		Create another function that takes 2 arrays as parameters, the questions and answers, and give the user the test. This function must return an int which
 
-is their score on the test.
+		is their score on the test.
 
-Call all three functions from main.
+		Call all three functions from main.
 
-In main, give the user their test score.
+		In main, give the user their test score.
 
 
-------------------------------
-CppPointersLesson11_pointers
+	------------------------------
+	ToDo - CppPointersLesson11_pointers
 
- *Make sure you name the project the name listed above.
+		 *Make sure you name the project the name listed above.
 
-Create a game that is a memory gage. The user will type in several words and then retype them back again.
+		Create a game that is a memory gage. The user will type in several words and then retype them back again.
 
-The user gets to pick how many words they want to try to type and repeate.
+		The user gets to pick how many words they want to try to type and repeate.
 
-The game will clear the screen after they type the words the first time. Then the user will have to repeate what they typed.
+		The game will clear the screen after they type the words the first time. Then the user will have to repeate what they typed.
 
-The game will give them a score of how many they got right.
+		The game will give them a score of how many they got right.
 
-How to implement this game:
+		How to implement this game:
 
-In main, create an int on the stack that will hold the number of words the user wants to try.
+		In main, create an int on the stack that will hold the number of words the user wants to try.
 
-Create a function that takes the address of that int and asks the user how many words they want to try. Update the int from main by dereferencing
+		Create a function that takes the address of that int and asks the user how many words they want to try. Update the int from main by dereferencing
 
-the parameter that was passed.
+		the parameter that was passed.
 
-Create another function that takes an int, not an int pointer, and allocates the array of strings on the heap. Meaning you will from main
+		Create another function that takes an int, not an int pointer, and allocates the array of strings on the heap. Meaning you will from main
 
-call this function and pass the int value. This function will return the newly allocated array back to main.
+		call this function and pass the int value. This function will return the newly allocated array back to main.
 
-Now main has the array of strings.
+		Now main has the array of strings.
 
-Create another function that takes this array of strings and asks the user to fill it with words.
+		Create another function that takes this array of strings and asks the user to fill it with words.
 
-Clear the screen.
+		Clear the screen.
 
-Create another function takes the array of strings and asks the user to retype all the words in order. Grade the user's attempt and return
+		Create another function takes the array of strings and asks the user to retype all the words in order. Grade the user's attempt and return
 
-a double this is a percentage grade. (NOTE, you have to pass the int in main as well as the array so the function will know how big it is.)
+		a double this is a percentage grade. (NOTE, you have to pass the int in main as well as the array so the function will know how big it is.)
 
-Before the user starts the game, make sure to output instructions for them.
+		Before the user starts the game, make sure to output instructions for them.
 
 
-------------------------------
-CppPointersLesson12_pointers
+	------------------------------
+	ToDo - CppPointersLesson12_pointers
 
-Make a program that, in a function, fills an array with names. Then another function makes another array and it copies the names from the first
+		Make a program that, in a function, fills an array with names. Then another function makes another array and it copies the names from the first
 
-array to the new one. Then the function returns the array to main, and main outputs all of the names from the second array to show that the
+		array to the new one. Then the function returns the array to main, and main outputs all of the names from the second array to show that the
 
-arrays are the same.
+		arrays are the same.
 
 
-------------------------------
-CppPointersLesson13
+	------------------------------
+	ToDo - CppPointersLesson13
 
-Create a DNA program where the user types in a list of nucleotide values and the program will return the opposite values.
+		Create a DNA program where the user types in a list of nucleotide values and the program will return the opposite values.
 
-Then it will return the both values with a "-" between them.
+		Then it will return the both values with a "-" between them.
 
-Programming requirements:
+		Programming requirements:
 
-Don't create an array of strings, use an array of chars.  char * arr = new char[?];
+		Don't create an array of strings, use an array of chars.  char * arr = new char[?];
 
-Important note, chars in code use single quotes, not double like a string.
+		Important note, chars in code use single quotes, not double like a string.
 
-In the for loop where you place the opposite value, call another function that takes in the char and returns
+		In the for loop where you place the opposite value, call another function that takes in the char and returns
 
-the new opposing char.
+		the new opposing char.
 
-Create a function that validates the user's entry, give them an error message if they give an invalid value and
+		Create a function that validates the user's entry, give them an error message if they give an invalid value and
 
-let them type another value. In the error message, tell the user the valid values that are allowed.
+		let them type another value. In the error message, tell the user the valid values that are allowed.
 
-Helping Notes:
+		Helping Notes:
 
-signature of the getOpposing is: char getOpposing(char userValue)
+		signature of the getOpposing is: char getOpposing(char userValue)
 
-int the loop where you get the opposing values: opposingArray[i8] = getOpposing( userInputArray[i8]  );
+		int the loop where you get the opposing values: opposingArray[i8] = getOpposing( userInputArray[i8]  );
 
 
 
@@ -290,83 +293,83 @@ int the loop where you get the opposing values: opposingArray[i8] = getOpposing(
 
 
 
-------------------------------
-CppPointersLesson14
+	------------------------------
+	ToDo - CppPointersLesson14
 
-Create a program takes in a list of words from a user and then
+		Create a program takes in a list of words from a user and then
 
-creates another list of words but they have been changed to upper case.
+		creates another list of words but they have been changed to upper case.
 
-Output both lists.
+		Output both lists.
 
-Create the following utility functions for this program.
+		Create the following utility functions for this program.
 
-You can create other functions as well if you want, but you must use these two functions.
+		You can create other functions as well if you want, but you must use these two functions.
 
- char toUpper(char input)
+		 char toUpper(char input)
 
- {
+		 {
 
-  // This takes one letter char and returns one upper char of the same.
+		  // This takes one letter char and returns one upper char of the same.
 
- }
+		 }
 
- string * createUpperWordArray( needed parameter...)
+		 string * createUpperWordArray( needed parameter...)
 
- {
+		 {
 
-  // This takes in an array of strings, its size and returns a new array with the same words
+		  // This takes in an array of strings, its size and returns a new array with the same words
 
-  // but the letters are upper case.   
+		  // but the letters are upper case.   
 
- }
+		 }
 
 
-------------------------------
-CppPointersLesson15
+	------------------------------
+	ToDo - CppPointersLesson15
 
-Create a program that takes in a list of double numbers from the user; make sure to ask the user how many they want.
+		Create a program that takes in a list of double numbers from the user; make sure to ask the user how many they want.
 
-It then asks the user for one more double that will be multiplied by each element in the list to create a new list.
+		It then asks the user for one more double that will be multiplied by each element in the list to create a new list.
 
-Output both arrays.
+		Output both arrays.
 
-Example:
+		Example:
 
- The user enter a 3 because they want the list to have 3 elements.
+		 The user enter a 3 because they want the list to have 3 elements.
 
- Then the user updates the list by entering 3 double values (1.5, 2.0, 4.0).
+		 Then the user updates the list by entering 3 double values (1.5, 2.0, 4.0).
 
- Then the user enters the multiply value 2.0.
+		 Then the user enters the multiply value 2.0.
 
- The second calculated list would be (3.0, 4.0, 8.0).
+		 The second calculated list would be (3.0, 4.0, 8.0).
 
-Before you start coding, design your program and how you want it to work.
+		Before you start coding, design your program and how you want it to work.
 
 
-------------------------------
-CppPointersLesson16
+	------------------------------
+	ToDo - CppPointersLesson16
 
-Create a mad lib program. Create a list/array for each part of speech; meaning an array for adjectives, another array for nouns, and so on.
+		Create a mad lib program. Create a list/array for each part of speech; meaning an array for adjectives, another array for nouns, and so on.
 
-You can then get a each speech element using sub-scripts as you need them.
+		You can then get a each speech element using sub-scripts as you need them.
 
-Example:
+		Example:
 
- cout << "The dog was " << adjectiveArray[2] << endl;
+		 cout << "The dog was " << adjectiveArray[2] << endl;
 
-Make sure to design your program first and simplify it by creating functions.
+		Make sure to design your program first and simplify it by creating functions.
 
-For example, create a function called
+		For example, create a function called
 
- string * get5Adjectives(void){ ... }
+		 string * get5Adjectives(void){ ... }
 
- This function will allocate the 5 strings and also ask the user for 5 adjectives.
+		 This function will allocate the 5 strings and also ask the user for 5 adjectives.
 
-Create one last function that takes all the arrays and outputs the story.
+		Create one last function that takes all the arrays and outputs the story.
 
 
-
-
+	------------------------------
+	ToDo - Verse for the day: Find a verse for today and email the teacher.	
 
 

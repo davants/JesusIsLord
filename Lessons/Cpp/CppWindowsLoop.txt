@@ -19,7 +19,13 @@ This will take some time but is needed to setup the windows environment.
 	http://www.directxtutorial.com/LessonList.aspx?listid=11
 
 	
-
-
+Task List
+	ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_1
+	ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_2
+	ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_3
+	ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_4
+	ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_5
+	
+	Done - Verse for the day: Matthew 5:3 - Blessed are the poor in spirit, for theirs is the kingdom of heaven.
 
 
