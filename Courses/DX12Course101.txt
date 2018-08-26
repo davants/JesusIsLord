@@ -49,9 +49,7 @@ so the directory will not change after that is started.
 -------------------------------------------
 
 
-
-Proj_CppSimpleWindowsApp	
-	
+Proj_CppWindowsLoop
 	Task List from the lesson:
 		ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_1
 		ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_2
@@ -59,6 +57,11 @@ Proj_CppSimpleWindowsApp
 		ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_4
 		ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_5		
 		Done - Verse for the day: Matthew 5:3 - Blessed are the poor in spirit, for theirs is the kingdom of heaven.
+
+
+Proj_CppSimpleWindowsApp	
+	Task List	
+		ToDo - Complete this simple lesson.
 	
 	
 Proj_CppPointers 	
