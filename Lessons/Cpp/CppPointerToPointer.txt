@@ -18,47 +18,48 @@ Pointer to Pointer: https://youtu.be/ZMDYsr9scGo
 
 
 ---------------------------------------------------------
-How can we use a double pointer?
-The double pointer pattern is used so that a function can allocate an object for the caller. 
-For example
-	Note the "MyClass" is just some class that you already created.
+ToDo - P2P_FunctionFactory - build and debug this application
+	How can we use a double pointer?
+	The double pointer pattern is used so that a function can allocate an object for the caller. 
+	For example
+		Note the "MyClass" is just some class that you already created.
 
-int someFunc(MyClass** returnObj) 
-{
-	// By dereferencing, I'm getting at the value of pValue in main.
-    *returnObj = new MyClass();
+	int someFunc(MyClass** returnObj) 
+	{
+		// By dereferencing, I'm getting at the value of pValue in main.
+		*returnObj = new MyClass();
 
-    return 0;
-}
+		return 0;
+	}
 
-int main()
-{
-	MyClass* pValue;
-	someFunc(&pValue);
-	// pValue now contains the newly allocated MyClass
-}
+	int main()
+	{
+		MyClass* pValue;
+		someFunc(&pValue);
+		// pValue now contains the newly allocated MyClass
+	}
 
-//A single pointer is insufficient here because parameters are passed by value in C++. So the modification of the single pointer would only be visible from within someFunc. 
+	//A single pointer is insufficient here because parameters are passed by value in C++. So the modification of the single pointer would only be visible from within someFunc. 
 
 
+ToDo - Ref2P_FunctionFactory - build and debug this application
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	// Another way to do the same thing is to have a reference to a pointer.
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-// Another way to do the same thing is to have a reference to a pointer.
+	//Note: When using C++ you should consider using a reference in this scenario. 
+	int someFunc(MyClass*& retObj) 
+	{
+	  retObj = new MyClass();
+	  return 0;
+	}
 
-//Note: When using C++ you should consider using a reference in this scenario. 
-int someFunc(MyClass*& retObj) 
-{
-  retObj = new MyClass();
-  return 0;
-}
+	int main()
+	{
+		MyClass* pValue;
+		someFunc(pValue);
+	}
 
-int main()
-{
-	MyClass* pValue;
-	someFunc(pValue);
-}
-
-//This allows you to pass the argument by reference instead of by value. Hence the results are visible to the caller. 
+	//This allows you to pass the argument by reference instead of by value. Hence the results are visible to the caller. 
 
 
 
@@ -99,12 +100,12 @@ Place the lessons below in their own sub-directory naming it the lesson name.
 
 
 ------------------------------
-CppPointersToPointers_Lesson1
+ToDo - CppPointersToPointers_Lesson1
 Create the program from the video.
 
 
 ------------------------------
-CppPointersToPointers_Lesson2
+ToDo - CppPointersToPointers_Lesson2
 Create a program that has a class named food that has a property of type string who's name is foodType.  
 In main, create a variable of type food pointer named pFoodItem.
 Create a function named allocateFood that has 2 parameters; one parameteer that is type string named foodType and a second parameter of type food ** named ppFoodItem.

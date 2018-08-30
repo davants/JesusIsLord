@@ -19,7 +19,7 @@ CppLesson1_WinApp
 
 
 Visual Studio 2017
-New project->Win32 Project
+New project->Visual C++ -> Windows Desktop application
 	Name the project YourFirstName + AppABC.  (example: DavantAppABC)  (No Spaces or unusual charactors)
 	Have visual studio create a directory for your solution. (This is a checkbox in the lower right.)
 	Click Ok to go to the next screen.
