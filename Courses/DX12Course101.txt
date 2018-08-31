@@ -88,12 +88,15 @@ Proj_CppPointers
 Proj_CppPointerToPointer 	
 	Task List from the lesson:
 
-		TEACHER TODO - add todo list here...
-	
+		ToDo - P2P_FunctionFactory
+		ToDo - Ref2P_FunctionFactory
+		ToDo - CppPointersToPointers_Lesson1
+		ToDo - CppPointersToPointers_Lesson2	
 		ToDo - Verse for the day: Find a verse for today and email the teacher.		
 	
 Proj_CppPreprocessor
 
+		TEACHER TODO - add todo list here...
 
 		ToDo - Verse for the day: Find a verse for today and email the teacher.		
 	
