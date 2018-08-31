@@ -19,6 +19,17 @@ This will take some time but is needed to setup the windows environment.
 	http://www.directxtutorial.com/LessonList.aspx?listid=11
 
 	
+Note: 
+	If you create your Visual Studio project by selecting "Desktop Application", you will
+	need to leave the #include "stdafx.h" at the top of your main .cpp file.
+	
+	If you start with a blank project, and add your own .cpp file, the "L" in from of the 
+		strings may not work. Example L"test" may need to be "test".
+	alternatively, you can change the charactor set setting in the project's properties.
+		Select Properties in the Project menu. Then, under Configuration Properties and General, 
+		change the parameter "Character Set" to Use Unicode Character Set.
+	
+	
 Task List
 	ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_1
 	ToDo - Proj_CppSimpleWindowsApp_Win32:Baics_Lesson_2
