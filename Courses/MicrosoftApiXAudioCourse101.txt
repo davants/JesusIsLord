@@ -1,0 +1,40 @@
+This course has a set of projects that will help you learn how to read technical documentation
+and use complex APIs.  The APIs will be the Microsoft XAudio APIs which can be used to 
+make sounds play on the computer using Mp3 files. These APIs also allow for 3D sound, meaning
+the sounds can be made to move around.
+
+
+This course uses materials that are put together my different people from the industry. I would not expect 
+them to be Christian, but probably have some Christian values because our culture was strongly influenced 
+by Christianity. I avoid materials that use bad language or crude commentary.
+I will include verses between lessons so we don't loose sight of what really matters. 
+
+Exodus 20:16 - Old Testament
+	You must not lie or deceive one another. 
+	
+Isaiah 53:5 - Old Testament
+	.. he was pierced for our transgressions; he was crushed for our iniquities;
+	upon him was the chastisement that brought us peace, and with his wounds we are healed.
+	
+1 Peter 2:24
+	"He himself bore our sins" in his body on the cross, so that we might die to sins and live 
+	for righteousness; "by his wounds you have been healed." 
+
+Hebrews 11:6 
+	.. and without faith it is impossible to please God, for whoever would draw near to God must 
+	believe that he exists and that he rewards those who seek him.
+ 
+Acts 18 - 1 through 4
+	Paul....met a certain Jew named Aquila...with his wife Priscilla... and because Paul was a 
+	tentmaker as they were, he stayed and worked with them.
+	Every Sabbath he reasoned in the synagogue, trying to persuade Jews and Greeks.
+
+	
+XAudio2 APIs
+	https://docs.microsoft.com/en-us/windows/desktop/xaudio2/xaudio2-apis-portal
+	
+	
+	
+	
+	
+	

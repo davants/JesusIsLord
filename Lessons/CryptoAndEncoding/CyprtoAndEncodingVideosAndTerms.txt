@@ -1,0 +1,78 @@
+Terms:
+	Symmetric - One Key, single secret
+	ASymmetric - private/public keys (2)	
+	RSA - is ASymmetric
+	Encoding - Which is not encryption! Example, Base64.
+	
+
+	Great Video on OAuth2, OpenId, JWT 
+		https://www.youtube.com/watch?v=996OiexHze0&t=1207s
+	
+	Great Video on JWT and SSO and load balancing without session state.
+		https://www.youtube.com/watch?v=67mezK3NzpU
+
+	
+	RS256 (RSA Signature with SHA-256 ) is an asymmetric algorithm , and it uses a 
+		public/private key pair: the identity provider has a private (secret) key used to generate the 
+		signature, and the consumer of the JWT gets a public key to validate the signature. Since the 
+		public key, as opposed to the private key, doesn't need to be kept secured, most identity 
+		providers make it easily available for consumers to obtain and use (usually through a 
+		metadata URL).	Note that this is not encrypted, just a way to sign.
+	
+	HS256 - symmetric algorithm 
+		
+	OAuth and signing -	At 0Auth we allow signing of tokens using either a symmetric algorithm (HS256), or an 
+		asymmetric algorithm (RS256). HS256 tokens are signed and verified using a simple 
+		secret, where as RS256 use a private and public key for signing and verifying the 
+		token signatures.
+		
+	In OAuth2, the Authorization Code (or Authentication Grant) flow which has the "Grant" step 
+		and then the client gets an Access Token using the Grant,...  sometime Access Tokens 
+		are called Bearer tokens.
+		
+	In OAuth2, you can have other workflows like the 
+		"Resource owner password credentials" (back channel only) 
+		and also the "Client credentials" (back channel only)
+		and "Implicit Flow" (front channel only)
+		
+		Implicit flow - The initial request is specified as "token" and not "Code"(grant).
+		
+	OpenId - a small add-on to OAuth2. In the initial request, a scope parameter if "openid" is added.
+		This is to support Authentication.  Without this, OAuth2 is just doing Authorization.
+		When the client gets back the Access Token, they also get a ID Token.
+		The Open ID Token IS A JWT! 
+	
+	JWT format is header.payload.signature
+	
+	
+	JWKS and JWK - URL that published keys.
+		https://auth0.com/docs/jwks
+		
+		
+	Base64Url - use base 64 Url as per - https://tools.ietf.org/html/rfc7515
+		which is referenced in the IMS security document 
+			here - https://www.imsglobal.org/spec/security/v1p0/#bib-RFC7515
+
+	JWT is encoded in Base64Url! (not base64)
+		Base64 and Base64Url are slightly different? The later is safe on a url?
+	
+	OAuth2 Authorization Code Flow
+		Why the extra step of the Authentication Code to get to the Access token?
+			The exchange of the Authentication Code for the Access token doesn
+			not happen in the browser, it is server to server and also include
+			a secret id as well. Therefore, if someone stole the Authentication code
+			they would not be able to redeam it for an Access token.
+			https://www.youtube.com/watch?v=996OiexHze0&t=1207s
+	
+	
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
