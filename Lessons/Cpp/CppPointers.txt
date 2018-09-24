@@ -178,34 +178,40 @@ Tasks
 
 		Create an array of strings in main on the stack; set the length to 5.
 
-		Pass the array to a function that will prompt the user to add the 5 strings.
+		Pass the array to a function that will prompt the user type in text that will
+		be put in the array.  So, the user will type 5 things. For example, "dog", "cat",
+		"tomorrow","over","whatever".  
 
-		Back in main, clear the screen and output all the strings the user added.
+		Back in main, clear the screen and output all the strings the user put in the array
+		of strings.
 
 		Study:
 
 		Remember, when you create an array on the stack you have to know how long it will be at compile time.
 
-		Remember, an array on the stack can be passed to a function as a pointer. You do not have to dereference the array when calling the function because an array is already like a pointer.
+		Remember, an array on the stack can be passed to a function as a pointer. You do not have to use the 
+			"address of", &, when calling the function because an array is already like a pointer.
 
 
 
 	------------------------------
 	ToDo - CppPointersLesson10_pointers
 
-		Done - 95 - Write a program that contains 10 questions and 10 answers. The answer to the question must be a one word answer to you can check it.
+		Write a program that contains 10 questions and 10 answers. 
+		The answer to the question must be a one word answer so you can check it.
 
 		For example: what is the color of the sky?  blue
 
 		Tell the user to type in lower case.
 
-		Create a function that allocates the array of questions on the heap, fills the array with questions, and returns the array to main.
+		Create a function that allocates the array of questions on the heap, fills the array 
+		with questions, and returns the array to main.
 
-		Create a function that allocates the answer array on the heap, fills the array with corresponding answers, and returns the array to main.
+		Create a function that allocates the answer array on the heap, fills the array with 
+		corresponding answers, and returns the array to main.
 
-		Create another function that takes 2 arrays as parameters, the questions and answers, and give the user the test. This function must return an int which
-
-		is their score on the test.
+		Create another function that takes 2 arrays as parameters, the questions and answers, and 
+		give the user the test. This function must return an int which is their score on the test.
 
 		Call all three functions from main.
 
@@ -219,9 +225,10 @@ Tasks
 
 		Create a game that is a memory gage. The user will type in several words and then retype them back again.
 
-		The user gets to pick how many words they want to try to type and repeate.
+		The user gets to pick how many words they want to try to type and repeat.
 
-		The game will clear the screen after they type the words the first time. Then the user will have to repeate what they typed.
+		The game will clear the screen after they type the words the first time. Then the user will have to repeat
+		what they typed.
 
 		The game will give them a score of how many they got right.
 
@@ -229,13 +236,11 @@ Tasks
 
 		In main, create an int on the stack that will hold the number of words the user wants to try.
 
-		Create a function that takes the address of that int and asks the user how many words they want to try. Update the int from main by dereferencing
-
-		the parameter that was passed.
-
-		Create another function that takes an int, not an int pointer, and allocates the array of strings on the heap. Meaning you will from main
-
-		call this function and pass the int value. This function will return the newly allocated array back to main.
+		Create a function that takes the "address of" that int and asks the user how many words they want to try. 
+		
+		Create another function that takes an int, not an int pointer, and allocates the array of strings on the heap. 
+		Meaning you will from main call this function and pass the int value. 
+		This function will return the newly allocated array back to main.
 
 		Now main has the array of strings.
 
@@ -243,9 +248,9 @@ Tasks
 
 		Clear the screen.
 
-		Create another function takes the array of strings and asks the user to retype all the words in order. Grade the user's attempt and return
-
-		a double this is a percentage grade. (NOTE, you have to pass the int in main as well as the array so the function will know how big it is.)
+		Create another function takes the array of strings and asks the user to retype all the words in order. 
+		Grade the user's attempt and return a double this is a percentage grade. 
+		(NOTE, you have to pass the int in main as well as the array so the function will know how big it is.)
 
 		Before the user starts the game, make sure to output instructions for them.
 
@@ -253,17 +258,17 @@ Tasks
 	------------------------------
 	ToDo - CppPointersLesson12_pointers
 
-		Make a program that, in a function, fills an array with names. Then another function makes another array and it copies the names from the first
-
-		array to the new one. Then the function returns the array to main, and main outputs all of the names from the second array to show that the
-
-		arrays are the same.
+		Make a program that, in a function, fills an array with names. Then another function makes another 
+		array and it copies the names from the first array to the new one. 
+		Then the function returns the array to main, and main outputs all of the names from the second 
+		array to show that the arrays are the same.
 
 
 	------------------------------
 	ToDo - CppPointersLesson13
 
-		Create a DNA program where the user types in a list of nucleotide values and the program will return the opposite values.
+		Create a DNA program where the user types in a list of nucleotide values and the program will 
+		return the opposite values.
 
 		Then it will return the both values with a "-" between them.
 
@@ -273,13 +278,12 @@ Tasks
 
 		Important note, chars in code use single quotes, not double like a string.
 
-		In the for loop where you place the opposite value, call another function that takes in the char and returns
+		In the for loop where you place the opposite value, call another function that takes in the char and 
+		returns	the new opposing char.
 
-		the new opposing char.
-
-		Create a function that validates the user's entry, give them an error message if they give an invalid value and
-
-		let them type another value. In the error message, tell the user the valid values that are allowed.
+		Create a function that validates the user's entry, give them an error message if they give an 
+		invalid value and let them type another value. In the error message, tell the user the valid 
+		values that are allowed.
 
 		Helping Notes:
 

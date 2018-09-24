@@ -3,7 +3,7 @@ Terms:
 	ASymmetric - private/public keys (2)	
 	RSA - is ASymmetric
 	Encoding - Which is not encryption! Example, Base64.
-	
+	AES - symmetric encryption with a single key.
 
 	Great Video on OAuth2, OpenId, JWT 
 		https://www.youtube.com/watch?v=996OiexHze0&t=1207s
