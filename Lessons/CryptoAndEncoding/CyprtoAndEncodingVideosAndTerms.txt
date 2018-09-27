@@ -17,7 +17,14 @@ Terms:
 		signature, and the consumer of the JWT gets a public key to validate the signature. Since the 
 		public key, as opposed to the private key, doesn't need to be kept secured, most identity 
 		providers make it easily available for consumers to obtain and use (usually through a 
-		metadata URL).	Note that this is not encrypted, just a way to sign.
+		metadata URL).	Note that the original data is not encrypted, just a way to sign.
+		
+		There is some encryption involved; but the message data is not encrypted.
+		See "Asymmetric encryption" below later in this document. The way this works is to 
+		hash the data, no key or secret needed to hash, then Asymmetric encrypt the hash result.
+		The client can decrypt the hash result with the public key and then validate the data 
+		with the same hash algorithm.
+		
 	
 	HS256 - symmetric algorithm 
 		
@@ -64,15 +71,31 @@ Terms:
 			they would not be able to redeam it for an Access token.
 			https://www.youtube.com/watch?v=996OiexHze0&t=1207s
 	
-	
+	ASymmetric encryption - Things are encrypted by the private key and the public key can
+		decrypt it. Only small amounts of data can be encrypted this way.
 			
+	Symmetric encryption - One secret is used to encrypted and decrypt the data. Large amounts
+		of data can be encrypted with this.
+		
+	Safe Encryption of large amounts of data can be somewhat accomplished with both ASymmetric and 
+		Symmetric together. Create a random hash and use it to encrypt the data with Symmetric
+		encryption. Next, use ASymmetric encryption to encrypt the hash used as the secret.
 			
+	Hash - A fixed-size result obtained by applying a mathematical function (the hashing algorithm)
+		to an arbitrary amount of data. (Also known as "message digest.")
 			
+	“SHA-2” “SHA-256 are the same thing. They are the same Hashing algorithm.		
 			
+	c++ Libraries
+		https://docs.microsoft.com/en-us/windows/desktop/SecCNG/cng-portal
+		
+	c# Libraries
+		RSACryptoServiceProvider - What I have used.
+			https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsacryptoserviceprovider?view=netframework-4.7.2
 			
-			
-			
-			
+		This may be a new one - https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsacng?view=netframework-4.7.2
+		
+		
 			
 			
 			

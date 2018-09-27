@@ -3,3 +3,4 @@ Crypto and Encoding
 CyprtoAndEncodingVideosAndTerms.txt
 	This contains video and terms to cover encryption and encoding.
 	Tags: OAuth, Encryption, JWT, RS256, HS256, Sign, signature, Base64Url, Encoding, Hash, AES
+		SHA, ASymmetric Encryption, Symmetric Encryption

@@ -34,7 +34,8 @@ XAudio2 APIs
 	https://docs.microsoft.com/en-us/windows/desktop/xaudio2/xaudio2-apis-portal
 	
 	
-	
+Navigate using the left tree structure links. Most of the links in the page are pages
+you will run into later so there is no reason leave the page.
 	
 	
 	
