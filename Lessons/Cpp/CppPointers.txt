@@ -287,9 +287,9 @@ Tasks
 
 		Helping Notes:
 
-		signature of the getOpposing is: char getOpposing(char userValue)
+			- The signature of the getOpposing is: char getOpposing(char userValue)
 
-		int the loop where you get the opposing values: opposingArray[i8] = getOpposing( userInputArray[i8]  );
+			- In the loop where you get the opposing values: opposingArray[i8] = getOpposing( userInputArray[i8]  );
 
 
 
