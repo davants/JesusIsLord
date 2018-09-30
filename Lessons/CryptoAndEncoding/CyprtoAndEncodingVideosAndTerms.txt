@@ -96,6 +96,19 @@ Terms:
 		This may be a new one - https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsacng?view=netframework-4.7.2
 		
 		
+	Iv - When doing symmetric encryption, with a single secret, it is important to have
+		the value that needs to be encrypted start with different values. If the value 
+		that needs to be encrypted always start with "from", for example, it is at risk
+		of being decrypted. The Iv is the random leading chars/bytes to make each
+		encrypted value safe from hackers. 
+		The Iv does NOT have to be kept secret, it just needs to be random.
+		
 			
+	Microsoft CNG - https://docs.microsoft.com/en-us/windows/desktop/SecCNG/signing-data-with-cng
+		Data signing does not protect the data. It only to verifies the integrity of the data. 
+		The sender hashes that data and signs (encrypts) the hash by using a private key. 
+		The intended recipient performs verification by creating a hash of the data received, 
+		decrypting the signature to obtain the original hash, and comparing the two hashes.
+		
 			
 			
