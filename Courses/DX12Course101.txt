@@ -95,9 +95,10 @@ Proj_CppPointerToPointer
 		ToDo - Verse for the day: Find a verse for today and email the teacher.		
 	
 Proj_CppPreprocessor
-
-		TEACHER TODO - add todo list here...
-
+	Task List from the lesson:
+		ToDo - Create a program that uses the #ifdef preprocessor.		
+		ToDo - Create a program that uses the #ifndef preprocessor.
+		ToDo - Create a program that uses a macro.
 		ToDo - Verse for the day: Find a verse for today and email the teacher.		
 	
 Proj_CppVector

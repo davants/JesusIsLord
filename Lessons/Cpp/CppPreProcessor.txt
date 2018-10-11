@@ -10,6 +10,7 @@ Tasks for this Step:
 
 --------------------------------------------------------
 Preprocessor Commands 
+Video - https://www.youtube.com/watch?v=ZYpvz9ZAwDI
 Video - https://youtu.be/xro8-rObtP0
 
 Notes from site (you don't need to read this article) - http://www.cplusplus.com/doc/tutorial/preprocessor/
@@ -37,5 +38,17 @@ Example: This is a DirectX lib file being loaded.
 #pragma comment(lib, "dxgi.lib")
 
 
+ToDo - Create a program that uses the #ifdef preprocessor.
+	You will need to define a preprocessor value that you can use in your #ifdef.
+	Explain in the comments of your code which code gets compiled and which code 
+	gets skipped.
+	
+ToDo - Create a program that uses the #ifndef preprocessor.
+	You will need to define a preprocessor value that you can use in your #ifndef.
+	Explain in the comments of your code which code gets compiled and which code 
+	gets skipped.
+
+ToDo - Create a program that uses a macro.
+	Explain in the comments of your code that the code will look like after the pre-compiler runs.
 
 
