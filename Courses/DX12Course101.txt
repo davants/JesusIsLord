@@ -103,9 +103,13 @@ Proj_CppPreprocessor
 	
 Proj_CppVector
 	Finish lesson CppVector
+		ToDo - CppVectorsLesson1VectorOfInts
+		ToDo - CppVectorsLesson2DeleteAnElement
 
 Proj_CppFactory
 	Finish lesson CppFactory
+		ToDo - CppPFactory_Prog1_CarFactory
+		
 
 Proj_IDXGIFactory4
 	Complete the following 

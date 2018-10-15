@@ -36,7 +36,7 @@ Create a directory according to the structure specified in the course.
 
 
 ------------------------------
-CppPFactory_Prog1_CarFactory
+ToDo - CppPFactory_Prog1_CarFactory
 
 Create a car class and add some properties like Make, Color and Year.
 

@@ -23,7 +23,7 @@ Place the lessons below in their own sub-directory naming it the lesson name.
 
 
 ------------------------------
-CppVectorsLesson1VectorOfInts
+ToDo - CppVectorsLesson1VectorOfInts
 
 Write a program that creates a vector of ints and asks the user to add as many ints as the user wants.
 Use the push_back function to add the ints to the vector.
@@ -32,7 +32,7 @@ After they are done adding to the vector, print out all the ints in the list.
 
 
 ------------------------------
-CppVectorsLesson2DeleteAnElement
+ToDo - CppVectorsLesson2DeleteAnElement
 
 Write a program that creates a vector of doubles. 
 Add 10 double values to the vector. 
