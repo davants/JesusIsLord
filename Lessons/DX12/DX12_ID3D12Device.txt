@@ -10,109 +10,111 @@ This lesson will create a ID3D12Device interface object and use it to query your
 ---------------------
 Lessons
 
-Use the directory structure specified in the course.
-This lesson requires that you already have an app running that can be updated by the following steps.
-So you will not create a project, but edit an existing project.
+ToDo - Add the ID3D12Device interface
+
+	Use the directory structure specified in the course.
+	This lesson requires that you already have an app running that can be updated by the following steps.
+	So you will not create a project, but edit an existing project.
 
 
-Step 1)
-Include another file named "d3d12.h".
+	Step 1)
+	Include another file named "d3d12.h".
 
-Code:
-	// Preprocessor directive that add the contents of another file.
-	#include <d3d12.h>
- // Preprocessor directive that add the contents of another file.
+	Code:
+		// Preprocessor directive that add the contents of another file.
+		#include <d3d12.h>
+	 // Preprocessor directive that add the contents of another file.
 
-Step 2)
-Load another library named "D3D12.lib"
+	Step 2)
+	Load another library named "D3D12.lib"
 
-Code:
-	// Preprocessor directive that adds a library.
-	#pragma comment(lib, "D3D12.lib")
- 
+	Code:
+		// Preprocessor directive that adds a library.
+		#pragma comment(lib, "D3D12.lib")
+	 
 
-Step 3)
-Create the pointer to the object we want to create. The object is of type ID3D12Device;
+	Step 3)
+	Create the pointer to the object we want to create. The object is of type ID3D12Device;
 
-Code: 
-	ID3D12Device * vpD3dDevice;
+	Code: 
+		ID3D12Device * vpD3dDevice;
 
-Step 4)
-Ask the Direct X API to create the device for you by calling the function "D3D12CreateDevice".
+	Step 4)
+	Ask the Direct X API to create the device for you by calling the function "D3D12CreateDevice".
 
-This function returns a value that tells us if the object was created successfully or not.
-The return type is "HRESULT".  HRESULT is a typedef that is a "long" data type.
-Remember, a typedef is just giving another name to a data type.  
+	This function returns a value that tells us if the object was created successfully or not.
+	The return type is "HRESULT".  HRESULT is a typedef that is a "long" data type.
+	Remember, a typedef is just giving another name to a data type.  
 
-Create a variable to hold the HRESULT.
+	Create a variable to hold the HRESULT.
 
-Code:
-	HRESULT vResult;
+	Code:
+		HRESULT vResult;
 
-Now call the D3D12CreateDevice function and pass it the address of your pointer named "vpD3dDevice".
+	Now call the D3D12CreateDevice function and pass it the address of your pointer named "vpD3dDevice".
 
-Code:
-	vResult = D3D12CreateDevice(
-		nullptr,             // nullptr mean to create the default adapter
-		D3D_FEATURE_LEVEL_11_0,
-		IID_PPV_ARGS(&vpD3dDevice));
+	Code:
+		vResult = D3D12CreateDevice(
+			nullptr,             // nullptr mean to create the default adapter
+			D3D_FEATURE_LEVEL_11_0,
+			IID_PPV_ARGS(&vpD3dDevice));
 
-Notes on the D3D12CreateDevice function:
-This function is a factory of sorts. It does the work of finding the right object and creating it.
-The first parameter is set to nullptr (null pointer). This will tell the function that you want the default GPU card on your computer.
-The second parameter is an enum value that tells the function the minimum GPU card you will take. We set this to direct X 11.
-	If the card is not powerful enough to support Direct X 11 then the HRESULT will be set to a value that means failed to create the object.
-The third parameter is your the variable you created earlier; the pointer to a ID3D12Device object. Remember, the reason we are calling
-	this "create" function in the first place is so it can fill your variable with the address of the created object on the heap. This is 
-	why we pass the address of our variable "&vpD3dDevice".
-	The third parameter is placed inside a macro that will turn our one parameter into two. So this means the D3D12CreateDevice function
-	actually takes four parameters. If you don't understand what this means, go back and review how macros work and the DX12_IDXGIFactory4
-	which describes this is more detail.
+	Notes on the D3D12CreateDevice function:
+	This function is a factory of sorts. It does the work of finding the right object and creating it.
+	The first parameter is set to nullptr (null pointer). This will tell the function that you want the default GPU card on your computer.
+	The second parameter is an enum value that tells the function the minimum GPU card you will take. We set this to direct X 11.
+		If the card is not powerful enough to support Direct X 11 then the HRESULT will be set to a value that means failed to create the object.
+	The third parameter is your the variable you created earlier; the pointer to a ID3D12Device object. Remember, the reason we are calling
+		this "create" function in the first place is so it can fill your variable with the address of the created object on the heap. This is 
+		why we pass the address of our variable "&vpD3dDevice".
+		The third parameter is placed inside a macro that will turn our one parameter into two. So this means the D3D12CreateDevice function
+		actually takes four parameters. If you don't understand what this means, go back and review how macros work and the DX12_IDXGIFactory4
+		which describes this is more detail.
 
-Step 5)
-So how to we know if the ID3D12Device was created? We check the HRESULT that was returned from the D3D12CreateDevice function.
-We will check if it is equal to S_OK.  S_OK is a preprocessor #define that is alway zero (0).
-This means if the D3D12CreateDevice returns a 0, S_OK, then it was successful in creating the ID3D12Device object and your
-variable vpD3dDevice now contains the address.
+	Step 5)
+	So how do we know if the ID3D12Device was created? We check the HRESULT that was returned from the D3D12CreateDevice function.
+	We will check if it is equal to S_OK.  S_OK is a preprocessor #define that is alway zero (0).
+	This means if the D3D12CreateDevice returns a 0, S_OK, then it was successful in creating the ID3D12Device object and your
+	variable vpD3dDevice now contains the address.
 
-Make a change to the MessageBox function call code so that we output if everything worked or not. 
+	Make a change to the MessageBox function call code so that we output if everything worked or not. 
 
-Code:
-	if (vResult == S_OK)
-	{
-		MessageBox(nullptr, L"Success - ID3D12Device was created!", L"Working!!", MB_OK);
+	Code:
+		if (vResult == S_OK)
+		{
+			MessageBox(nullptr, L"Success - ID3D12Device was created!", L"Working!!", MB_OK);
 
-	}
-	else
-	{
-		MessageBox(nullptr, L"FAIL - ID3D12Device was not created!", L"Working!!", MB_OK);
-	}
-
-
-Compile and run this code.
-
-Step 6)
-The last thing we have not done is delete these pointers; however, we do not clean up these objects
-like we do other objects. Notice that we did not call "new", we called a function that allocated 
-the objects for us.  The writers of these objects have a specific way to delete these objects and it is
-to call the "Release()" function. This will do the job of disconnecting from the GPU and deleting resources.
-
-So, call delete on both the factory and the device. Add this code after you are done with the objects.
-Check to see if they are not null before calling their functions.
-
-Code:
-	
-	
-	if (vpDxgiFactory != nullptr)
-	{
-		vpDxgiFactory->Release();
-	}
+		}
+		else
+		{
+			MessageBox(nullptr, L"FAIL - ID3D12Device was not created!", L"Working!!", MB_OK);
+		}
 
 
-	if (vpD3dDevice != nullptr)
-	{
-		vpD3dDevice->Release();
-	}
+	Compile and run this code.
+
+	Step 6)
+	The last thing we have not done is delete these pointers; however, we do not clean up these objects
+	like we do other objects. Notice that we did not call "new", we called a function that allocated 
+	the objects for us.  The writers of these objects have a specific way to delete these objects and it is
+	to call the "Release()" function. This will do the job of disconnecting from the GPU and deleting resources.
+
+	So, call delete on both the factory and the device. Add this code after you are done with the objects.
+	Check to see if they are not null before calling their functions.
+
+	Code:
+		
+		
+		if (vpDxgiFactory != nullptr)
+		{
+			vpDxgiFactory->Release();
+		}
+
+
+		if (vpD3dDevice != nullptr)
+		{
+			vpD3dDevice->Release();
+		}
 
 
 

@@ -18,7 +18,7 @@ For example:
 -------------------------------
 Lessons
 
-CppConstFunctionParameters
-Write a program that has a function that takes 2 parameters that are pointers to ints. 
-Make one const and the other without the const.
-Try to change both values in the function and see what the compilter does.
+ToDo - CppConstFunctionParameters
+	Write a program that has a function that takes 2 parameters that are pointers to ints. 
+	Make one const and the other without the const.
+	Try to change both values in the function and see what the compilter does.

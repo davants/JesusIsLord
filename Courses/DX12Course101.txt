@@ -112,33 +112,35 @@ Proj_CppFactory
 		
 
 Proj_IDXGIFactory4
-	Complete the following 
-		As always, create a project directory using the directory structure listed at the top of this course.
-		Copy the application you created for the CppSimpleWindowsApp project to the new directory for this project.
-			For example, for me I will copy directory DavantAppABC 
-				FROM Folder: C:\modules\Davant\DX12Course101\Proj_CppSimpleWindowsApp\
-				TO Folder:   C:\modules\Davant\DX12Course101\Proj_IDXGIFactory4\
-		Rename the cpp file that contains "main" to Proj_IDXGIFactory4.cpp.
-		Use lesson DX12_IDXGIFactory4 as a guide to add the direct x factory to your application.
-		Compile and run the application. 
+	ToDo - lesson DX12_IDXGIFactory4
+		Complete the following 
+			As always, create a project directory using the directory structure listed at the top of this course.
+			Copy the application you created for the CppSimpleWindowsApp project to the new directory for this project.
+				For example, for me I will copy directory DavantAppABC 
+					FROM Folder: C:\modules\Davant\DX12Course101\Proj_CppSimpleWindowsApp\
+					TO Folder:   C:\modules\Davant\DX12Course101\Proj_IDXGIFactory4\
+			Rename the cpp file that contains "main" to Proj_IDXGIFactory4.cpp.
+			Use lesson DX12_IDXGIFactory4 as a guide to add the direct x factory to your application.
+			Compile and run the application. 
 
 Proj_CppTypeDef
-	Finish lesson CppTypeDef
+	ToDo - CppTypeDefLesson1
 	
 Proj_ID3D12Device
-	Complete the following 
-		As always, create a project directory using the directory structure listed at the top of this course.
-		Copy the application you created for the Proj_IDXGIFactory4 project to the new directory for this project.
-			For example, for me I will copy directory DavantAppABC 
-				FROM Folder:  C:\modules\Davant\DX12Course101\Proj_IDXGIFactory4\
-				TO Folder:    C:\modules\Davant\DX12Course101\Proj_ID3D12Device\
-		Rename the cpp file that contains "main" to Proj_ID3D12Device.cpp.
-		Compile and run the application.
-		Using lesson DX12_ID3D12Device create the interface to the GPU adaptor.
+	ToDo - Add the ID3D12Device interface
+		Complete the following 
+			As always, create a project directory using the directory structure listed at the top of this course.
+			Copy the application you created for the Proj_IDXGIFactory4 project to the new directory for this project.
+				For example, for me I will copy directory DavantAppABC 
+					FROM Folder:  C:\modules\Davant\DX12Course101\Proj_IDXGIFactory4\
+					TO Folder:    C:\modules\Davant\DX12Course101\Proj_ID3D12Device\
+			Rename the cpp file that contains "main" to Proj_ID3D12Device.cpp.
+			Compile and run the application.
+			Using lesson DX12_ID3D12Device create the interface to the GPU adaptor.
 
 
-Pro_CppConst
-	Finish lesson CppConst 
+Pro_CppConst 
+	ToDo - CppConstFunctionParameters 
 
 
 Pro_CppOperatorOverloading

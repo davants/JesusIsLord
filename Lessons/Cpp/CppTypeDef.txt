@@ -17,7 +17,7 @@ Place the lessons below in their own sub-directory naming it the lesson name.
 
 
 -----------------------
-CppTypeDefLesson1
+ToDo - CppTypeDefLesson1
 
 Creat a project that asks a user for an int and responds with that number plus 15.
 Run and test the application.
