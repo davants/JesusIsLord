@@ -95,9 +95,9 @@ Step 4) The last thing to do is call "Release()" for this factory object. This i
 	Place this at the end of the program in main.
 	
 CODE
-	if (mpDxgiFactory != nullptr)
+	if (vpDxgiFactory != nullptr)
 	{
-		mpDxgiFactory->Release();
+		vpDxgiFactory->Release();
 	}
 
 
