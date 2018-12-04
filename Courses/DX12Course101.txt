@@ -221,6 +221,8 @@ Proj_CppWindowsLoop
 Proj_CppStaticVariableInAClass
 	Complete lesson CppStaticVariableInAClass.
 
+Proj_CppSmartPointrs_Unique_ptr_And_Shared_ptr
+	Complete lessons.
 
 Proj_Github_Setup
 	Complete the Github_Setup lesson.
