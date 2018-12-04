@@ -25,6 +25,10 @@ Bullet_Picking
 	btPoint2PointConstraint
 	btPoint2PointConstraint::setPivotB(...)
 	
+Bullet_Terms
+	DISABLE_DEACTIVATION
+	ISLAND_SLEEPING
+	
 	
 
 Bullet Tutorial

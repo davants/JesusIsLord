@@ -19,7 +19,7 @@ Place the lessons below in their own sub-directory naming it the lesson name.
 -----------------------
 ToDo - CppTypeDefLesson1
 
-Creat a project that asks a user for an int and responds with that number plus 15.
+Create a project that asks a user for an int and responds with that number plus 15.
 Run and test the application.
 
 Now create a typedef for int, choose your own name, and then update the program to use the typedef.

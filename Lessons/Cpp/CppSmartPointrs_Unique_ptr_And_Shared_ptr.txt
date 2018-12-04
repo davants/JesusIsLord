@@ -1,0 +1,197 @@
+
+Smart Pointers - Unique Pointer(std::unique_ptr), Shared Pointer(std::shared_ptr) 
+	The header file for this is 
+		#include <memory>
+
+You will learn a little about the following:
+	std::unique_ptr template Class
+	std::shared_ptr template Class
+	
+	
+You should understand C++ pointers before starting this lesson.
+
+
+Videos
+	This video also talks about shared pointer.
+	NOTE! -> The issue with this video is that he implies that you can’t pass a unique pointer 
+		around or have a function return a unique pointer. 
+		This is not true; they can be moved around from function to function very easily.  
+	https://www.youtube.com/watch?v=UOB7-B2MfwA
+	
+	This only covers unique_ptr.
+	https://www.youtube.com/watch?v=YeI6V2O5BFE
+	
+
+
+
+Notes
+	You allocate memory on the heap by calling "new". 
+	For example, assume we have a class named Airplane:
+		Airplane * pAirplane = new Airplane();
+	After you are done with pAirplane, you must call delete otherwise you will have a memory leak.
+	For example,
+		delete pAirplane;
+		
+	The problem is that if you pass your pointer from function to function it is VERY easy to forget 
+	to call delete. So... smart pointers to the rescue. 
+	
+	Ownership of a heap pointer	
+		Before we cover unique pointer and shared pointer we need to understand "ownership". Ownership is 
+		very important. Look at the following code. Say I have the main function plus 3 other functions 
+		named funcA, funcB and funcC. All 3 have one parameter which is a pointer to the Airplane.
+		Now shown below is the code where funcB call funcC.
+		In main...
+			Airplane * pAirplane = new Airplane();
+			
+			funcA(pAirplane);
+			
+			funcB(pAirplane);   // ALSO!!! What if funcB calls funcC!
+			
+		
+		The question is where do I delete?  I can't call delete in funcA because pAirplane is used later.
+		Should I call delete in funcC?  What if main still needs it later? What if one of these 
+		functions runs in another thread. What if ..... 
+		
+		So an important thing to understand when your building your program is who "owns" the pointer; meaning 
+		which function owns it.
+		Each function must document what it does and how it works. If you have seperate threads for each 
+		function then they could all be using the pointer at the same time so it must be shared.
+		
+	
+	Unique Pointer
+		A unique pointer, is a smart pointer because it is smart enough to delete itself. It will
+		make sure delete is called.
+		
+		Another very important point, no pun intended, is that unique pointers make sure only ONE
+		function "Owns" the pointer at a time. This is very important because how else will the 
+		smart pointer know when to delete itself.
+		
+		Unique pointers are just as fast as regular pointers so you don't need to worry about performance.
+		
+		Unique pointers are templates so to create one do the following.
+			
+			std::unique_ptr<Airplane> pAirplate; 
+			
+			// This will default to nullptr.  To call "new", you use the "make_unique" template.
+			
+			pAirplane = std::make_unique<Airplane>();
+			
+			// Done!  You can of course do it on one line instead of 2.
+			// 		For example: std::unique_ptr<Airplane> pAirplate = std::make_unique<Airplane>();
+			
+			// You treat the pointer just like a regular pointer. To call the "fly" function that is part of 
+			// the Airplane class, use normal pointer syntax.
+			
+			pAirplane->fly();
+			
+			// You can also de-reference it just like a regular pointer.
+		
+			(*pAirplane).fly();	
+		
+		
+		Unique pointer only allows ONE variable to "own" it at a time.
+		
+		To transfer "ownership", use the std::move(....) function. This "moves" ownership to another variable.
+		This will cause the unique_ptr to give up its ownership to another variable.
+		
+			For example, say I have a function, funcA, that takes a unique_ptr to the Airplane. If the 
+			unique_ptr was created in main, it can be passed by using the std::move(..) function. 
+			
+			void funcA( std::unique_ptr<Airplane> pMyAirplane )
+			{
+				// funcA owns the Airplane pointer now.
+				pMyAirplane->fly();
+				... 
+				
+				// When funcA ends, the Airplane will be automatically deleted.
+			} 
+			
+			int main()
+			{
+				// Create an Airplane on the heap!
+				std::unique_ptr<Airplane> pAirplane = std::make_unique<Airplane>();
+	
+				// This "main()" function now owns pAirplane.
+				
+	
+				// Transfer ownership of the pointer to funcA. 
+				funcA( std::move( pAirplane )  );
+	
+				// VERY IMPORTANT, here in main you can't use pAirplane anymore; it is now a nullptr 
+				// because you "moved" ownership to funcA(...).
+				
+				
+				// Next line of code is an ERROR
+				pAirplane->fly(); // <-- !! - - - ERROR because pAirplane is nullptr now.
+				
+				...
+				
+				// When main() ends, it will NOT call delete for the pAirplane.
+			}
+			
+			
+	
+	Shared Pointer	
+		A shared pointer is a different kind of smart pointer; however, it also will delete automatically. 
+		Unlike unique_ptr, shared pointer allows more than one owner; meaning 2 functions can "Own" the 
+		pointer at the same time.  
+		So how does it know when to delete the pointer if 3 functions "Own" it?  
+		It keeps a count of every time you pass the pointer to a function. Meaning, it 
+		keeps an internal int counter. Every time you share it, it will increase the counter by 1.
+		When one of the shared pointers goes out of scope, like when a function ends, it will decrease 
+		the counter by 1.
+		When the counter reaches zero, it deletes the pointer.
+		
+		SharePointers are not as fast as unique_ptr because there is a small amount of work to keep 
+		track of the number of owners.
+		
+		
+	
+
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+Lessons
+All of these are console applications.
+If you have already done these program, review the instructions below and make sure you understand how to build these.
+	
+
+Create a directory according to the structure specified in the course.
+Place the lessons below in their own sub-directory naming it the lesson name.
+
+
+
+
+Tasks
+
+	------------------------------
+	ToDo - CppSmartPointer_Unique_ptr_PassToFunction
+
+		Create a program that has 3 functions, each one will take a unique pointer as a parametr. 
+		Create the Airplane object in main on the heap using unique_ptr. 
+		Pass the object from function to function.
+		Have each function call the fly() function; it should output something like 
+			"Off I go.. into the wild blue yonder!".
+		In the constructor of the Airplane, output "I'm alive!".
+		In the descructor of the Airplane, output "I'm going away!!!"; or something similar. :)
+	
+	ToDo - CppSmartPointer_Unique_ptr__get_And_release
+		Create a program that uses the "get()" and "release()" functions that come with unique_ptr.
+		Use the same Airplane class as the previous program.
+		In your code, document what each of these is doing.
+
+	ToDo - CppSmartPointer_Unique_ptr__pass_by_reference
+		Similar to CppUnique_ptr_PassToFunction project above, create a program that has 3 functions; however,
+		have each function take a reference to the Airplane.
+		Have each function call the fly() function.
+		Note that for this program, "main()" never gives up ownership! The other functions only have a refernece.
+			Reminder, when references go out of scope they do not call delete.
+
+	ToDo - CppSmartPointer_SharedPointer
+		Create a program with the Airplane class and demonstrate the passing to functions using Shared Pointer.
+	
+	
+	
+	------------------------------
+	ToDo - Verse for the day: Find a verse for today and email the teacher.	
+
+

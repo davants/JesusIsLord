@@ -1,0 +1,16 @@
+
+
+
+DISABLE_DEACTIVATION
+	From what I understand, objects can fall asleep which saves processing time. 
+	Like when I delete an object and things on it don't move. 
+	"DISABLE_DEACTIVATION" means it is not allowed to go to sleep.
+	
+	m_pickedBody->setActivationState(DISABLE_DEACTIVATION);
+	
+	This is used for picking and holding something so it does not go to sleep while 
+	being held.
+
+ISLAND_SLEEPING 
+	Note from some blog.
+	This is set when a group of nearby objects is deactivated.

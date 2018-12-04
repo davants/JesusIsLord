@@ -138,4 +138,12 @@ CppUnderscoreUnderscoreReserved
 
 CppReferences
 	Reference
-	Pointers
+	Pointers	
+	
+CppSmartPointrs_Unique_ptr_And_Shared_ptr
+	unique_ptr 
+	shared_ptr 
+	
+	
+	
+	
