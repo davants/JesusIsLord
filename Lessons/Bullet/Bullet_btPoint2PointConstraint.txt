@@ -18,24 +18,24 @@ There are 4 parameters for the main constructor.
 	The third and fourth parameters define pivot points for the corresponding bodies.
 
 3rd and 4th parameter notes:
-	3rd is pivot point pivotInA for 1st param rbA. The pivot point is relative to the other body, the rbB.
-	4th is pivot point pivotInB for 2nd param rbB. The pivot point is relative to the other body, the rbA.
+	3rd is pivot point pivotInA for 1st param rbA. 
+	4th is pivot point pivotInB for 2nd param rbB. 
 	These pivot points are in local space.
 	
 A pivot point is defined with btVector3 which is 3 floats. (x, y, z)
 	So what is it?  Picture your object with a steel rod coming out of it. The steel rod is part of your
-		object and is solidly in place. The rod starts in the center of your object.
+		object and is solidly in place. The rod starts in the center of your object and comes out to the 
+		ball/joint.
 		
 		How long is the rod and what direction does it point?  This is where the x, y, z come in. They 
 		determine how long and the direction it sticks out based on local space of the object.  
 			Important - The rod is based on the local space of the object.
 	
-		The other end of the rod is connected to some point in world space. When using btPoint2PointConstraint
-		with another object, the rod is connected to the other object's current location. As the other object
-		moves, then so does the rod's connected point.
+		The other end of the rod is the ball. When using btPoint2PointConstraint
+		with another object, each object has their rod and ball. Both balls exist together at the same 
+		place. Or you can think of it as the same ball for both.
 		
-		With btPoint2PointConstraint, each object's steel rod is connected to the other's center point. So,
-		they constantly effect each other.
+		With btPoint2PointConstraint, the joint is at the end of both rods.
 		
 		Example 1, how do we picture the rod?  Note that in this example does not care about what the 
 			other end of the rod is connected to; just object and its rod which together are one solid 
@@ -46,13 +46,19 @@ A pivot point is defined with btVector3 which is 3 floats. (x, y, z)
 			left side of rbA because the direction is -7 on the x axis.
 
 
-		Example 2, what about the other end of the rod? If we start with the object and rod created from
-			Example 1, the other end of the rod is loosely connected to a 3d point in space.  The point in 
-			space can be a specified x, y, z or it can be another object's current location.
-			
-			How tightly the rod is connected to the 3d point in space depends on the btPoint2PointConstraint
-			m_setting property.
-			
+		----------------							 
+		|				|							
+		|		------------------------0		   
+		|				|				 \	 ___	  
+		----------------				  \ /   |
+										   \    |
+										  / \   |
+										  |  \  |
+										  |     |
+										  -------
+											
+		They both pivot around the zero 0.
+											
 
 btPoint2PointConstraint::m_setting which is type data btConstraintSetting.
 
