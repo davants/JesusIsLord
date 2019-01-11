@@ -46,16 +46,16 @@ A pivot point is defined with btVector3 which is 3 floats. (x, y, z)
 			left side of rbA because the direction is -7 on the x axis.
 
 
-		----------------							 
-		|				|							
-		|		------------------------0		   
-		|				|				 \	 ___	  
-		----------------				  \ /   |
-										   \    |
-										  / \   |
-										  |  \  |
-										  |     |
-										  -------
+		 ---------------							 
+		|		|							
+		|	------------------------0   
+		|		|		 \   ___	  
+		 ---------------		  \ /   |
+						   \    |
+						  / \   |
+						  |  \  |
+						  |     |
+						  -------
 											
 		They both pivot around the zero 0.
 											
