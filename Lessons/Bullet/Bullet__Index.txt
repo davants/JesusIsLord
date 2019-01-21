@@ -29,6 +29,10 @@ Bullet_Terms
 	DISABLE_DEACTIVATION
 	ISLAND_SLEEPING
 	
+Bullet_btBoxShape_getEdge
+	btBoxShape::getEdge(...)
+	
+	
 	
 
 Bullet Tutorial

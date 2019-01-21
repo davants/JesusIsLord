@@ -1,0 +1,53 @@
+Bullet Physics
+
+btBoxShape
+
+virtual void getEdge(int i,btVector3& pa,btVector3& pb) const;
+
+This function will return one of the edges of a shape by updating 
+the passed parameters pa and pb.
+
+The returned edge is the i, index, of the edge in the shape.
+
+Use the getNumEdges() function to get the number of edges. 
+For example, you could loop through the edges using this 
+number of edges value.
+
+What is an Edge?
+
+	An Edge is a two point line. 
+	
+	For example, say we are looking down on a box. 
+		The X axis is horizontal; -X is to the left and +X is to the right.
+		The Z axis is verticle; -Z is Up and +Z is down.
+		It has a rectangle box shape which means 6 sides.
+		It has a total width of 2 on the x axis, y not visable because we are looking down but we will
+		say it is 2 and z is 8.
+
+		There will be 12 total edges. Two are documented below.
+		
+	      		
+		 __ __	<--- This Edge is 2 points to make a line. One p is (-1, 1, -4) and the other p is (1, 1, -4).
+		|     |
+		|     |
+		|     |
+		|     |
+		|     |
+		|     |
+		|     |
+		|     |
+		 -----		
+
+		^
+		|
+		|
+		| (This Edge is 2 points to make a line. One p is (-1, 1, -4) and the other p is (-1, 1, +4).
+		
+	
+
+
+
+
+
+
+
