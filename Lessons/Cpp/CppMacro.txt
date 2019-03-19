@@ -1,0 +1,38 @@
+Tasks for this Step:
+	Create a program that uses a macro.
+
+Videos - https://www.youtube.com/watch?v=j3mYki1SrKE
+
+	Pre-processor code can be as simple as:
+		#define WACKY
+		
+		This code just makes WACKY exist for the pre-processor. Why?
+		Later you can have another pre-processor piece of code check to see if WACKY was defined.
+		#ifdef WACKY ... then do some other pre-processor work...
+		
+		This is very common for building code for different Operating systems. You could define 
+		WINDOWS or define APPLE in your app. This would allow for you to check which one is 
+		defined so the compiled code can be different depending on the operating system.
+		
+			#ifdef WINDOWS ... Launch edge browser...
+			#ifdef APPLE ... Launch apple crome....
+			
+		This is not really a valid example but you get the idea.
+
+	Notes on this video: The video shows how to define a macro in visual studio properties 
+		that will depend on wether you are in debug or release mode. 
+		So if you are compiling in debug mode, visual studio will add the code #define PR_DEBUG 
+		to your code. If you compine in release mode, visual studio will add the code 
+		#define PR_RELEASE to your code.
+		Now you can do a pre-processor #ifdef PR_DEBUG ... and have code added only during 
+		a debug build. If not a debug build then the pre-processor replaces your macro with 
+		nothing.
+		
+
+
+	Simple Notes:
+		Macros are run before the compiler. They are kind of a "find and replace", but you can add 
+		some logic to the find and replace.
+	
+	
+	
