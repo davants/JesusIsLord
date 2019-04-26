@@ -1,3 +1,8 @@
+Microsoft Api XAudio2 Course 101
+
+This course is still be created.
+
+
 This course has a set of projects that will help you learn how to read technical documentation
 and use complex APIs.  The APIs will be the Microsoft XAudio APIs which can be used to 
 make sounds play on the computer using Mp3 files. These APIs also allow for 3D sound, meaning
