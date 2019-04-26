@@ -1,0 +1,61 @@
+DX 12 Course 102
+
+This course will build on 101 where you will implement a Graphics engine using DirectX 12. 
+
+	Download source for the "Matthew5" project. Download the zip file.
+		https://github.com/davants/Matthew5
+		
+	Get the Solution running.
+	
+	In this solution there are 3 projects; 2 libraries and the exe application that 
+		uses the 2 libraries.
+		Libraries: Matthew5Graphics and Matthew5Windows
+		Exe: Matthew5
+		
+	Create a training course that builds the Matthew5Graphics library 
+	from scratch. You do not have to build the Matthew5Windows from scratch, you can 
+	use it as is, just cover it briefly. Before recording to video, you must write up an 
+	outline script and review with the teacher ahead of time. Once approved then make the 
+	video.
+	Include a lot of C++ training in the tutorials, assuming they have a basic understanding 
+	of C++ but not advanced knowledge. Any DirectX data types must be reviewed and talked about.
+	For each video you will publish your outline.
+	
+	Here is a basic "Getting Started" set of steps you can take.
+	Make a training for each; first approved by teacher then video.
+	Each video should not be more than 15 minutes so you will need to organize and 
+	break each area listed below into multiple videos.
+	
+		- Review how to setup visual studio with a static library and an exe.
+			See https://github.com/davants/JesusIsLord/blob/master/Lessons/Cpp/CppVisualStudioLinkingProjects.txt
+			You will have 2 projects. One for the Exe and one for the graphics library. 
+			In the Matthew5 Version 1.000 the graphics library project is called Matthew5Graphics.
+		- Review how to add the Matthew5Windows project and set "include" paths 
+			and so on. 
+		- Review basic functionality of the Matthew5Windows library using a simple 
+			console application.
+
+		Now start adding code to your graphics library		
+		- IMattthew5Graphcs abstrct class.
+			What is an abstract class? Why are we creating this.. so we can later build an 
+				Oculus class to derive from it instead of Matthew5Dx.
+		- Create Matthew5Dx class that derives from IMattthew5Graphcs.
+			Do not add all the functionality, that will happen over time.
+		- Add it to your main and run. Note you will have to implement the DrawTestTriangle() function.
+		- Update the Matthew5Dx class to take in the Windows HWND type and save it to a private 
+			variable. What is HWND?
+		- "Stub Out" functions and properties contained in the Matthew5Dx class. This will include 
+			several of the other M5 classes; however, be sure to "Stub Out" all of definitions. 
+			What does "Stub Out" mean when creating a class?
+		- Build out the definition of the M5DxGpuDeviceNFactory - Go into details about what is happening.
+		- Build out the definition of the M5DxGpuCommand
+		- Build out the definition of the M5DxGpuSwapChain
+		- Build out the definition of the M5DxGpuMemoryUploadBuffer
+		- Build out the definitions of the "M5Tri...." (Triangle) classes. Maybe start with M5TriVector.
+		- Build out M5SceneObject and related.
+		- Finish up using your exe to call IMatthew5Graphics::DrawTestTriangle
+			
+		 
+	
+
+
