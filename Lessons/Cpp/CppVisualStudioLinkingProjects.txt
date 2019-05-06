@@ -7,16 +7,11 @@ Video - https://youtu.be/Wt4dxDNmDA8
 Note: In this video he uses static libraries. A static library code is kept separate, but final compiled 
 	machine code is not separate. A static library's source code actually gets compiled into your application's exe. 
 	
-	This is different from a dynamic link library (dll). A dynamic link library also keeps its code separate and it also 
-	keeps it compiled code sepeate as well. It is not compiled into your application's exe. 
-	A dynamic library is built into a "dll" file. So this means the compiled result is in its own file.
-	When you start your application's exe, it will look for the ".dll" file.  Why do this? Two reasons.
-	Well, if you have the same dll being used in 20 applications it saves disk space. This is not really an issue with today's computers.
-	The second reason is to use someone else's compiled dll file without having to have their source code. All you need is the 
-	".h" (header) files and you never get to see the source code. This is how the DirectX SDK works. We get the header files but
-	the implemented source code is hidden from us.
+	This is different from a dynamic link library (dll). A dynamic link library also keeps its source code separate; 
+	however, it also keeps it compiled code sepeate as well. Meaning a dll is not compiled into your application's exe. 
+	A dynamic library is built into a "dll" file. So this means the compiled result is in its own file.	
+	When you ship your application you will ship your exe and the dll.
+	When you start your application's exe, it will look for the ".dll" file.  
 	
-	What to use?  For your own code, use static libraries, after all it is your code so there is no need to hide anything. 
-	If you are writing code that you will sell and don't want to hand over 	your source code then use dynamic libraries.
 	
 	
