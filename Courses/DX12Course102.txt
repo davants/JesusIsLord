@@ -35,27 +35,48 @@ This course will build on 101 where you will implement a Graphics engine using D
 		- Review basic functionality of the Matthew5Windows library using a simple 
 			console application.
 
-		Now start adding code to your graphics library		
-		- IMattthew5Graphcs abstrct class.
-			What is an abstract class? Why are we creating this.. so we can later build an 
-				Oculus class to derive from it instead of Matthew5Dx.
-		- Create Matthew5Dx class that derives from IMattthew5Graphcs.
-			Do not add all the functionality, that will happen over time.
-		- Add it to your main and run. Note you will have to implement the DrawTestTriangle() function.
-		- Update the Matthew5Dx class to take in the Windows HWND type and save it to a private 
-			variable. What is HWND?
-		- "Stub Out" functions and properties contained in the Matthew5Dx class. This will include 
-			several of the other M5 classes; however, be sure to "Stub Out" all of definitions. 
-			What does "Stub Out" mean when creating a class?
-		- Build out the definition of the M5DxGpuDeviceNFactory - Go into details about what is happening.
-		- Build out the definition of the M5DxGpuCommand
-		- Build out the definition of the M5DxGpuSwapChain
-		- Build out the definition of the M5DxGpuMemoryUploadBuffer
-		- Build out the definitions of the "M5Tri...." (Triangle) classes. Maybe start with M5TriVector.
-		- Build out M5SceneObject and related.
-		- Finish up using your exe to call IMatthew5Graphics::DrawTestTriangle
+		Now start adding code to your graphics library	
+		
+Goal - Create Matthew5 Graphics Version 1.000 that outputs one triangle.
+
+	Overview 
+		The approach is to bulid the smaller classes first and then add the Matthew5Graphics 
+		class hierarchy.
+
+
+	Sub-Goal 1)
+		Overview 
+			Create the Matthew 5 Gpu Device Factory.
 			
-		 
+	Sub-Goal 2) 
+		Overview 
+			Create the Matthew 5 Gpu Command Object.
+			
+	Sub-Goal 3) 
+		Overview 
+			Create the Matthew 5 Gpu Memory Upload Buffer 
+			
 	
+
+
+
+
+	Sub-Goal 10
+		Overview 
+			We will stub out all the components and class functions/methods to call the 
+			Draw function in main.
+			It will not do anything at this point.
+			The main interface class is IMatthew5Graphics. It will have one pure virual 
+			function named "Draw".
+			Matthew5Dx derives from IMatthew5Graphics and Matthew5DxDesktop derives from Matthew5Dx.
+			Main will have a pointer to data type IMatthew5Graphics and the object on the heap 
+			that it points to will be of data type Matthew5DxDesktop. 
+			The Draw function take one parameter that specifies "draw instructions".
+			Add the code to main to call draw in the infinate while loop.
+			
+			
+		
+		
+			
 
 
