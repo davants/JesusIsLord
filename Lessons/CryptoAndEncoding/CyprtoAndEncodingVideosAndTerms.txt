@@ -26,7 +26,11 @@ Terms:
 		with the same hash algorithm.
 		
 	
-	HS256 - symmetric algorithm 
+	HS256 - symmetric algorithm (ALSO can use SHA-256)
+		
+	See this for review of both and many things signing and encryption.
+		https://stackoverflow.com/questions/39239051/rs256-vs-hs256-whats-the-difference
+		
 		
 	OAuth and signing -	At 0Auth we allow signing of tokens using either a symmetric algorithm (HS256), or an 
 		asymmetric algorithm (RS256). HS256 tokens are signed and verified using a simple 
